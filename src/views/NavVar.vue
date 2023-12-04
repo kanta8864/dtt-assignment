@@ -2,10 +2,10 @@
   <div id="nav-container">
     <img class="logo" src="../assets/img_logo_dtt@3x.png" alt="DTT logo">
     <router-link :to="{name: `home`}">
-        <div class="houses">Houses</div>
+        <div>Houses</div>
     </router-link>  
     <router-link :to="{name: `about`}">
-        <div class="about">About</div>
+        <div>About</div>
     </router-link>
   </div>
 </template>
@@ -23,23 +23,23 @@ export default {
     display:flex;
     gap: 70px;
     align-items: center;
-    padding: 10px 40px;
+    padding: 15px 100px;
     background-color:white;
-    font-family: 'Montserrat';
+    font-family: "Montserrat";
+    font-size:18px;
 }
 
 #nav-container a {
     color: black;
     text-decoration: none;
-    font-size:16px;
 }
 
 #nav-container a.router-link-exact-active {
-    font-weight: bold;
+    font-weight: 700;
 }
 
 img {
-    max-width: 120px;  
+    max-width: 150px;  
     height: auto;  
 }
 
