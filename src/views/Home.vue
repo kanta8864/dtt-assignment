@@ -29,6 +29,7 @@ export default {
                     throw Error("No house was found")
                 } else {
                     houseList.value = await data.data
+                    console.log(houseList.value)
                 }
             } catch (e) {
                 error.value = e.message

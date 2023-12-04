@@ -25,6 +25,7 @@ export default {
     align-items: center;
     padding: 10px 40px;
     background-color:white;
+    font-family: 'Montserrat';
 }
 
 #nav-container a {
