@@ -22,29 +22,29 @@
             {{ house.location.zip }}
           </div>
           <div class="secondRow">
-            <div>
+            <div class="icon">
               <img src="../assets/ic_price@3x.png" alt="price icon">
               {{ house.price }}
             </div>
-            <div class="sizeInfo">
+            <div class="icon">
               <img src="../assets/ic_size@3x.png" alt="size icon">
               {{ house.size }} m2
             </div>
-            <div>
+            <div class="icon">
               <img src="../assets/ic_construction_date@3x.png" alt="building icon">
               Built in {{ house.constructionYear }}
             </div>
           </div>
           <div class="thirdRow">
-            <div class="bedroomInfo">
+            <div class="icon">
               <img src="../assets/ic_bed@3x.png" alt="bed icon">
               {{ house.rooms.bedrooms }}
             </div>
-            <div class="bathroomInfo">
+            <div class="icon">
               <img src="../assets/ic_bath@3x.png" alt="bathroom icon">
               {{ house.rooms.bathrooms }}
             </div>
-            <div>
+            <div class="icon">
               <img src="../assets/ic_garage@3x.png" alt="garage icon">
               {{ hasGarage }}
             </div>
@@ -177,5 +177,11 @@ export default {
 .textContent {
   margin-top: 20px;
   padding: 0px 50px;
+}
+
+.icon {
+  display: flex;
+  gap:8px;
+  text-align: center;
 }
 </style>

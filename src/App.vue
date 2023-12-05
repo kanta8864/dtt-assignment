@@ -16,10 +16,13 @@ body {
   display:flex;
   align-items: center;
   gap:10px;
+  font-family: "Montserrat";
+  font-weight:600;
+  font-size:16px;
 }
 
 .backButtonContainer img{
-  width:20px;
+  width:16px;
   height:auto;
   margin: 30px 0px;
 }

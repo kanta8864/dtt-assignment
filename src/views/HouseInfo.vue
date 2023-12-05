@@ -67,11 +67,11 @@ export default {
     height:100%;
 }
 
-.houseInfo {
+#houseTextInfoContainer {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 7px;
+    gap: 5px;
 }
 
 .moreInfo img {

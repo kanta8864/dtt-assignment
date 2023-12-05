@@ -2,10 +2,10 @@
   <div id="toolContainer">
     <div id="firstRow">
       <div id="housesHeader">Houses</div>
-      <button id="newButton">
+      <router-link id="newButton" :to="{name: `create`}">
         <img id="plusSymbol" src="../assets/ic_plus_white@3x.png" alt="plus symbol">
         CREATE NEW
-      </button>
+      </router-link>
     </div>
     <div id="secondRow">
       <input type="search" placeholder="Search for a house" v-model="searchText">
@@ -35,6 +35,10 @@ export default {
   padding: 10px 100px;
   margin-top: 30px;
   font-family: "Montserrat";
+}
+
+#toolContainer a {
+    text-decoration: none;
 }
 
 #toolContainer #housesHeader {
