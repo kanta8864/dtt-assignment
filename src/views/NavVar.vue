@@ -1,19 +1,24 @@
 <template>
   <div id="nav-container">
     <img class="logo" src="../assets/img_logo_dtt@3x.png" alt="DTT logo">
-    <router-link :to="{name: `home`}">
+    <router-link :to="{name: `home`}" :class="housesIncluded ? `active` : ``">
         <div>Houses</div>
     </router-link>  
-    <router-link :to="{name: `about`}">
+    <router-link :to="{name: `about`}" :class="housesIncluded ? `` : `active`">
         <div>About</div>
     </router-link>
   </div>
 </template>
 
 <script>
+import {useRoute} from 'vue-router'
+import {computed} from 'vue'
+
 export default {
     setup() {
-
+        const route = useRoute();
+        const housesIncluded = computed(() => route.path.includes("houses") ? true : false)
+        return {housesIncluded}
     }
 }
 </script>
@@ -34,7 +39,7 @@ export default {
     text-decoration: none;
 }
 
-#nav-container a.router-link-exact-active {
+#nav-container .active {
     font-weight: 700;
 }
 
