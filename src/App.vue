@@ -12,4 +12,16 @@ body {
   background-color: #F6F6F6;
 }
 
+.backButtonContainer {
+  display:flex;
+  align-items: center;
+  gap:10px;
+}
+
+.backButtonContainer img{
+  width:20px;
+  height:auto;
+  margin: 30px 0px;
+}
+
 </style>

@@ -1,17 +1,17 @@
 <template>
     <div id="houseListContainer">
         <div v-for="house in houseList" :key="house.id">
-            <HouseDisplay :house="house" />
+            <HousePreview :house="house" />
         </div>
     </div>
 </template>
 
 <script>
-import HouseDisplay from './HouseDisplay.vue'
+import HousePreview from './HousePreview.vue'
 
 export default {
     name: "HousesComponent",
-    components: {HouseDisplay},
+    components: {HousePreview},
     props: ["houseList"]
 }
 </script>

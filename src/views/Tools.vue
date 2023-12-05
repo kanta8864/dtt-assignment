@@ -74,7 +74,7 @@ export default {
 
 #toolContainer input[type=search] {
   width: 400px;
-  padding: 10px 10px 10px 50px;
+  padding: 15px 15px 15px 50px;
   border-radius: 5px;
   font-size: 14px;
   border: none;
@@ -82,6 +82,7 @@ export default {
   background-repeat: no-repeat;
   background-size: 20px;
   background-position: 20px center;
+  background-color: #E8E8E8;
 }
 
 #toolContainer input[type=radio] {
