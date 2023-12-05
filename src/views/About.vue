@@ -36,7 +36,7 @@ export default {
 
 <style>
 #aboutPage {
-  padding: 10px 40px;
+  padding: 10px 100px;
   font-family: "Open Sans";
   font-weight:400;
   font-size:18px;

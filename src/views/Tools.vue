@@ -8,15 +8,22 @@
       </button>
     </div>
     <div id="secondRow">
-      <input type="text" placeholder="Search for a house">
-      <div id="sortButtons">Price, Size</div>
+      <input type="search" placeholder="Search for a house" v-model="searchText">
+      <div class="container">
+          <input type="radio" id="priceChoice" name="choice" value="price" checked="checked">
+          <label for="priceChoice" id="priceLabel">Price</label>
+          <input type="radio" id="SizeChoice" name="choice" value="size">
+          <label for="SizeChoice" id="sizeLabel">Size</label>
+      </div>
     </div>
+    <div>5 results found</div>
   </div>
 </template>
 
 <script>
-export default {
+import { computed } from "vue"
 
+export default {
 }
 </script>
 
@@ -26,7 +33,8 @@ export default {
   flex-direction: column;
   gap: 30px;
   padding: 10px 100px;
-  margin-top:30px;
+  margin-top: 30px;
+  font-family: "Montserrat";
 }
 
 #toolContainer #housesHeader {
@@ -64,7 +72,7 @@ export default {
   align-items: center;
 }
 
-input[type=text] {
+#toolContainer input[type=search] {
   width: 400px;
   padding: 10px 10px 10px 50px;
   border-radius: 5px;
@@ -75,4 +83,35 @@ input[type=text] {
   background-size: 20px;
   background-position: 20px center;
 }
+
+#toolContainer input[type=radio] {
+  display:none;
+  position:absolute;
+  visibility: hidden;
+}
+
+#toolContainer label {
+  display: inline-block;
+  cursor: pointer;
+  font-weight: bold;
+  padding: 10px 50px;
+  color: white;
+  background-color: #C3C3C3;
+  font-size:16px;
+}
+
+#toolContainer #priceLabel {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+#toolContainer #sizeLabel {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+#toolContainer input[type=radio]:checked + label{
+  background-color: #EB5440;
+}
+
 </style>
