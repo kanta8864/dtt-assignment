@@ -1,19 +1,19 @@
 <template>
-  <div id="toolContainer">
-    <div id="firstRow">
-      <div id="housesHeader">Houses</div>
-      <router-link id="newButton" :to="{name: `create`}">
-        <img id="plusSymbol" src="../assets/ic_plus_white@3x.png" alt="plus symbol">
+  <div id="tools">
+    <div class="first-row">
+      <div class="header1">Houses</div>
+      <router-link id="new-button" :to="{name: `create`}">
+        <img src="../assets/ic_plus_white@3x.png" alt="plus symbol">
         CREATE NEW
       </router-link>
     </div>
-    <div id="secondRow">
+    <div class="second-row">
       <input type="search" placeholder="Search for a house" v-model="searchText">
-      <div class="container">
-          <input type="radio" id="priceChoice" name="choice" value="price" checked="checked">
-          <label for="priceChoice" id="priceLabel">Price</label>
-          <input type="radio" id="SizeChoice" name="choice" value="size">
-          <label for="SizeChoice" id="sizeLabel">Size</label>
+      <div class="sort">
+          <input type="radio" id="price-choice" name="choice" value="price" checked="checked">
+          <label for="price-choice" id="price-label">Price</label>
+          <input type="radio" id="size-choice" name="choice" value="size">
+          <label for="size-choice" id="side-label">Size</label>
       </div>
     </div>
     <div>5 results found</div>
@@ -28,25 +28,24 @@ export default {
 </script>
 
 <style>
-#toolContainer {
+#tools {
   display: flex;
   flex-direction: column;
   gap: 30px;
   padding: 10px 100px;
-  margin-top: 30px;
   font-family: "Montserrat";
 }
 
-#toolContainer a {
+#tools a {
     text-decoration: none;
 }
 
-#toolContainer #housesHeader {
+#tools #housesHeader {
   font-size: 30px;
   font-weight: bold;
 }
 
-#toolContainer #newButton {
+#tools #new-button {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -59,24 +58,24 @@ export default {
   font-size: 18px;
 }
 
-#toolContainer #newButton img {
+#tools #new-button img {
   width: 25px;
   height: auto;
 }
 
-#toolContainer #firstRow {
+#tools .first-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-#toolContainer #secondRow {
+#tools .second-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-#toolContainer input[type=search] {
+#tools input[type=search] {
   width: 400px;
   padding: 15px 15px 15px 50px;
   border-radius: 5px;
@@ -89,13 +88,13 @@ export default {
   background-color: #E8E8E8;
 }
 
-#toolContainer input[type=radio] {
+#tools input[type=radio] {
   display:none;
   position:absolute;
   visibility: hidden;
 }
 
-#toolContainer label {
+#tools label {
   display: inline-block;
   cursor: pointer;
   font-weight: bold;
@@ -105,17 +104,17 @@ export default {
   font-size:16px;
 }
 
-#toolContainer #priceLabel {
+#tools #price-label {
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
 }
 
-#toolContainer #sizeLabel {
+#tools #size-label {
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
 }
 
-#toolContainer input[type=radio]:checked + label{
+#tools input[type=radio]:checked + label{
   background-color: #EB5440;
 }
 

@@ -1,11 +1,11 @@
 <template>
-    <router-link :to="{name: `houseDetail`, params: {id: house.id }}" class="housePreviewContainer">
+    <router-link :to="{name: `houseDetail`, params: {id: house.id }}" id="house-preview">
         <div class="y">
             <HouseInfo :id="house.id"/>
         </div>
         <div>
-            <img src="../assets/ic_edit@3x.png" class="editDeleteButton">
-            <img src="../assets/ic_delete@3x.png" class="editDeleteButton">
+            <img src="../assets/ic_edit@3x.png" class="edit-delete-button">
+            <img src="../assets/ic_delete@3x.png" class="edit-delete-button">
         </div>
     </router-link>
 </template>
@@ -21,7 +21,7 @@ export default {
 </script>
 
 <style>
-.housePreviewContainer {
+#house-preview {
     background: white;
     display: flex;
     justify-content: space-between;
@@ -34,17 +34,11 @@ export default {
     text-decoration: none;
 }
 
-.housePreviewContainer .editDeleteButton {
+#house-preview .edit-delete-button {
     width: 20px;
     height: auto;
     margin: 5px;
     align-items:start;
-}
-
-.housePreviewContainer .houseDisplayHeader {
-    font-family: "Montserrat";
-    font-weight: 700;
-    font-size: 16px;
 }
 
 .y {

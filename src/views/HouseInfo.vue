@@ -1,20 +1,20 @@
 <template>
-    <div class="houseInfoContainer" v-if="house">
-        <img class="housePhoto" :src="house.image" alt="house photo">
-        <div id="houseTextInfoContainer">
-            <div class="houseDisplayHeader">{{ house.location.street }} {{ house.location.houseNumber }}</div>
+    <div id="house-info" v-if="house">
+        <img class="house-photo" :src="house.image" alt="house photo">
+        <div class="preview-text">
+            <div class="street">{{ house.location.street }} {{ house.location.houseNumber }}</div>
             <div>&euro; {{ house.price }}</div>
             <div>{{ house.location.city }} {{ house.location.zip }}</div>
-            <div class="moreInfo">
-                <div class="bedroomInfo">
+            <div class="more-info">
+                <div class="bedroom-info">
                     <img src="../assets/ic_bed@3x.png" alt="bed icon">
                     {{ house.rooms.bedrooms }}
                 </div>
-                <div class="bathroomInfo">
+                <div class="bathroom-info">
                     <img src="../assets/ic_bath@3x.png" alt="bathroom icon">
                     {{ house.rooms.bathrooms }}
                 </div>
-                <div class="sizeInfo">
+                <div class="size-info">
                     <img src="../assets/ic_size@3x.png" alt="size icon">
                     {{ house.size }} m2
                 </div>
@@ -57,36 +57,44 @@ export default {
 </script>
 
 <style>
-.houseInfoContainer {
+#house-info {
     display: flex;
     gap: 20px;
+    font-family: "Open Sans";
+    font-weight:500;
 }
 
-.housePhoto {
+#house-info .street {
+    font-family: "Montserrat";
+    font-weight: 700;
+    font-size:18px;
+}
+
+.house-photo {
     border-radius: 20px;
     height:100%;
 }
 
-#houseTextInfoContainer {
+.preview-text {
     display: flex;
     flex-direction: column;
     justify-content: center;
     gap: 5px;
 }
 
-.moreInfo img {
+.more-info img {
     width: 16px;
     height: auto;
 }
 
-.moreInfo {
+.more-info {
     display: flex;
     gap: 10px;
 }
 
-.bedroomInfo,
-.bathroomInfo,
-.sizeInfo {
+.bedroom-info,
+.bathroom-info,
+.size-info {
     display: flex;
     gap: 7px;
     align-items: center;

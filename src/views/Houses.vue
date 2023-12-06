@@ -1,5 +1,5 @@
 <template>
-    <div id="houseListContainer">
+    <div id="houses">
         <div v-for="house in houseList" :key="house.id">
             <HousePreview :house="house" />
         </div>
@@ -17,7 +17,7 @@ export default {
 </script>
 
 <style>
-#houseListContainer {
+#houses {
     padding: 10px 100px;
     display:flex;
     flex-direction: column;

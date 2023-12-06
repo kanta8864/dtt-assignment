@@ -1,7 +1,8 @@
 <template>
     <NavVar />
-    <div class="createHouseContainer">
-        <div class="backButtonContainer">
+    <div id="create-house" class="content">
+        <div class="back-button">
+            <!-- Comment -->
             <img src="../assets/ic_back_grey@3x.png" alt="back button" @click="this.$router.go(-1)">
             Back to Overview
         </div>
@@ -76,7 +77,7 @@ export default {
 </script>
 
 <style>
-.createHouseContainer {
+#create-house {
     position: relative;
   left: 0;
   right: 0;

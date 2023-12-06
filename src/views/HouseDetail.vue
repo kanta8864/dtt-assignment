@@ -1,27 +1,29 @@
 <template>
   <NavVar />
-  <div id="houseDetailContainer">
-    <div class="backButtonContainer">
+  <div id="house-detail" class="content">
+    <div class="back-button">
       <img src="../assets/ic_back_grey@3x.png" alt="back button" @click="this.$router.go(-1)">
       Back to Overview
     </div>
-    <div id="houseDetailContent">
-      <div id="houseDetail" v-if="house">
-        <img class="hey" :src="house.image" alt="house photo" width="500" height="600">
-        <div class="textContent">
-          <div class="firstRow">
-            {{ house.location.street }} {{ house.location.houseNumber }}
-            <div>
-              <img src="../assets/ic_edit@3x.png" class="editDeleteButton">
-              <img src="../assets/ic_delete@3x.png" class="editDeleteButton">
+    <div class="main-content">
+      <div class="house-info" v-if="house">
+        <img :src="house.image" alt="house photo" width="500" height="600">
+        <div class="text-content">
+          <div class="first-row">
+            <div class="header1">{{ house.location.street }} {{ house.location.houseNumber }}</div>
+            <div class="edit-delete-button-container">
+              <img src="../assets/ic_edit@3x.png" class="edit-delete-button">
+              <img src="../assets/ic_delete@3x.png" class="edit-delete-button">
             </div>
           </div>
-          <div>
-            <img src="../assets/ic_location@3x.png" alt="location icon">
-            {{ house.location.city }}
-            {{ house.location.zip }}
+          <div class="second-row">
+            <div class="icon">
+              <img src="../assets/ic_location@3x.png" alt="location icon">
+              {{ house.location.city }}
+              {{ house.location.zip }}
+            </div>
           </div>
-          <div class="secondRow">
+          <div class="third-row">
             <div class="icon">
               <img src="../assets/ic_price@3x.png" alt="price icon">
               {{ house.price }}
@@ -35,7 +37,7 @@
               Built in {{ house.constructionYear }}
             </div>
           </div>
-          <div class="thirdRow">
+          <div class="fourth-row">
             <div class="icon">
               <img src="../assets/ic_bed@3x.png" alt="bed icon">
               {{ house.rooms.bedrooms }}
@@ -48,19 +50,21 @@
               <img src="../assets/ic_garage@3x.png" alt="garage icon">
               {{ hasGarage }}
             </div>
-            <div></div>
+          </div>
+          <div class="description"> 
+            {{ house.description }}
           </div>
         </div>
       </div>
-      <div id="recommendationContainer">
-        <div>Recommended for you</div>
-        <div class="recommendationItemContainer">
+      <div id="recommendation">
+        <div class="header2">Recommended for you</div>
+        <div class="recommendation-item">
           <HouseInfo id="2" />
         </div>
-        <div class="recommendationItemContainer">
+        <div class="recommendation-item">
           <HouseInfo id="3" />
         </div>
-        <div class="recommendationItemContainer">
+        <div class="recommendation-item">
           <HouseInfo id="4" />
         </div>
       </div>
@@ -104,84 +108,91 @@ export default {
 </script>
 
 <style>
-#houseDetailContainer {
+#house-detail {
   display: flex;
   flex-direction: column;
   padding: 10px 100px;
+  font-family: "Open Sans";
 }
 
-#houseDetailContent {
+#house-detail .main-content {
   display: flex;
   justify-content: space-between;
 }
 
-#houseDetail {
+#house-detail .house-info {
   width: 65%;
   background: white;
   display: flex;
   flex-direction: column;
 }
 
-.textContent {
+.text-content {
   display: flex;
   flex-direction: column;
-  gap:10px;
+  gap: 10px;
+  padding: 0px 50px;
+  font-size: 16px;
 }
 
-#houseDetail img {
+#house-detail .icon img {
   width: 16px;
   height: auto;
 }
 
-#recommendationContainer {
+#recommendation {
   display: flex;
   flex-direction: column;
   gap: 10px;
   width: 30%;
 }
 
-.recommendationItemContainer {
+#house-detail .recommendation-item {
   background: white;
   display: flex;
   align-items: center;
   border-radius: 10px;
   padding: 10px 20px;
   height: 130px;
-  font-family: "Open Sans";
   color: #4A4B4C;
   font-size: 16px;
   text-decoration: none;
 }
 
-.hey {
-  width: 100% !important;
-  height: auto;
+#house-detail  .edit-delete-button-container {
+  display: flex;
+  align-items: center;
 }
 
-.editDeleteButton {
-  width: 20px;
-  height: auto;
-  margin: 5px;
-}
-
-.firstRow {
+.first-row {
   display: flex;
   justify-content: space-between;
 }
 
-.secondRow, .thirdRow {
+.second-row,
+.third-row,
+.fourth-row {
   display: flex;
-  gap:40px;
+  justify-content: left;
+  gap: 40px;
 }
 
-.textContent {
+.first-row,
+.second-row,
+.third-row,
+.fourth-row {
+  font-weight: 600;
+  font-size: 16px;
+}
+
+#house-detail .description {
   margin-top: 20px;
-  padding: 0px 50px;
+  font-weight: 500;
+  font-size: 18px;
 }
 
 .icon {
   display: flex;
-  gap:8px;
+  gap: 8px;
   text-align: center;
-}
-</style>
+}</style>

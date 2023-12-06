@@ -1,8 +1,8 @@
 <template>
   <NavVar />
-  <div id="aboutPage">
+  <div id="about" class="content">
     <div>
-      <div class="title">About DTT Real Estate</div>
+      <div class="header1">About DTT Real Estate</div>
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
         sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
         Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
@@ -15,9 +15,9 @@
         aliqua.</p>
     </div>
     <div>
-      <div class="title">Design and Development</div>
-      <div id="dttContainer">
-        <img class="logo" src="../assets/img_logo_dtt@3x.png" alt="DTT logo">
+      <div class="header1">Design and Development</div>
+      <div id="dtt-info">
+        <img src="../assets/img_logo_dtt@3x.png" alt="DTT logo">
         <div>
           <div>By DTT</div>
           <a href="https://www.d-tt.nl">www.d-tt.nl</a>
@@ -35,31 +35,23 @@ export default {
 </script>
 
 <style>
-#aboutPage {
-  padding: 10px 100px;
+#about {
   font-family: "Open Sans";
   font-weight:400;
   font-size:18px;
 }
 
-#aboutPage .title {
-  font-family: "Montserrat";
-  font-weight: 700;
-  font-size: 32px;
-  margin: 30px 0px;
-}
-
-#aboutPage .logo {
+#about img {
   max-width: 250px;
 }
 
-#aboutPage #dttContainer {
+#about #dtt-info {
   display: flex;
   gap: 30px;
   align-items: center;
 }
 
-#aboutPage a:link {
+#about a:link {
   color: #067BC2;
 }
 </style>
