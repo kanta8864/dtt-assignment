@@ -24,6 +24,11 @@ export const useHouseStore = defineStore("houseStore", {
             return (id) => {
                 return state.houses.find(x => x.id == id)
             }
+        }, 
+        getFilteredListSize: (state) => {
+            return (text) => {
+                return state.houses.filter(x => x.location.street.toLowerCase().includes(text.toLowerCase())).length
+            }
         }
 
 

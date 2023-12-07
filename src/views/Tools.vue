@@ -16,14 +16,20 @@
           <label for="size-choice" id="side-label">Size</label>
       </div>
     </div>
-    <div>5 results found</div>
   </div>
 </template>
 
 <script>
 import { computed, ref } from "vue"
+import { useHouseStore } from "../stores/HouseStore"
 
 export default {
+  emits: ["changeSortTarget"],
+  setup(context) {
+    const houseStore = useHouseStore()
+    const searchText = ref("")
+    return {searchText}
+  }
 }
 </script>
 

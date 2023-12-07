@@ -4,7 +4,7 @@
   <Tools @changeSortTarget="handleSortTargetChange" @changeSearchText="handleSearchTextChange"/>
   <div v-if="error"> {{ error }}</div>
   <div v-if="houseStore.houses.length">
-    <Houses :searchText="searchText" :sortType="sortType"></Houses>
+    <Houses :searchResultSize="searchResultSize" :searchText="searchText" :sortType="sortType"></Houses>
   </div>
 </template>
 
@@ -30,13 +30,15 @@ export default {
     }
 
     const searchText = ref("")
+    const searchResultSize = ref("")
     const handleSearchTextChange = (value) => {
       searchText.value = value
+      console.log(houseStore.getFilteredListSize(value))
+      searchResultSize.value = houseStore.getFilteredListSize(value)
     }
 
-    
 
-    return { houseStore, handleSortTargetChange, handleSearchTextChange, sortType, searchText}
+    return { houseStore, handleSortTargetChange, handleSearchTextChange, sortType, searchText, searchResultSize}
   },
   craeted() {
     console.log("sup")
