@@ -43,7 +43,6 @@ export default {
     const sortType = ref("price")
     const handleSortTargetChange = (value) => {
       sortType.value = value
-      console.log(value)
     }
 
     const houseStore = useHouseStore()
@@ -51,6 +50,9 @@ export default {
     
 
     return { houseList, error, handleSortTargetChange, sortType}
+  },
+  craeted() {
+    console.log("sup")
   }
 }
 </script>

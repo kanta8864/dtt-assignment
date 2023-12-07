@@ -6,7 +6,6 @@
             </div>
         </div>
         <div v-if="sortType === `size`" id="size-sorted">
-            {{ sortType }}
             <div v-for="house in houseStore.sizeSorted" :key="house.id">
                 <HousePreview :house="house" />
             </div>
@@ -17,13 +16,12 @@
 <script>
 import HousePreview from './HousePreview.vue'
 import { useHouseStore } from "../stores/HouseStore"
-import { ref } from 'vue'
 
 
 export default {
     name: "HousesComponent",
     components: { HousePreview },
-    props: ["houseList", "sortType"],
+    props: ["sortType"],
     setup() {
         const houseStore = useHouseStore()
         return { houseStore }
