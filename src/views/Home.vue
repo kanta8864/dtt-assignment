@@ -1,5 +1,6 @@
 <template>
   <NavVar />
+  {{ houseStore.tasks }}
   <Tools @changeSortTarget="handleSortTargetChange" @changeSearchText="handleSearchTextChange"/>
   <div v-if="error"> {{ error }}</div>
   <div v-if="houseStore.houses.length">
@@ -19,25 +20,9 @@ export default {
   name: 'HomeView',
   components: { NavVar, Tools, Houses },
   setup() {
-    const error = ref(null)
-
-    const load = async () => {
-      try {
-        axios.defaults.headers['X-API-KEY'] = 'DiAa72IRMOZYnGe5qVSo9C4gmUQJ-wu3';
-        let data = await axios.get("https://api.intern.d-tt.nl/api/houses")
-        console.log(data.data)
-        if (data.status !== 200) {
-          throw Error("No house was found")
-        } else {
-          houseStore.initializeHouses(await data.data)
-
-        }
-      } catch (e) {
-        error.value = e.message
-      }
-    }
-
-    load()
+    const houseStore = useHouseStore()
+    console.log()
+    houseStore.initializeHouses()
 
     const sortType = ref("price")
     const handleSortTargetChange = (value) => {
@@ -49,11 +34,9 @@ export default {
       searchText.value = value
     }
 
-    const houseStore = useHouseStore()
-
     
 
-    return { houseStore, error, handleSortTargetChange, handleSearchTextChange, sortType, searchText}
+    return { houseStore, handleSortTargetChange, handleSearchTextChange, sortType, searchText}
   },
   craeted() {
     console.log("sup")

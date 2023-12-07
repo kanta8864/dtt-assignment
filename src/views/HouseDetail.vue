@@ -7,12 +7,11 @@
     </div>
     <div class="main-content">
       <div class="house-info" v-if="house">
-        {{ house.image }}
         <img :src="house.image" alt="house photo" width="500" height="600">
         <div class="text-content">
           <div class="first-row">
             <div class="header1">{{ house.location.street }} {{ house.location.houseNumber }}</div>
-            <div class="edit-delete-button-container">
+            <div class="edit-delete-button-container" v-if="house.madeByMe">
               <img src="../assets/ic_edit@3x.png" class="edit-delete-button">
               <img src="../assets/ic_delete@3x.png" class="edit-delete-button">
             </div>
@@ -78,11 +77,17 @@ import { ref } from "vue"
 import axios from 'axios'
 import HouseInfo from "./HouseInfo.vue"
 import NavVar from "./NavVar.vue"
+import { useHouseStore } from "../stores/HouseStore"
 
 export default {
   props: ["id"],
   components: { HouseInfo, NavVar },
   setup(props) {
+      const houseStore = useHouseStore()
+      const house = houseStore.getById(props.id)
+      const hasGarage = ref(house.hasGarage ? "yes" : "no")
+      return { house, hasGarage}
+      /*
     const house = ref(null)
     const error = ref(null)
     const hasGarage = ref("")
@@ -104,6 +109,7 @@ export default {
     }
     load()
     return { house, error, hasGarage }
+    */
   }
 }
 </script>

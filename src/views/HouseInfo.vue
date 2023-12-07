@@ -29,10 +29,14 @@
 <script>
 import { ref } from "vue"
 import axios from 'axios'
+import { useHouseStore } from "../stores/HouseStore"
 
 export default {
     props: ["id"],
     setup(props) {
+        const houseStore = useHouseStore()
+        const house = houseStore.getById(props.id)
+        /*
         const house = ref(null)
         const error = ref(null)
         const load = async () => {
@@ -49,7 +53,8 @@ export default {
             }
         }
         load()
-        return { house, error }
+        */
+        return { house }
     }
 }
 </script>

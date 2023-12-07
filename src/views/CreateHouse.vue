@@ -74,13 +74,15 @@
 
 <script>
 import NavVar from "./NavVar.vue"
-import axios from 'axios'
 import { ref } from 'vue'
+import { useHouseStore } from "../stores/HouseStore"
 
 export default {
-
     components: { NavVar },
-    setup(props) {
+    setup() {
+        const houseStore = useHouseStore()
+
+        // for storing form inputs. The use of v-model allows for two-way data binding
         const streetName = ref("")
         const houseNumber = ref("")
         const numberAddition = ref("")
@@ -95,7 +97,6 @@ export default {
         const description = ref("")
 
         const formSubmit = async function (e) {
-            axios.defaults.headers['X-API-KEY'] = 'DiAa72IRMOZYnGe5qVSo9C4gmUQJ-wu3';
             const body = {
                 price: price.value, 
                 bedrooms: bedrooms.value,
@@ -109,15 +110,9 @@ export default {
                 constructionYear: constructionYear.value, 
                 hasGarage: hasGarage.value, 
                 description: description.value
-
-            }
-            console.log(body)
-            await axios.post("https://api.intern.d-tt.nl/api/houses", body).then(response => {
-                const formData = new FormData()
-                formData.append("image", file.value)
-                axios.post(`https://api.intern.d-tt.nl/api/houses/${response.data.id}/upload`, formData).then(response => console.log(response))
-            })
-            
+        }
+            //validators
+            houseStore.addHouse(body, file)
         }
 
         const file = ref("")

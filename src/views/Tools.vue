@@ -22,13 +22,8 @@
 
 <script>
 import { computed, ref } from "vue"
-import { useHouseStore } from "../stores/HouseStore"
 
 export default {
-  setup() {
-    const houseStore = useHouseStore()
-    const searchText = ref("")
-  }
 }
 </script>
 
