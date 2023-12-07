@@ -1,9 +1,9 @@
 <template>
   <NavVar />
-  <Tools />
+  <Tools @changeSortTarget="handleSortTargetChange"/>
   <div v-if="error"> {{ error }}</div>
   <div v-if="houseList.length">
-    <Houses :houseList="houseList"></Houses>
+    <Houses :houseList="houseList" :sortType="sortType"></Houses>
   </div>
 </template>
 
@@ -13,6 +13,7 @@ import Tools from "./Tools.vue"
 import Houses from "./Houses.vue"
 import { ref } from "vue"
 import axios from 'axios'
+import { useHouseStore } from "../stores/HouseStore"
 
 export default {
   name: 'HomeView',
@@ -29,6 +30,8 @@ export default {
           throw Error("No house was found")
         } else {
           houseList.value = await data.data
+          houseStore.initializeHouses(data.data)
+
         }
       } catch (e) {
         error.value = e.message
@@ -36,7 +39,18 @@ export default {
     }
 
     load()
-    return { houseList, error }
+
+    const sortType = ref("price")
+    const handleSortTargetChange = (value) => {
+      sortType.value = value
+      console.log(value)
+    }
+
+    const houseStore = useHouseStore()
+
+    
+
+    return { houseList, error, handleSortTargetChange, sortType}
   }
 }
 </script>

@@ -35,7 +35,6 @@ export default {
     setup(props) {
         const house = ref(null)
         const error = ref(null)
-        console.log("yooooo")
         const load = async () => {
             try {
                 axios.defaults.headers['X-API-KEY'] = 'DiAa72IRMOZYnGe5qVSo9C4gmUQJ-wu3';
@@ -44,7 +43,6 @@ export default {
                     throw Error("No house was found")
                 } else {
                     house.value = await data.data[0]
-                    console.log(house.value)
                 }
             } catch (e) {
                 error.value = e.message

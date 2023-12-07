@@ -10,9 +10,9 @@
     <div class="second-row">
       <input type="search" placeholder="Search for a house" v-model="searchText">
       <div class="sort">
-          <input type="radio" id="price-choice" name="choice" value="price" checked="checked">
+          <input type="radio" id="price-choice" name="choice" value="price" checked="checked" @click="e => $emit('changeSortTarget', e.target.value)">
           <label for="price-choice" id="price-label">Price</label>
-          <input type="radio" id="size-choice" name="choice" value="size">
+          <input type="radio" id="size-choice" name="choice" value="size" @click="e => $emit('changeSortTarget', e.target.value)">
           <label for="size-choice" id="side-label">Size</label>
       </div>
     </div>
@@ -24,6 +24,12 @@
 import { computed } from "vue"
 
 export default {
+  setup({emit}) {
+    const sendSortTargetChange = (event) => {
+      emit("changeSortTarget", event.target.value)
+    }
+    return {sendSortTargetChange}
+  }
 }
 </script>
 
