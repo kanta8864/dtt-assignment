@@ -34,13 +34,6 @@ export default {
     text-decoration: none;
 }
 
-#house-preview .edit-delete-button {
-    width: 20px;
-    height: auto;
-    margin: 5px;
-    align-items:start;
-}
-
 .y {
     align-self: center;
 }

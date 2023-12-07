@@ -8,7 +8,7 @@
       </router-link>
     </div>
     <div class="second-row">
-      <input type="search" placeholder="Search for a house" v-model="searchText">
+      <input type="search" placeholder="Search for a house" v-model="searchText" @input="e => $emit('changeSearchText', e.target.value)">
       <div class="sort">
           <input type="radio" id="price-choice" name="choice" value="price" checked="checked" @click="e => $emit('changeSortTarget', e.target.value)">
           <label for="price-choice" id="price-label">Price</label>
@@ -21,14 +21,13 @@
 </template>
 
 <script>
-import { computed } from "vue"
+import { computed, ref } from "vue"
+import { useHouseStore } from "../stores/HouseStore"
 
 export default {
-  setup({emit}) {
-    const sendSortTargetChange = (event) => {
-      emit("changeSortTarget", event.target.value)
-    }
-    return {sendSortTargetChange}
+  setup() {
+    const houseStore = useHouseStore()
+    const searchText = ref("")
   }
 }
 </script>

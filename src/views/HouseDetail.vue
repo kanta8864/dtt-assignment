@@ -7,6 +7,7 @@
     </div>
     <div class="main-content">
       <div class="house-info" v-if="house">
+        {{ house.image }}
         <img :src="house.image" alt="house photo" width="500" height="600">
         <div class="text-content">
           <div class="first-row">

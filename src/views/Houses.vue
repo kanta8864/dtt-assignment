@@ -1,12 +1,12 @@
 <template>
     <div id="houses">
         <div v-if="sortType === 'price'" id="price-sorted">
-            <div v-for="house in houseStore.priceSorted" :key="house.id">
+            <div v-for="house in houseStore.priceSorted(searchText)" :key="house.id">
                 <HousePreview :house="house" />
             </div>
         </div>
         <div v-if="sortType === `size`" id="size-sorted">
-            <div v-for="house in houseStore.sizeSorted" :key="house.id">
+            <div v-for="house in houseStore.sizeSorted(searchText)" :key="house.id">
                 <HousePreview :house="house" />
             </div>
         </div>
@@ -21,9 +21,12 @@ import { useHouseStore } from "../stores/HouseStore"
 export default {
     name: "HousesComponent",
     components: { HousePreview },
-    props: ["sortType"],
-    setup() {
+    props: ["searchText", "sortType"],
+    setup(props) {
+        console.log(props.sortType)
         const houseStore = useHouseStore()
+
+
         return { houseStore }
     }
 }
