@@ -1,8 +1,9 @@
 <template>
     <router-link :to="{name: `houseDetail`, params: {id: house.id }}" id="house-preview">
-        <div class="y">
+        <div class="left">
             <HouseInfo :id="house.id"/>
         </div>
+        <!-- only displays edit and delete button when the listing was made by the user -->
         <div v-if="house.madeByMe">
             <img src="../assets/ic_edit@3x.png" class="edit-delete-button">
             <img src="../assets/ic_delete@3x.png" class="edit-delete-button" @click.prevent="houseStore.deleteHouse(house.id)">
@@ -12,11 +13,9 @@
 
 <script>
 import HouseInfo from "./HouseInfo.vue"
-import axios from 'axios'
 import { useHouseStore } from "../stores/HouseStore"
 
 export default {
-    name: "HouseDisplay",
     components: {HouseInfo},
     props: ["house"],
     setup(props) {
@@ -41,7 +40,8 @@ export default {
     text-decoration: none;
 }
 
-.y {
+#house-preview .left{
     align-self: center;
+    height:100%;
 }
 </style>

@@ -6,8 +6,8 @@
       Back to Overview
     </div>
     <div class="main-content">
-      <div class="house-info" v-if="house">
-        <img :src="house.image" alt="house photo" width="500" height="600">
+      <div class="house-info">
+        <img :src="house.image" alt="house photo" id="big-house-image">
         <div class="text-content">
           <div class="first-row">
             <div class="header1">{{ house.location.street }} {{ house.location.houseNumber }}</div>
@@ -74,7 +74,6 @@
 
 <script>
 import { ref } from "vue"
-import axios from 'axios'
 import HouseInfo from "./HouseInfo.vue"
 import NavVar from "./NavVar.vue"
 import { useHouseStore } from "../stores/HouseStore"
@@ -85,31 +84,9 @@ export default {
   setup(props) {
       const houseStore = useHouseStore()
       const house = houseStore.getById(props.id)
+      // converts true/false value to yes/no for easier understanding
       const hasGarage = ref(house.hasGarage ? "yes" : "no")
       return { house, hasGarage}
-      /*
-    const house = ref(null)
-    const error = ref(null)
-    const hasGarage = ref("")
-
-    const load = async () => {
-      try {
-        axios.defaults.headers['X-API-KEY'] = 'DiAa72IRMOZYnGe5qVSo9C4gmUQJ-wu3';
-        let data = await axios.get("https://api.intern.d-tt.nl/api/houses/" + props.id)
-        if (data.status !== 200) {
-          throw Error("No house was found")
-        } else {
-          console.log("hi")
-          house.value = await data.data[0]
-          hasGarage.value = house.hasGarage ? "yes" : "no"
-        }
-      } catch (e) {
-        error.value = e.message
-      }
-    }
-    load()
-    return { house, error, hasGarage }
-    */
   }
 }
 </script>
@@ -120,6 +97,11 @@ export default {
   flex-direction: column;
   padding: 10px 100px;
   font-family: "Open Sans";
+}
+
+#house-detail #big-house-image {
+  min-width: 100%;
+  height:auto;
 }
 
 #house-detail .main-content {

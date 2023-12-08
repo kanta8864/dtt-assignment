@@ -1,5 +1,5 @@
 <template>
-    <div id="house-info" v-if="house">
+    <div id="house-info" >
         <img class="house-photo" :src="house.image" alt="house photo">
         <div class="preview-text">
             <div class="street">{{ house.location.street }} {{ house.location.houseNumber }}</div>
@@ -21,14 +21,9 @@
             </div>
         </div>
     </div>
-    <div v-else>
-        errorrrrr
-    </div>
 </template>
 
 <script>
-import { ref } from "vue"
-import axios from 'axios'
 import { useHouseStore } from "../stores/HouseStore"
 
 export default {
@@ -36,25 +31,7 @@ export default {
     setup(props) {
         const houseStore = useHouseStore()
         const house = houseStore.getById(props.id)
-        /*
-        const house = ref(null)
-        const error = ref(null)
-        const load = async () => {
-            try {
-                axios.defaults.headers['X-API-KEY'] = 'DiAa72IRMOZYnGe5qVSo9C4gmUQJ-wu3';
-                let data = await axios.get("https://api.intern.d-tt.nl/api/houses/" + props.id)
-                if (data.status !== 200) {
-                    throw Error("No house was found")
-                } else {
-                    house.value = await data.data[0]
-                }
-            } catch (e) {
-                error.value = e.message
-            }
-        }
-        load()
-        */
-        return { house }
+        return { houseStore, house }
     }
 }
 </script>
@@ -65,6 +42,7 @@ export default {
     gap: 20px;
     font-family: "Open Sans";
     font-weight:500;
+    height:100%;
 }
 
 #house-info .street {
@@ -75,7 +53,8 @@ export default {
 
 .house-photo {
     border-radius: 20px;
-    height:100%;
+    margin: 10px;
+    aspect-ratio: 1 / 1; 
 }
 
 .preview-text {

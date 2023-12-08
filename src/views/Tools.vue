@@ -2,33 +2,37 @@
   <div id="tools">
     <div class="first-row">
       <div class="header1">Houses</div>
-      <router-link id="new-button" :to="{name: `create`}">
+      <router-link id="new-button" :to="{ name: `create` }">
         <img src="../assets/ic_plus_white@3x.png" alt="plus symbol">
         CREATE NEW
       </router-link>
     </div>
     <div class="second-row">
-      <input type="search" placeholder="Search for a house" v-model="searchText" @input="e => $emit('changeSearchText', e.target.value)">
+      <input type="search" placeholder="Search for a house" v-model="searchText"
+        @input="e => $emit('changeSearchText', e.target.value)">
       <div class="sort">
-          <input type="radio" id="price-choice" name="choice" value="price" checked="checked" @click="e => $emit('changeSortTarget', e.target.value)">
-          <label for="price-choice" id="price-label">Price</label>
-          <input type="radio" id="size-choice" name="choice" value="size" @click="e => $emit('changeSortTarget', e.target.value)">
-          <label for="size-choice" id="side-label">Size</label>
+        <!-- emits a custom event to the parent component (Home) when the radio button is clicked
+        It also emits a target-value which will either be price or size. -->
+        <input type="radio" id="price-choice" name="choice" value="price" checked="checked"
+          @click="e => $emit('changeSortTarget', e.target.value)">
+        <label for="price-choice" id="price-label">Price</label>
+        <input type="radio" id="size-choice" name="choice" value="size"
+          @click="e => $emit('changeSortTarget', e.target.value)">
+        <label for="size-choice" id="side-label">Size</label>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { computed, ref } from "vue"
-import { useHouseStore } from "../stores/HouseStore"
+import { ref } from "vue"
 
 export default {
   emits: ["changeSortTarget"],
-  setup(context) {
-    const houseStore = useHouseStore()
+  setup() {
+    // this variable will keep track of the user input for search text.
     const searchText = ref("")
-    return {searchText}
+    return { searchText }
   }
 }
 </script>
@@ -43,7 +47,7 @@ export default {
 }
 
 #tools a {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 #tools #housesHeader {
@@ -95,8 +99,8 @@ export default {
 }
 
 #tools input[type=radio] {
-  display:none;
-  position:absolute;
+  display: none;
+  position: absolute;
   visibility: hidden;
 }
 
@@ -107,7 +111,7 @@ export default {
   padding: 10px 50px;
   color: white;
   background-color: #C3C3C3;
-  font-size:16px;
+  font-size: 16px;
 }
 
 #tools #price-label {
@@ -120,8 +124,7 @@ export default {
   border-bottom-right-radius: 5px;
 }
 
-#tools input[type=radio]:checked + label{
+#tools input[type=radio]:checked+label {
   background-color: #EB5440;
 }
-
 </style>

@@ -34,7 +34,7 @@ export const useHouseStore = defineStore("houseStore", {
 
     },
     actions: {
-        async initializeHouses() {
+        async fetchHouses() {
             try {
                 axios.defaults.headers['X-API-KEY'] = 'DiAa72IRMOZYnGe5qVSo9C4gmUQJ-wu3';
                 // function execution is paused until the promise is resolved

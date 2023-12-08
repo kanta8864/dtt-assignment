@@ -1,6 +1,8 @@
 <template>
   <div id="nav-container">
     <img class="logo" src="../assets/img_logo_dtt@3x.png" alt="DTT logo">
+    <!-- checks if the current route starts with /houses. 
+        If so, add CSS class "active" and make the Houses text bold-->
     <router-link :to="{name: `home`}" :class="housesIncluded ? `active` : ``">
         <div>Houses</div>
     </router-link>  
@@ -17,7 +19,9 @@ import {computed} from 'vue'
 export default {
     setup() {
         const route = useRoute();
-        const housesIncluded = computed(() => route.path.includes("houses") ? true : false)
+        // use of computed property to automatically track its dependencies. (the route in this case) 
+        // checks if the route contains houses. 
+        const housesIncluded = computed(() => route.path.includes("/houses") ? true : false)
         return {housesIncluded}
     }
 }

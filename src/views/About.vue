@@ -29,6 +29,7 @@
 
 <script>
 import NavVar from "./NavVar.vue"
+
 export default {
   components: { NavVar }
 }
@@ -37,8 +38,8 @@ export default {
 <style>
 #about {
   font-family: "Open Sans";
-  font-weight:400;
-  font-size:18px;
+  font-weight: 400;
+  font-size: 18px;
 }
 
 #about img {
