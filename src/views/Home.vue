@@ -2,7 +2,6 @@
   <NavVar />
   <!-- handling custom events emitted from Tools component-->
   <Tools @changeSortTarget="handleSortTargetChange" @changeSearchText="handleSearchTextChange" />
-  <div v-if="error"> {{ error }}</div>
   <div v-if="houseStore.houses.length">
     <Houses :searchResultSize="searchResultSize" :searchText="searchText" :sortType="sortType"></Houses>
   </div>

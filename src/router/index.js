@@ -3,6 +3,7 @@ import Home from '../views/Home.vue'
 import About from '../views/About.vue'
 import CreateHouse from "../views/CreateHouse.vue"
 import HouseDetail from "../views/HouseDetail.vue"
+import EditHouse from  "../views/EditHouse.vue"
 
 const routes = [
   {
@@ -23,6 +24,12 @@ const routes = [
     path: '/houses/new',
     name: 'create',
     component: CreateHouse
+  }, 
+  {
+    path: '/houses/:id/edit',
+    name: 'edit',
+    component: EditHouse,
+    props:true
   }, 
   {
     path: '/houses/:id',

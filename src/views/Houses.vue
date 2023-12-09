@@ -35,7 +35,7 @@ import { useHouseStore } from "../stores/HouseStore"
 export default {
     components: { HousePreview },
     props: ["searchResultSize", "searchText", "sortType"],
-    setup(props) {
+    setup() {
         const houseStore = useHouseStore()
         return { houseStore }
     }

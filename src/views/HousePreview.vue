@@ -1,12 +1,16 @@
 <template>
-    <router-link :to="{name: `houseDetail`, params: {id: house.id }}" id="house-preview">
+    <router-link :to="{ name: `houseDetail`, params: { id: house.id } }" id="house-preview">
         <div class="left">
-            <HouseInfo :id="house.id"/>
+            <HouseInfo :id="house.id" />
         </div>
-        <!-- only displays edit and delete button when the listing was made by the user -->
+        <!-- only displays edit and delete button when the listing was made by the user
+        click.prevent is there to stop the propagation of click to the parent elements (not to be routed to HouseDetail page)-->
         <div v-if="house.madeByMe">
-            <img src="../assets/ic_edit@3x.png" class="edit-delete-button">
-            <img src="../assets/ic_delete@3x.png" class="edit-delete-button" @click.prevent="houseStore.deleteHouse(house.id)">
+            <router-link :to="{ name: `edit`, params: { id: house.id } }">
+                <img src="../assets/ic_edit@3x.png" class="edit-delete-button">
+            </router-link>
+            <img src="../assets/ic_delete@3x.png" class="edit-delete-button"
+                @click.prevent="houseStore.deleteHouse(house.id)">
         </div>
     </router-link>
 </template>
@@ -16,12 +20,11 @@ import HouseInfo from "./HouseInfo.vue"
 import { useHouseStore } from "../stores/HouseStore"
 
 export default {
-    components: {HouseInfo},
+    components: { HouseInfo },
     props: ["house"],
-    setup(props) {
+    setup() {
         const houseStore = useHouseStore()
-
-        return {houseStore}
+        return { houseStore }
     }
 }
 </script>
@@ -40,8 +43,8 @@ export default {
     text-decoration: none;
 }
 
-#house-preview .left{
+#house-preview .left {
     align-self: center;
-    height:100%;
+    height: 100%;
 }
 </style>

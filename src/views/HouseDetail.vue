@@ -2,7 +2,9 @@
   <NavVar />
   <div id="house-detail" class="content">
     <div class="back-button">
-      <img src="../assets/ic_back_grey@3x.png" alt="back button" @click="this.$router.go(-1)">
+      <router-link :to="{ name: `home`}">
+        <img src="../assets/ic_back_grey@3x.png" alt="back button">
+      </router-link>
       Back to Overview
     </div>
     <div class="main-content">
@@ -84,6 +86,7 @@ export default {
   setup(props) {
       const houseStore = useHouseStore()
       const house = houseStore.getById(props.id)
+      console.log(house)
       // converts true/false value to yes/no for easier understanding
       const hasGarage = ref(house.hasGarage ? "yes" : "no")
       return { house, hasGarage}
@@ -102,6 +105,7 @@ export default {
 #house-detail #big-house-image {
   min-width: 100%;
   height:auto;
+  max-height:500px;
 }
 
 #house-detail .main-content {
