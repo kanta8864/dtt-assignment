@@ -31,6 +31,7 @@ export default {
     setup(props) {
         const houseStore = useHouseStore()
         const house = houseStore.getById(props.id)
+        console.log(house)
         return { houseStore, house }
     }
 }

@@ -2,7 +2,7 @@
   <NavVar />
   <div id="house-detail" class="content">
     <div class="back-button">
-      <router-link :to="{ name: `home`}">
+      <router-link :to="{ name: `home` }">
         <img src="../assets/ic_back_grey@3x.png" alt="back button">
       </router-link>
       Back to Overview
@@ -14,8 +14,13 @@
           <div class="first-row">
             <div class="header1">{{ house.location.street }} {{ house.location.houseNumber }}</div>
             <div class="edit-delete-button-container" v-if="house.madeByMe">
-              <img src="../assets/ic_edit@3x.png" class="edit-delete-button">
-              <img src="../assets/ic_delete@3x.png" class="edit-delete-button">
+              <router-link :to="{ name: `edit`, params: { id: house.id } }">
+                <img src="../assets/ic_edit@3x.png" class="edit-delete-button">
+              </router-link>
+              <router-link :to="{ name: `home`,}">
+                <img src="../assets/ic_delete@3x.png" @click="deleteHouse"
+                class="edit-delete-button">
+              </router-link>
             </div>
           </div>
           <div class="second-row">
@@ -53,7 +58,7 @@
               {{ hasGarage }}
             </div>
           </div>
-          <div class="description"> 
+          <div class="description">
             {{ house.description }}
           </div>
         </div>
@@ -84,12 +89,15 @@ export default {
   props: ["id"],
   components: { HouseInfo, NavVar },
   setup(props) {
-      const houseStore = useHouseStore()
-      const house = houseStore.getById(props.id)
-      console.log(house)
-      // converts true/false value to yes/no for easier understanding
-      const hasGarage = ref(house.hasGarage ? "yes" : "no")
-      return { house, hasGarage}
+    const houseStore = useHouseStore()
+    const house = houseStore.getById(props.id)
+    console.log(house)
+    // converts true/false value to yes/no for easier understanding
+    const hasGarage = ref(house.hasGarage ? "yes" : "no")
+
+    const deleteHouse = () => houseStore.deleteHouse(house.id)
+
+    return { house, hasGarage, deleteHouse }
   }
 }
 </script>
@@ -104,8 +112,8 @@ export default {
 
 #house-detail #big-house-image {
   min-width: 100%;
-  height:auto;
-  max-height:500px;
+  height: auto;
+  max-height: 500px;
 }
 
 #house-detail .main-content {
@@ -152,7 +160,7 @@ export default {
   text-decoration: none;
 }
 
-#house-detail  .edit-delete-button-container {
+#house-detail .edit-delete-button-container {
   display: flex;
   align-items: center;
 }
@@ -188,4 +196,5 @@ export default {
   display: flex;
   gap: 8px;
   text-align: center;
-}</style>
+}
+</style>

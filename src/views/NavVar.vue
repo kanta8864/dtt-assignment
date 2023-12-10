@@ -6,7 +6,13 @@
         <router-link :to="{ name: `home` }" :class="housesIncluded ? `active` : ``">
             <div>Houses</div>
         </router-link>
-        <router-link :to="{ name: `about` }" :class="housesIncluded ? `` : `active`">
+        <router-link :to="{ name: `myHouses` }" :class="myHousesIncluded ? `active` : ``">
+            <div>My Listings</div>
+        </router-link>
+        <router-link :to="{ name: `favorites` }" :class="favoritesIncluded ? `active` : ``">
+            <div>Favorites</div>
+        </router-link>
+        <router-link :to="{ name: `about` }" :class="aboutIncluded ? `active` : ``">
             <div>About</div>
         </router-link>
     </div>
@@ -22,7 +28,10 @@ export default {
         // use of computed property to automatically track its dependencies. (the route in this case) 
         // checks if the route contains houses. 
         const housesIncluded = computed(() => route.path.includes("/houses") ? true : false)
-        return { housesIncluded }
+        const aboutIncluded = computed(() => route.path.includes("/about") ? true : false)
+        const myHousesIncluded = computed(() => route.path.includes("/myHouses") ? true : false)
+        const favoritesIncluded = computed(() => route.path.includes("/favorites") ? true : false)
+        return { housesIncluded, aboutIncluded, myHousesIncluded, favoritesIncluded}
     }
 }
 </script>

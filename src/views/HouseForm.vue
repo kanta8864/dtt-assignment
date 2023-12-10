@@ -25,24 +25,8 @@
             </div>
             <div>
                 <p>Upload picture (PNG or JPG)&#x2a;</p>
-                <div v-if="type == 'create'">
-                    <input type="file" class="file" @change="onFileUpload" required>
-                    <div id="preview">
-                        <img v-if="url" :src="url">
-                    </div>
-                </div>
-                <!-- following is for when the user is trying to edit listing-->
-                <div v-else>
-                    <input type="file" class="file" id="fileInput" @change="onFileUpload" style="display:none;" required>
-                    <label for="fileInput" class="fileUpload">
-                        <img src="../assets/ic_upload@3x.png" alt="upload icon">
-                    </label>
-                    <!-- if user submits a new image, show that preview, otherwise show the original image -->
-                    <div id="preview">
-                        <img v-if="url" :src="url">
-                        <img v-else-if="filePath" :src="filePath">
-                    </div>
-                </div>
+                <input type="file" class="file" @change="onFileUpload" required>
+               
             </div>
 
             <div>
@@ -56,7 +40,10 @@
                 </div>
                 <div>
                     <p>Garage&#x2a;</p>
-                    <input type="text" v-model="hasGarage" placeholder="Select" required>
+                    <input type="radio" id="yesGarage" value="yes" checked="checked" v-model="hasGarage">
+                    <label for="yes" id="yes-label">Yes</label>
+                    <input type="radio" id="noGarage" value="size" v-model="hasGarage">
+                    <label for="no" id="no-label">No</label>
                 </div>
             </div>
             <div>
@@ -75,7 +62,7 @@
             </div>
             <div id="description">
                 <p>Description&#x2a;</p>
-                <textarea v-model="description" placeholder="e.g. Utrecht" required></textarea>
+                <textarea v-model="description" placeholder="Enter description" required></textarea>
             </div>
             <div id="post-button-container">
                 <button type="submit" v-if="type=='create'">POST</button>
@@ -94,11 +81,11 @@ export default {
         const houseStore = useHouseStore()
 
         // this keeps track of the name of the submitted file and a string containing a URL representing the image
-        const file = ref("")
+        const fileName = ref("")
         const url = ref("")
         const onFileUpload = function (e) {
-            file.value = e.target.files[0]
-            url.value = URL.createObjectURL(file.value);
+            fileName.value = e.target.files[0]
+            url.value = URL.createObjectURL(fileName.value);
         }
 
         // for storing form inputs. The use of v-model allows for two-way data binding
@@ -137,44 +124,78 @@ export default {
         // defines the behaviour when the POST button is pressed
         const formSubmit = async function (e) {
             const body = {
-                price: price.value,
-                bedrooms: bedrooms.value,
-                bathrooms: bathrooms.value,
-                size: size.value,
+                price: parseInt(price.value),
+                bedrooms: parseInt(bedrooms.value),
+                bathrooms: parseInt(bathrooms.value),
+                size: parseInt(size.value),
                 streetName: streetName.value,
-                houseNumber: houseNumber.value,
+                houseNumber: parseInt(houseNumber.value),
                 numberAddition: numberAddition.value,
                 zip: zip.value,
                 city: city.value,
-                constructionYear: constructionYear.value,
+                constructionYear: parseInt(constructionYear.value),
                 hasGarage: hasGarage.value,
                 description: description.value
             }
             //validators
 
+
             if(props.type === "create") {
-                houseStore.addHouse(body, file)
+                console.log("yo")
+                houseStore.addHouse(body, fileName)
                 // clearing text fields and file input
                 streetName.value = houseNumber.value = numberAddition.value = zip.value = city.value = price.value =
-                size.value = hasGarage.value = bedrooms.value = bathrooms.value = constructionYear.value = description.value = ""
+                size.value =  bedrooms.value = bathrooms.value = constructionYear.value = description.value = ""
                 const file = document.querySelector(".file")
                 file.value = ""
+                document.getElementById("yesGarage").checked = true;
+                document.getElementById("noGarage").checked = false;
                 alert("House listing posted!")
             } else {
-                houseStore.updateHouse(props.id, body, file)
+                houseStore.updateHouse(props.id, body, fileName)
                 alert("House detail editted!")
             }
         }
 
         return {
             price, bedrooms, bathrooms, size, streetName, houseNumber, numberAddition, zip, city,
-            constructionYear, hasGarage, description, file, onFileUpload, formSubmit, url, filePath
+            constructionYear, hasGarage, description, fileName, onFileUpload, formSubmit, url, filePath
         }
     }
 }
 </script>
 
 <style>
+#house-form input[type=radio] {
+  display: none;
+  position: absolute;
+  visibility: hidden;
+}
+
+#house-form label {
+  display: inline-block;
+  cursor: pointer;
+  font-weight: bold;
+  padding: 10px 50px;
+  color: white;
+  background-color: #C3C3C3;
+  font-size: 16px;
+}
+
+#house-form #yes-label {
+    border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+#house-form #no-label {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+#house-form input[type=radio]:checked+label {
+  background-color: #EB5440;
+}
+
 #house-form {
     display: flex;
     flex-direction: column;

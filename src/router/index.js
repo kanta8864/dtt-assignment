@@ -4,6 +4,8 @@ import About from '../views/About.vue'
 import CreateHouse from "../views/CreateHouse.vue"
 import HouseDetail from "../views/HouseDetail.vue"
 import EditHouse from  "../views/EditHouse.vue"
+import MyHouses from "../views/MyHouses.vue"
+import Favorites from  "../views/Favorites.vue"
 
 const routes = [
   {
@@ -36,6 +38,16 @@ const routes = [
     name: 'houseDetail',
     component: HouseDetail,
     props: true
+  }, 
+  {
+    path: '/myHouses',
+    name: 'myHouses',
+    component: MyHouses
+  },
+  {
+    path: '/favorites',
+    name: 'favorites',
+    component: Favorites
   }, 
 
 ]

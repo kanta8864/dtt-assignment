@@ -7,13 +7,13 @@
                 <div v-if="searchResultSize == 1">{{ searchResultSize }} result found</div>
                 <div v-else>{{ searchResultSize }} results found</div>
             </div>
-            <div v-if="sortType === 'price'" id="price-sorted">
-                <div v-for="house in houseStore.priceSorted(searchText)" :key="house.id">
+            <div v-if="sortType === 'price'" class="house-preview-container">
+                <div v-for="house in houseStore.sortByPrice(houseStore.filterByText(searchText))" :key="house.id">
                     <HousePreview :house="house" />
                 </div>
             </div>
-            <div v-if="sortType === `size`" id="size-sorted">
-                <div v-for="house in houseStore.sizeSorted(searchText)" :key="house.id">
+            <div v-if="sortType === `size`" class="house-preview-container">
+                <div v-for="house in houseStore.sortBySize(houseStore.filterByText(searchText))" :key="house.id">
                     <HousePreview :house="house" />
                 </div>
             </div>
@@ -30,6 +30,7 @@
 <script>
 import HousePreview from './HousePreview.vue'
 import { useHouseStore } from "../stores/HouseStore"
+import { computed } from 'vue'
 
 
 export default {
@@ -74,10 +75,4 @@ export default {
     margin:5px;
 }
 
-#price-sorted,
-#size-sorted {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
 </style>

@@ -57,4 +57,11 @@ body {
   margin: 5px;
 }
 
+/* styling rules for displaying house listings */
+.house-preview-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
 </style>
