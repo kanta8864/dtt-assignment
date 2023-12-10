@@ -15,7 +15,7 @@
                     @click.prevent="houseStore.deleteHouse(house.id)">
                 </router-link>
             </div>
-            <font-awesome-icon :icon="['fas', 'heart']" :class="{active: house.isFav}" @click.prevent="houseStore.toggleFav(house.id)" size="lg"/>
+            <font-awesome-icon :icon="['fas', 'heart']" :class="{active: houseStore.getFavs.includes(house)}" @click.prevent="houseStore.toggleFav(house.id)" size="lg"/>
         </div>
     </router-link>
 </template>

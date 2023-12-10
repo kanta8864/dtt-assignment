@@ -40,10 +40,10 @@
                 </div>
                 <div>
                     <p>Garage&#x2a;</p>
-                    <input type="radio" id="yesGarage" value="yes" checked="checked" v-model="hasGarage">
-                    <label for="yes" id="yes-label">Yes</label>
-                    <input type="radio" id="noGarage" value="size" v-model="hasGarage">
-                    <label for="no" id="no-label">No</label>
+                    <input type="radio" id="yesGarage" value="true" checked="checked" v-model="hasGarage">
+                    <label for="yesGarage" id="yes-label">Yes</label>
+                    <input type="radio" id="noGarage" value="false" v-model="hasGarage">
+                    <label for="noGarage" id="no-label">No</label>
                 </div>
             </div>
             <div>
@@ -96,7 +96,7 @@ export default {
         const city = ref("")
         const price = ref("")
         const size = ref("")
-        const hasGarage = ref("")
+        const hasGarage = ref("true")
         const bedrooms = ref("")
         const bathrooms = ref("")
         const constructionYear = ref("")
@@ -135,8 +135,10 @@ export default {
                 city: city.value,
                 constructionYear: parseInt(constructionYear.value),
                 hasGarage: hasGarage.value,
-                description: description.value
+                description: description.value,
+                isFav: true
             }
+            console.log(hasGarage)
             //validators
 
 

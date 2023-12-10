@@ -4,7 +4,9 @@ import router from '../router'
 
 export const useHouseStore = defineStore("houseStore", {
     state: () => ({
-        houses: []
+        houses: [],
+        // stores a list of ids of houses that are marked as favorites
+        favList: []
     }),
     getters: { 
         // get the house object by its id
@@ -16,11 +18,12 @@ export const useHouseStore = defineStore("houseStore", {
         // get the size of the listing after filtering by search text 
         getFilteredListSize: (state) => {
             return (text) => {
-                return state.houses.filter(x => x.location.street.toLowerCase().includes(text.toLowerCase())).length
+                return state.houses.filter(x => x.location.street.toLowerCase().includes(text.toLowerCase())
+                || x.location.city.toLowerCase().includes(text.toLowerCase())).length
             }
         },
         getFavs() {
-            return this.houses.filter(x => x.isFav)
+            return this.houses.filter(x => this.favList.includes(x.id))
         },
         getMyListings() {
             return this.houses.filter(x => x.madeByMe)
@@ -38,67 +41,54 @@ export const useHouseStore = defineStore("houseStore", {
                 return houses.sort((a, b) => (a.size > b.size) ? 1 : ((b.size > a.size) ? -1 : 0))
         },
         filterByText(searchText) {
-            return this.houses.filter(x => x.location.street.toLowerCase().includes(searchText.toLowerCase()))
+            console.log(this.houses.map( x=> x.location.city))
+            console.log(searchText)
+            return this.houses.filter(x => x.location.street.toLowerCase().includes(searchText.toLowerCase())
+            || x.location.city.toLowerCase().includes(searchText.toLowerCase()) )
         },
         async fetchHouses() {
             try {
                 axios.defaults.headers['X-API-KEY'] = 'DiAa72IRMOZYnGe5qVSo9C4gmUQJ-wu3';
                 // function execution is paused until the promise is resolved
                 let data = await axios.get("https://api.intern.d-tt.nl/api/houses")
-                console.log(data)
                 if (data.status !== 200) {
                     throw Error("No house was found")
                 } else {
-                    // add isFav property and set to false if not initialized 
-                    data.data.forEach(element => {
-                        if(!Object.hasOwn(isFav)) {
-                            element.isFav = false
-                        } else {
-                            console.log("yay")
-                        }
-                    })
                     this.houses = data.data
                 }
             } catch (e) {
-                console.log(e)
+                alert(e)
             }
-
         },
-        addHouse(body, fileName) {
+        async addHouse(body, fileName) {
             axios.defaults.headers['X-API-KEY'] = 'DiAa72IRMOZYnGe5qVSo9C4gmUQJ-wu3'
-            axios.post("https://api.intern.d-tt.nl/api/houses", body).then(response => {
-                const formData = new FormData()
-                formData.append("image", fileName.value)
-                axios.post(`https://api.intern.d-tt.nl/api/houses/${response.data.id}/upload`, formData)
-                .then(() => {
-                    this.fetchHouses()
-                    console.log(response.data.id)
-                    router.push({ name: 'houseDetail', params: { id: response.data.id } })
-                })
-            })
+            let data = await axios.post("https://api.intern.d-tt.nl/api/houses", body)
+            const formData = new FormData()
+            formData.append("image", fileName.value)
+            await axios.post(`https://api.intern.d-tt.nl/api/houses/${data.data.id}/upload`, formData)
+            await this.fetchHouses()
+            router.push({ name: 'houseDetail', params: { id: data.data.id } })
         },
-        deleteHouse(houseId) {
-            console.log(this.houses)
+        async deleteHouse(houseId) {
             axios.defaults.headers['X-API-KEY'] = 'DiAa72IRMOZYnGe5qVSo9C4gmUQJ-wu3';
-            axios.delete("https://api.intern.d-tt.nl/api/houses/" + houseId)
-                .then(() => {
-                    this.fetchHouses()
-                    console.log(this.houses)
-                })
+            await axios.delete("https://api.intern.d-tt.nl/api/houses/" + houseId)
+            if(this.favList.includes(houseId)) this.favList.splice(this.favList.indexOf(houseId), 1)
+            this.fetchHouses()
         }, 
-        updateHouse(houseId, body, fileName) {
+        async updateHouse(houseId, body, fileName) {
             axios.defaults.headers['X-API-KEY'] = 'DiAa72IRMOZYnGe5qVSo9C4gmUQJ-wu3';
-            axios.post("https://api.intern.d-tt.nl/api/houses/" + houseId, body)
-                .then(() => {
-                const formData = new FormData()
-                formData.append("image", fileName.value)
-                axios.post(`https://api.intern.d-tt.nl/api/houses/${houseId}/upload`, formData)
-                .then(() => this.fetchHouses())
-            })
+            await axios.post("https://api.intern.d-tt.nl/api/houses/" + houseId, body)
+            const formData = new FormData()
+            formData.append("image", fileName.value)
+            await axios.post(`https://api.intern.d-tt.nl/api/houses/${houseId}/upload`, formData)
+            this.fetchHouses()
         },
         toggleFav(id) {
-            const house = this.houses.find(x => x.id == id)
-            house.isFav = !house.isFav
+            if(!this.favList.includes(id)){
+                this.favList.push(id)
+            } else {
+                this.favList.splice(this.favList.indexOf(id), 1)
+            }
         }
     },
     persist: true
