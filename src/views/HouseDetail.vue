@@ -8,14 +8,20 @@
       </router-link>
       <div>Back to Overview</div>
     </div>
-    <div class="mobile-edit-delete-button-container" v-if="house.madeByMe">
-      <router-link :to="{ name: `edit`, params: { id: house.id } }">
-        <img src="../assets/ic_edit_white@3x.png" class="edit-delete-button">
-      </router-link>
-      <router-link :to="{ name: `home` }">
-        <img src="../assets/ic_delete_white@3x.png" class="edit-delete-button" @click.prevent="openPopup(house.id)">
-      </router-link>
-      <Popup :houseId="house.id" @closePopup="closePopup" v-if="popupIsOpen" />
+    <div class="mobile-edit-delete-button-container">
+      <div v-if="house.madeByMe" class="buttons-container">
+        <router-link :to="{ name: `edit`, params: { id: house.id } }">
+          <img src="../assets/ic_edit_white@3x.png" class="edit-delete-button">
+        </router-link>
+        <div>
+          <img src="../assets/ic_delete_white@3x.png" class="edit-delete-button" @click.prevent="openPopup(house.id)">
+        </div>
+        <Popup :houseId="house.id" @closePopup="closePopup" v-if="popupIsOpen" />
+      </div>
+      <div>
+        <font-awesome-icon :icon="['fas', 'heart']" :class="{ active: houseStore.getFavs.includes(house) }"
+          @click.prevent="houseStore.toggleFav(house.id)" size="2x"  />
+      </div>
     </div>
     <div class="main-content">
       <div class="house-info">
@@ -23,15 +29,21 @@
         <div class="text-content">
           <div class="first-row">
             <div class="header1">{{ house.location.street }} {{ house.location.houseNumber }}</div>
-            <div class="edit-delete-button-container" v-if="house.madeByMe">
+            <div class="edit-delete-button-container">
+              <div v-if="house.madeByMe" class="buttons-container">
               <router-link :to="{ name: `edit`, params: { id: house.id } }">
                 <img src="../assets/ic_edit@3x.png" class="edit-delete-button">
               </router-link>
               <div>
-                <img src="../assets/ic_delete@3x.png" class="edit-delete-button"
-                        @click.prevent="openPopup(house.id)">
+                <img src="../assets/ic_delete@3x.png" class="edit-delete-button" @click.prevent="openPopup(house.id)">
+                <Popup :houseId="house.id" @closePopup="closePopup" v-if="popupIsOpen" />
               </div>
-              <Popup :houseId="house.id" @closePopup="closePopup" v-if="popupIsOpen"/>
+            </div>
+              <div>
+                <font-awesome-icon :icon="['fas', 'heart']" :class="{ active: houseStore.getFavs.includes(house) }"
+                  @click.prevent="houseStore.toggleFav(house.id)" size="2x" />
+              </div>
+              <Popup :houseId="house.id" @closePopup="closePopup" v-if="popupIsOpen" />
             </div>
           </div>
           <div class="second-row">
@@ -110,14 +122,14 @@ export default {
     const deleteHouse = () => houseStore.deleteHouse(house.id)
 
     const popupIsOpen = ref(false)
-        const openPopup = () => {
-            popupIsOpen.value = true
-        }
-        const closePopup = () => {
-            popupIsOpen.value = false
-        }
+    const openPopup = () => {
+      popupIsOpen.value = true
+    }
+    const closePopup = () => {
+      popupIsOpen.value = false
+    }
 
-    return { house, hasGarage, deleteHouse, popupIsOpen, openPopup, closePopup }
+    return { houseStore, house, hasGarage, deleteHouse, popupIsOpen, openPopup, closePopup }
   }
 }
 </script>
@@ -139,6 +151,13 @@ export default {
 #house-detail .main-content {
   display: flex;
   justify-content: space-between;
+}
+
+#house-detail .buttons-container {
+  display:flex;
+  gap:10px;
+  align-items: center;
+  margin-right:10px;
 }
 
 #house-detail .house-info {
@@ -178,6 +197,10 @@ export default {
   color: #4A4B4C;
   font-size: 16px;
   text-decoration: none;
+}
+
+#house-detail .active {
+    color: red
 }
 
 #house-detail .edit-delete-button-container {
@@ -269,6 +292,7 @@ export default {
     font-size: 12px;
   }
 
+
   #house-detail .description {
     font-size: 12px;
   }
@@ -285,12 +309,16 @@ export default {
     gap: 10px;
     position: absolute;
     right: 20px;
-    padding: 30px 10px;
+    padding: 20px 0px;
     z-index: 99;
   }
 
+  #house-detail svg {
+    color: white;
+}
+
   #house-detail .mobile-edit-delete-button-container img {
-    width: 20px;
+    width: 22px;
   }
 
   #house-detail .back-button .back-white {

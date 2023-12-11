@@ -5,7 +5,6 @@
             <!-- $router.go(-1) is used to go back to the previous page based on navigation history  -->
             <router-link :to="{ name: `houseDetail`, params: { id: id } }">
                 <img src="../assets/ic_back_grey@3x.png" alt="back button" class="back-grey">
-                <img src="../assets/ic_back_white@3x.png" alt="back button" class="back-whie">
             </router-link>
             <div>Back to House Detail</div>
         </div>

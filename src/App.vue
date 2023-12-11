@@ -25,7 +25,7 @@ body {
   font-family: "Montserrat";
   font-weight: 700;
   font-size: 32px;
-  margin: 30px 0px;
+  margin: 25px 0px;
 }
 
 /* styling rules for header2 */
@@ -33,7 +33,7 @@ body {
   font-family: "Montserrat";
   font-weight: 700;
   font-size: 22px;
-  margin: 15px 0px;
+  margin: 10px 0px;
 }
 
 /* styling rules for go back icon and text */
@@ -88,7 +88,7 @@ body {
 /* styling rules for go back icon and text */
 .back-button {
   position:absolute;
-  padding: 10px 10px;
+  padding: 0px 10px;
   z-index:99;
 }
 

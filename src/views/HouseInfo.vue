@@ -45,6 +45,10 @@ export default {
     height: 100%;
 }
 
+#house-info .header2 {
+    margin-bottom:0px;
+}
+
 .house-photo {
     border-radius: 20px;
     margin: 10px;

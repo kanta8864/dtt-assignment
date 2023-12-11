@@ -1,6 +1,6 @@
 <template>
     <NavVar />
-    <div class="content house-preview-container">
+    <div class="content house-preview-container" id="my-houses">
         <div class="header1">My Listings</div>
         <div v-for="house in houseStore.getMyListings" :key="house.id">
             <HousePreview :house="house" />
@@ -24,4 +24,9 @@ export default {
 </script>
 
 <style>
+@media only screen and (max-width: 600px) {
+    #my-houses .header1{
+    text-align: center;
+}
+}
 </style>

@@ -280,12 +280,14 @@ export default {
         border: none;
         width: 100%;
         height: 40px;
+        padding:0px;
     }
 
     #house-form textarea {
         border: none;
         width: 100%;
         height: 150px;
+        padding:0px;
     }
 
     #house-form button {

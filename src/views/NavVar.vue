@@ -68,6 +68,7 @@ export default {
         padding: 10px;
         height:50px;
         justify-content:space-around;
+        font-size:14px;
     }
 
     #nav-container a{
@@ -84,7 +85,7 @@ export default {
     }
     #home-button {
         background: url(../assets/ic_mobile_navigarion_home@3x.png);
-        background-size: 40px;
+        background-size: 35px;
         background-position: center;
         background-repeat: no-repeat;   
     }
@@ -101,6 +102,7 @@ export default {
 
     #about-button {
         background: url(../assets/ic_mobile_navigarion_info@3x.png);
+        background-size: 35px;
         background-size: contain;
         background-repeat: no-repeat;   
     }
