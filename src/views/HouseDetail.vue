@@ -12,9 +12,10 @@
       <router-link :to="{ name: `edit`, params: { id: house.id } }">
         <img src="../assets/ic_edit_white@3x.png" class="edit-delete-button">
       </router-link>
-      <router-link :to="{ name: `home`, }">
-        <img src="../assets/ic_delete_white@3x.png" @click="deleteHouse" class="edit-delete-button">
+      <router-link :to="{ name: `home` }">
+        <img src="../assets/ic_delete_white@3x.png" class="edit-delete-button" @click.prevent="openPopup(house.id)">
       </router-link>
+      <Popup :houseId="house.id" @closePopup="closePopup" v-if="popupIsOpen" />
     </div>
     <div class="main-content">
       <div class="house-info">
@@ -26,9 +27,11 @@
               <router-link :to="{ name: `edit`, params: { id: house.id } }">
                 <img src="../assets/ic_edit@3x.png" class="edit-delete-button">
               </router-link>
-              <router-link :to="{ name: `home`, }">
-                <img src="../assets/ic_delete@3x.png" @click="deleteHouse" class="edit-delete-button">
-              </router-link>
+              <div>
+                <img src="../assets/ic_delete@3x.png" class="edit-delete-button"
+                        @click.prevent="openPopup(house.id)">
+              </div>
+              <Popup :houseId="house.id" @closePopup="closePopup" v-if="popupIsOpen"/>
             </div>
           </div>
           <div class="second-row">
@@ -92,10 +95,11 @@ import { ref } from "vue"
 import HouseInfo from "./HouseInfo.vue"
 import NavVar from "./NavVar.vue"
 import { useHouseStore } from "../stores/HouseStore"
+import Popup from "./Popup.vue"
 
 export default {
   props: ["id"],
-  components: { HouseInfo, NavVar },
+  components: { HouseInfo, NavVar, Popup },
   setup(props) {
     const houseStore = useHouseStore()
     const house = houseStore.getById(props.id)
@@ -105,7 +109,15 @@ export default {
 
     const deleteHouse = () => houseStore.deleteHouse(house.id)
 
-    return { house, hasGarage, deleteHouse }
+    const popupIsOpen = ref(false)
+        const openPopup = () => {
+            popupIsOpen.value = true
+        }
+        const closePopup = () => {
+            popupIsOpen.value = false
+        }
+
+    return { house, hasGarage, deleteHouse, popupIsOpen, openPopup, closePopup }
   }
 }
 </script>
@@ -241,7 +253,7 @@ export default {
     background-color: white;
     position: relative;
     bottom: 30px;
-    z-index: 99;
+    z-index: 2;
   }
 
   #recommendation {
@@ -270,27 +282,27 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap:10px;
+    gap: 10px;
     position: absolute;
     right: 20px;
     padding: 30px 10px;
     z-index: 99;
   }
 
-  #house-detail .mobile-edit-delete-button-container img{
-    width:20px;
+  #house-detail .mobile-edit-delete-button-container img {
+    width: 20px;
   }
 
   #house-detail .back-button .back-white {
-  display: none;
-}
+    display: none;
+  }
 
   #house-detail .back-button .back-white {
-  display: inline;
-}
+    display: inline;
+  }
 
-#house-detail .back-button .back-grey {
-  display: none;
-}
+  #house-detail .back-button .back-grey {
+    display: none;
+  }
 }
 </style>

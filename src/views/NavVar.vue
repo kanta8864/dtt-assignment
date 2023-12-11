@@ -39,7 +39,7 @@ export default {
     display: flex;
     gap: 40px;
     align-items: center;
-    padding: 20px;
+    padding: 20px 70px;
     background-color: white;
     font-family: "Montserrat";
     font-size: 18px;

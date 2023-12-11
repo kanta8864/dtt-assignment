@@ -10,10 +10,11 @@
                 <router-link :to="{ name: `edit`, params: { id: house.id } }">
                     <img src="../assets/ic_edit@3x.png" class="edit-delete-button">
                 </router-link>
-                <router-link :to="{ name: `home` }">
+                <div>
                     <img src="../assets/ic_delete@3x.png" class="edit-delete-button"
-                        @click.prevent="houseStore.deleteHouse(house.id)">
-                </router-link>
+                        @click.prevent="openPopup(house.id)">
+                </div>
+                <Popup :houseId="house.id" @closePopup="closePopup" v-if="popupIsOpen"/>
             </div>
             <!-- importing heart icon for marking a listing as favorite-->
             <font-awesome-icon :icon="['fas', 'heart']" :class="{ active: houseStore.getFavs.includes(house) }"
@@ -25,13 +26,22 @@
 <script>
 import HouseInfo from "./HouseInfo.vue"
 import { useHouseStore } from "../stores/HouseStore"
+import Popup from "./Popup.vue"
+import { ref } from 'vue'
 
 export default {
-    components: { HouseInfo },
+    components: { HouseInfo, Popup},
     props: ["house"],
     setup() {
         const houseStore = useHouseStore()
-        return { houseStore }
+        const popupIsOpen = ref(false)
+        const openPopup = () => {
+            popupIsOpen.value = true
+        }
+        const closePopup = () => {
+            popupIsOpen.value = false
+        }
+        return { houseStore, popupIsOpen, openPopup, closePopup }
     }
 }
 </script>

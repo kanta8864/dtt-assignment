@@ -33,7 +33,8 @@ export default {
 
 @media only screen and (max-width: 600px) {
     #create-house {
-        width: calc(100% - 40px)
+        width: calc(100% - 20px);
+        padding: 10px;
     }
 
     #create-house .header1 {

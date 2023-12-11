@@ -1,6 +1,6 @@
 <template>
     <!-- submit.prevent prevents the default behavior of the form submit and let us execute formSubmit function -->
-    <form @submit.prevent="formSubmit" id="house-form" class="content">
+    <form @submit.prevent="formSubmit" id="house-form">
         <div>
             <p>Street name&#x2a;</p>
             <input type="text" v-model="streetName" placeholder="Enter the street name" required>
@@ -200,7 +200,9 @@ export default {
 #house-form {
     display: flex;
     flex-direction: column;
-    width: 25%;
+    width: 35%;
+    max-width: 500px;
+    min-width: 350px;
     gap: 15px;
 }
 
@@ -268,7 +270,8 @@ export default {
     }
 
     #house-form {
-        width: calc(100% - 20px);
+        width: 100%;
+        margin:0;
         gap: 15px;
         margin-bottom:80px;
     }

@@ -80,7 +80,8 @@ export const useHouseStore = defineStore("houseStore", {
             axios.defaults.headers['X-API-KEY'] = 'DiAa72IRMOZYnGe5qVSo9C4gmUQJ-wu3';
             await axios.delete("https://api.intern.d-tt.nl/api/houses/" + houseId)
             if (this.favList.includes(houseId)) this.favList.splice(this.favList.indexOf(houseId), 1)
-            this.fetchHouses()
+            await this.fetchHouses()
+            router.push({ name: 'home' })
         },
         // update house and send post request to House API
         async updateHouse(houseId, body, fileName) {
