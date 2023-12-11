@@ -1,5 +1,5 @@
 <template>
-    <div id="houses">
+    <div id="houses" class="content">
         <!-- if the search field is empty or search result size is graeter than 0 (there are some matches)
         then we show available listings -->
         <div v-if="searchText.length == 0 || searchResultSize > 0">
@@ -30,8 +30,6 @@
 <script>
 import HousePreview from './HousePreview.vue'
 import { useHouseStore } from "../stores/HouseStore"
-import { computed } from 'vue'
-
 
 export default {
     components: { HousePreview },
@@ -45,12 +43,12 @@ export default {
 
 <style>
 #houses {
-    padding: 10px 100px;
+    margin-bottom: 72px;
 }
 
 #searchMatches {
     margin-top: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     font-size: 18px;
 }
 
@@ -59,20 +57,22 @@ export default {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top:50px;
+    margin-top: 50px;
     font-family: "Montserrat";
     font-weight: 500;
-    font-size:18px;
+    font-size: 18px;
 }
 
 #noMatch img {
-    margin-bottom:30px;
-    min-width:300px;
-    height:auto;
+    margin-bottom: 30px;
+    width: 300px;
+    height: auto;
 }
 
 #noMatch p {
-    margin:5px;
+    margin: 5px;
 }
 
+@media only screen and (max-width: 600px) {
+}
 </style>

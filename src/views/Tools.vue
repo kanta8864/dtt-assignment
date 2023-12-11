@@ -1,13 +1,16 @@
 <template>
-  <div id="tools">
+  <div id="tools" class="content">
     <div class="first-row">
       <div class="header1">Houses</div>
       <router-link id="new-button" :to="{ name: `create` }">
-        <img src="../assets/ic_plus_white@3x.png" alt="plus symbol">
-        CREATE NEW
+        <img src="../assets/ic_plus_white@3x.png" alt="plus symbol" class="plus-white">
+        <img src="../assets/ic_plus_grey@3x.png" alt="plus symbol" class="plus-grey">
+        <div>CREATE NEW</div>
       </router-link>
     </div>
     <div class="second-row">
+      <!-- emits a custom event to the parent component (Home) when there is a change in input text
+        It also emits the search text itself -->
       <input type="search" placeholder="Search for a house" v-model="searchText"
         @input="e => $emit('changeSearchText', e.target.value)">
       <div class="sort">
@@ -41,9 +44,12 @@ export default {
 #tools {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: space-around;
   gap: 30px;
-  padding: 10px 100px;
   font-family: "Montserrat";
+  /* if width:100%, padding will be applied, making the website not fitting on screen */
+  width: calc(100% - 140px);
 }
 
 #tools a {
@@ -68,6 +74,10 @@ export default {
   font-size: 18px;
 }
 
+#tools #new-button .plus-grey {
+  display: none;
+}
+
 #tools #new-button img {
   width: 25px;
   height: auto;
@@ -86,7 +96,8 @@ export default {
 }
 
 #tools input[type=search] {
-  width: 400px;
+  max-width: 400px;
+  min-width: 300px;
   padding: 15px 15px 15px 50px;
   border-radius: 5px;
   font-size: 14px;
@@ -126,5 +137,56 @@ export default {
 
 #tools input[type=radio]:checked+label {
   background-color: #EB5440;
+}
+
+@media only screen and (max-width: 600px) {
+  #tools {
+    gap: 10px;
+    width: calc(100% - 40px);
+  }
+
+  #tools #new-button {
+    background-color: transparent;
+    border: none;
+    padding: 0px;
+  }
+
+  #tools #new-button .plus-white {
+    display: none;
+  }
+
+  #tools #new-button .plus-grey {
+    display: block;
+  }
+
+  #tools #new-button div {
+    display: none;
+  }
+
+  #tools .first-row {
+    margin: 20px 0px;
+  }
+
+  #tools .first-row div {
+    margin: auto;
+    font-size:22px;
+  }
+
+  #tools .first-row a {
+    position: absolute;
+    right: 15px;
+  }
+
+  #tools .second-row {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+  }
+
+  #tools input[type=search] {
+    padding: 10px 15px 10px 50px;
+  }
 }
 </style>

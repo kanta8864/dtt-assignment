@@ -10,12 +10,14 @@
                 <router-link :to="{ name: `edit`, params: { id: house.id } }">
                     <img src="../assets/ic_edit@3x.png" class="edit-delete-button">
                 </router-link>
-                <router-link :to="{ name: `home`}">
+                <router-link :to="{ name: `home` }">
                     <img src="../assets/ic_delete@3x.png" class="edit-delete-button"
-                    @click.prevent="houseStore.deleteHouse(house.id)">
+                        @click.prevent="houseStore.deleteHouse(house.id)">
                 </router-link>
             </div>
-            <font-awesome-icon :icon="['fas', 'heart']" :class="{active: houseStore.getFavs.includes(house)}" @click.prevent="houseStore.toggleFav(house.id)" size="lg"/>
+            <!-- importing heart icon for marking a listing as favorite-->
+            <font-awesome-icon :icon="['fas', 'heart']" :class="{ active: houseStore.getFavs.includes(house) }"
+                @click.prevent="houseStore.toggleFav(house.id)" size="2x" />
         </div>
     </router-link>
 </template>
@@ -29,15 +31,16 @@ export default {
     props: ["house"],
     setup() {
         const houseStore = useHouseStore()
-        return { houseStore}
+        return { houseStore }
     }
 }
 </script>
 
 <style>
 #house-preview .active {
-    color:red
+    color: red
 }
+
 #house-preview {
     background: white;
     display: flex;
@@ -54,5 +57,13 @@ export default {
 #house-preview .left {
     align-self: center;
     height: 100%;
+}
+
+@media only screen and (max-width: 600px) {
+    #house-preview {
+        font-size:12px;
+        height:130px;
+        padding: 10px 10px;
+    }
 }
 </style>

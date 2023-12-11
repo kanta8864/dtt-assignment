@@ -1,9 +1,8 @@
 <template>
     <div id="nav-container">
         <img class="logo" src="../assets/img_logo_dtt@3x.png" alt="DTT logo">
-        <!-- checks if the current route starts with /houses. 
-        If so, add CSS class "active" and make the Houses text bold-->
-        <router-link :to="{ name: `home` }" :class="housesIncluded ? `active` : ``">
+        <!-- dynamic is class is for styling the text to be bold when it is active -->
+        <router-link :to="{ name: `home` }" :class="housesIncluded ? `active` : ``" id="home-button">
             <div>Houses</div>
         </router-link>
         <router-link :to="{ name: `myHouses` }" :class="myHousesIncluded ? `active` : ``">
@@ -12,7 +11,7 @@
         <router-link :to="{ name: `favorites` }" :class="favoritesIncluded ? `active` : ``">
             <div>Favorites</div>
         </router-link>
-        <router-link :to="{ name: `about` }" :class="aboutIncluded ? `active` : ``">
+        <router-link :to="{ name: `about` }" :class="aboutIncluded ? `active` : ``" id="about-button">
             <div>About</div>
         </router-link>
     </div>
@@ -26,12 +25,11 @@ export default {
     setup() {
         const route = useRoute();
         // use of computed property to automatically track its dependencies. (the route in this case) 
-        // checks if the route contains houses. 
         const housesIncluded = computed(() => route.path.includes("/houses") ? true : false)
         const aboutIncluded = computed(() => route.path.includes("/about") ? true : false)
         const myHousesIncluded = computed(() => route.path.includes("/myHouses") ? true : false)
         const favoritesIncluded = computed(() => route.path.includes("/favorites") ? true : false)
-        return { housesIncluded, aboutIncluded, myHousesIncluded, favoritesIncluded}
+        return { housesIncluded, aboutIncluded, myHousesIncluded, favoritesIncluded }
     }
 }
 </script>
@@ -39,9 +37,9 @@ export default {
 <style>
 #nav-container {
     display: flex;
-    gap: 70px;
+    gap: 40px;
     align-items: center;
-    padding: 15px 100px;
+    padding: 20px;
     background-color: white;
     font-family: "Montserrat";
     font-size: 18px;
@@ -56,8 +54,64 @@ export default {
     font-weight: 700;
 }
 
-img {
+#nav-container img {
     max-width: 150px;
     height: auto;
+}
+
+@media only screen and (max-width: 600px) {
+    #nav-container {
+        position: fixed;
+        bottom: 0px;
+        width: calc(100% - 20px);
+        gap: 0;
+        padding: 10px;
+        height:50px;
+        justify-content:space-around;
+    }
+
+    #nav-container a{
+        height:40px;
+        display: flex;
+        align-items: center;
+    }
+
+    #nav-container a{
+        height:40px;
+    }
+    #nav-container img {
+        display:none
+    }
+    #home-button {
+        background: url(../assets/ic_mobile_navigarion_home@3x.png);
+        background-size: 40px;
+        background-position: center;
+        background-repeat: no-repeat;   
+    }
+
+    #home-button.active {
+        background: url(../assets/ic_mobile_navigarion_home_active@3x.png);
+        background-size: contain;
+        background-repeat: no-repeat; 
+    }
+
+    #home-button div {
+        color: transparent;
+    }
+
+    #about-button {
+        background: url(../assets/ic_mobile_navigarion_info@3x.png);
+        background-size: contain;
+        background-repeat: no-repeat;   
+    }
+
+    #about-button.active {
+        background: url(../assets/ic_mobile_navigarion_info_active@3x.png);
+        background-size: contain;
+        background-repeat: no-repeat; 
+    }
+    #about-button div {
+        color: transparent;
+    }
 }
 </style>

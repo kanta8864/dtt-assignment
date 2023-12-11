@@ -1,5 +1,6 @@
 <template>
   <NavVar />
+  <div id="about-mobile" class="header1">About</div>
   <div id="about" class="content">
     <div>
       <div class="header1">About DTT Real Estate</div>
@@ -43,7 +44,7 @@ export default {
 }
 
 #about img {
-  max-width: 250px;
+  width: 250px;
 }
 
 #about #dtt-info {
@@ -54,5 +55,26 @@ export default {
 
 #about a:link {
   color: #067BC2;
+}
+
+#about-mobile {
+  display: none;
+}
+
+@media only screen and (max-width: 600px) {
+  #about {
+    margin-bottom: 80px;
+    font-size:12px;
+  }
+  #about-mobile {
+    display: block;
+    text-align: center;
+    margin-top:40px;
+    font-size:22px;
+  }
+
+  #about img {
+    width: 150px;
+  }
 }
 </style>

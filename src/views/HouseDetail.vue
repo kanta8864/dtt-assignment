@@ -3,9 +3,18 @@
   <div id="house-detail" class="content">
     <div class="back-button">
       <router-link :to="{ name: `home` }">
-        <img src="../assets/ic_back_grey@3x.png" alt="back button">
+        <img src="../assets/ic_back_grey@3x.png" alt="back button" class="back-grey">
+        <img src="../assets/ic_back_white@3x.png" alt="back button" class="back-whie">
       </router-link>
-      Back to Overview
+      <div>Back to Overview</div>
+    </div>
+    <div class="mobile-edit-delete-button-container" v-if="house.madeByMe">
+      <router-link :to="{ name: `edit`, params: { id: house.id } }">
+        <img src="../assets/ic_edit_white@3x.png" class="edit-delete-button">
+      </router-link>
+      <router-link :to="{ name: `home`, }">
+        <img src="../assets/ic_delete_white@3x.png" @click="deleteHouse" class="edit-delete-button">
+      </router-link>
     </div>
     <div class="main-content">
       <div class="house-info">
@@ -17,9 +26,8 @@
               <router-link :to="{ name: `edit`, params: { id: house.id } }">
                 <img src="../assets/ic_edit@3x.png" class="edit-delete-button">
               </router-link>
-              <router-link :to="{ name: `home`,}">
-                <img src="../assets/ic_delete@3x.png" @click="deleteHouse"
-                class="edit-delete-button">
+              <router-link :to="{ name: `home`, }">
+                <img src="../assets/ic_delete@3x.png" @click="deleteHouse" class="edit-delete-button">
               </router-link>
             </div>
           </div>
@@ -91,7 +99,7 @@ export default {
   setup(props) {
     const houseStore = useHouseStore()
     const house = houseStore.getById(props.id)
-    console.log(house)
+
     // converts true/false value to yes/no for easier understanding
     const hasGarage = ref(house.hasGarage ? "yes" : "no")
 
@@ -132,7 +140,7 @@ export default {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  padding: 0px 50px;
+  padding: 10px 30px;
   font-size: 16px;
 }
 
@@ -163,6 +171,10 @@ export default {
 #house-detail .edit-delete-button-container {
   display: flex;
   align-items: center;
+}
+
+#house-detail .mobile-edit-delete-button-container {
+  display: none;
 }
 
 .first-row {
@@ -196,5 +208,89 @@ export default {
   display: flex;
   gap: 8px;
   text-align: center;
+}
+
+@media only screen and (max-width: 600px) {
+  #house-detail {
+    padding: 0px;
+    margin-bottom: 70px;
+  }
+
+  #house-detail .house-info {
+    position: relative;
+  }
+
+  #house-detail #big-house-image {
+    width: 100%;
+    height: auto;
+    max-height: 500px;
+  }
+
+  #house-detail .main-content {
+    flex-direction: column;
+  }
+
+  #house-detail .house-info {
+    width: 100%;
+    padding: 0;
+  }
+
+  #house-detail .text-content {
+    border-top-right-radius: 30px;
+    border-top-left-radius: 30px;
+    background-color: white;
+    position: relative;
+    bottom: 30px;
+    z-index: 99;
+  }
+
+  #recommendation {
+    padding: 20px;
+    width: calc(100% - 40px);
+  }
+
+  .first-row,
+  .second-row,
+  .third-row,
+  .fourth-row {
+    font-weight: 600;
+    font-size: 12px;
+  }
+
+  #house-detail .description {
+    font-size: 12px;
+  }
+
+  #house-detail .edit-delete-button-container {
+    display: none;
+    align-items: center;
+  }
+
+  #house-detail .mobile-edit-delete-button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap:10px;
+    position: absolute;
+    right: 20px;
+    padding: 30px 10px;
+    z-index: 99;
+  }
+
+  #house-detail .mobile-edit-delete-button-container img{
+    width:20px;
+  }
+
+  #house-detail .back-button .back-white {
+  display: none;
+}
+
+  #house-detail .back-button .back-white {
+  display: inline;
+}
+
+#house-detail .back-button .back-grey {
+  display: none;
+}
 }
 </style>

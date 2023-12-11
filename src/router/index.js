@@ -3,15 +3,15 @@ import Home from '../views/Home.vue'
 import About from '../views/About.vue'
 import CreateHouse from "../views/CreateHouse.vue"
 import HouseDetail from "../views/HouseDetail.vue"
-import EditHouse from  "../views/EditHouse.vue"
+import EditHouse from "../views/EditHouse.vue"
 import MyHouses from "../views/MyHouses.vue"
-import Favorites from  "../views/Favorites.vue"
+import Favorites from "../views/Favorites.vue"
 
 const routes = [
   {
     path: '/',
     redirect: "/houses",
-  }, 
+  },
   {
     path: '/houses',
     name: 'home',
@@ -21,24 +21,24 @@ const routes = [
     path: '/about',
     name: 'about',
     component: About
-  }, 
+  },
   {
     path: '/houses/new',
     name: 'create',
     component: CreateHouse
-  }, 
+  },
   {
     path: '/houses/:id/edit',
     name: 'edit',
     component: EditHouse,
-    props:true
-  }, 
+    props: true
+  },
   {
     path: '/houses/:id',
     name: 'houseDetail',
     component: HouseDetail,
     props: true
-  }, 
+  },
   {
     path: '/myHouses',
     name: 'myHouses',
@@ -48,7 +48,7 @@ const routes = [
     path: '/favorites',
     name: 'favorites',
     component: Favorites
-  }, 
+  },
 
 ]
 

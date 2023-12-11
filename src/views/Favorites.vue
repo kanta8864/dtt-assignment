@@ -2,7 +2,7 @@
     <NavVar />
     <div class="content house-preview-container">
         <div class="header1">Favorite Listings</div>
-        <div v-for="house in houseStore.sortByPrice(houseStore.getFavs)" :key="house.id">
+        <div v-for="house in houseStore.getFavs" :key="house.id">
             <HousePreview :house="house" />
         </div>
     </div>
@@ -15,7 +15,7 @@ import HousePreview from "./HousePreview.vue"
 import { useHouseStore } from "../stores/HouseStore"
 
 export default {
-    components: { NavVar, HousePreview},
+    components: { NavVar, HousePreview },
     setup() {
         const houseStore = useHouseStore()
         return { houseStore }
