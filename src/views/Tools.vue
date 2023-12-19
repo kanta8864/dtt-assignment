@@ -11,7 +11,7 @@
     <div class="second-row">
       <!-- emits a custom event to the parent component (Home) when there is a change in input text
         It also emits the search text itself -->
-      <input type="search" placeholder="Search for a house" v-model="searchText"
+      <input type="search" id="search-text-input" placeholder="Search for a house" v-model="searchText"
         @input="e => $emit('changeSearchText', e.target.value)">
       <div class="sort">
         <!-- emits a custom event to the parent component (Home) when the radio button is clicked
@@ -142,7 +142,7 @@ export default {
   background-color: #EB5440;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 768px) {
   #tools {
     gap: 10px;
     /* takes padding into consideration */
@@ -194,6 +194,13 @@ export default {
 
   #tools input[type=search] {
     padding: 10px 15px 10px 50px;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  #tools {
+    /* takes padding into consideration */
+    width: calc(100% - 20px);
   }
 }
 </style>

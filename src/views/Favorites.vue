@@ -24,10 +24,11 @@ export default {
 </script>
 
 <style>
-
-@media only screen and (max-width: 600px) {
-    #favorites .header1{
-    text-align: center;
-}
+@media only screen and (max-width: 768px) {
+    #favorites .header1 {
+        text-align: center;
+        margin-top: 40px;
+        font-size: 22px;
+    }
 }
 </style>

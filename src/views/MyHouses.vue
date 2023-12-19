@@ -15,7 +15,7 @@ import HousePreview from "./HousePreview.vue"
 import { useHouseStore } from "../stores/HouseStore"
 
 export default {
-    components: { NavVar, HousePreview},
+    components: { NavVar, HousePreview },
     setup() {
         const houseStore = useHouseStore()
         return { houseStore }
@@ -24,9 +24,11 @@ export default {
 </script>
 
 <style>
-@media only screen and (max-width: 600px) {
-    #my-houses .header1{
-    text-align: center;
-}
+@media only screen and (max-width: 768px) {
+    #my-houses .header1 {
+        text-align: center;
+        margin-top: 40px;
+        font-size: 22px;
+    }
 }
 </style>

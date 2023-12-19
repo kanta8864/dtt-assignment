@@ -12,7 +12,7 @@
             </div>
             <div>
                 <p>Addition (optional)</p>
-                <input type="text" v-model="numberAddition" placeholder="e.g. A">
+                <input type="text" id="addition-input" v-model="numberAddition" placeholder="e.g. A">
             </div>
         </div>
         <div>
@@ -124,6 +124,7 @@ export default {
             filePath.value = house.image
         }
 
+        // function which displays error message in case of bad input (missing required field, invalid input type etc)
         function hadleBadInput(id, message) {
             const inputField = document.querySelector(`#${id}`)
             const errorMessageSpan = document.createElement("span")
@@ -134,28 +135,29 @@ export default {
             inputField.parentNode.insertBefore(errorMessageSpan, inputField.nextSibling)
         }
 
+        // function to validate the inputs by the users
         function validateInputs() {
             // check if there exists any required fields missing  
-            if(!streetName.value) hadleBadInput("street-input", "Required field missing")
-            else if(!houseNumber.value) hadleBadInput("house-number-input", "Required field missing")
-            else if(!zip.value) hadleBadInput("postal-code-input", "Required field missing")
-            else if(!city.value) hadleBadInput("city-input", "Required field missing")
-            else if(!fileName.value) hadleBadInput("picture-input","Required field missing")
-            else if(!price.value) hadleBadInput("price-input", "Required field missing")
-            else if(!size.value) hadleBadInput("size-input", "Required field missing")
-            else if(!bedrooms.value) hadleBadInput("bedroom-input", "Required field missing")
-            else if(!bathrooms.value) hadleBadInput("bathroom-input", "Required field missing")
-            else if(!constructionYear.value) hadleBadInput("construction-year-input", "Required field missing")
-            else if(!description.value) hadleBadInput("description-input","Required field missing")
+            if (!streetName.value) hadleBadInput("street-input", "Required field missing")
+            else if (!houseNumber.value) hadleBadInput("house-number-input", "Required field missing")
+            else if (!zip.value) hadleBadInput("postal-code-input", "Required field missing")
+            else if (!city.value) hadleBadInput("city-input", "Required field missing")
+            else if (!fileName.value) hadleBadInput("picture-input", "Required field missing")
+            else if (!price.value) hadleBadInput("price-input", "Required field missing")
+            else if (!size.value) hadleBadInput("size-input", "Required field missing")
+            else if (!bedrooms.value) hadleBadInput("bedroom-input", "Required field missing")
+            else if (!bathrooms.value) hadleBadInput("bathroom-input", "Required field missing")
+            else if (!constructionYear.value) hadleBadInput("construction-year-input", "Required field missing")
+            else if (!description.value) hadleBadInput("description-input", "Required field missing")
             else {
                 // check if the input is valid 
-                if(isNaN(parseInt(houseNumber.value))) hadleBadInput("house-number-input", "Invalid house number input")
-                    else if(isNaN(parseInt(price.value))) hadleBadInput("price-input","Invalid price input")
-                    else if(isNaN(parseInt(size.value))) hadleBadInput("size-input", "Invalid size input")
-                    else if(isNaN(parseInt(bedrooms.value))) hadleBadInput("bedroom-input","Invalid bedrooms input")
-                    else if(isNaN(parseInt(bathrooms.value))) hadleBadInput("bathroom-input", "Invalid bathrooms input")
-                    else if(isNaN(parseInt(constructionYear.value))) hadleBadInput("construction-year-input", "Invalid construction year input")
-                    else return true
+                if (isNaN(parseInt(houseNumber.value))) hadleBadInput("house-number-input", "Invalid house number input")
+                else if (isNaN(parseInt(price.value))) hadleBadInput("price-input", "Invalid price input")
+                else if (isNaN(parseInt(size.value))) hadleBadInput("size-input", "Invalid size input")
+                else if (isNaN(parseInt(bedrooms.value))) hadleBadInput("bedroom-input", "Invalid bedrooms input")
+                else if (isNaN(parseInt(bathrooms.value))) hadleBadInput("bathroom-input", "Invalid bathrooms input")
+                else if (isNaN(parseInt(constructionYear.value))) hadleBadInput("construction-year-input", "Invalid construction year input")
+                else return true
             }
         }
 
@@ -163,43 +165,44 @@ export default {
         const formSubmit = async function (e) {
             // remove the error message div from DOM and make the input border back to black
             const errorMessageDiv = document.querySelector(".error-message")
-            if(errorMessageDiv) {
+            if (errorMessageDiv) {
                 const inputFields = document.querySelectorAll("#house-form input")
                 inputFields.forEach(input => input.style.border = "none")
                 errorMessageDiv.remove()
             }
 
-            if(validateInputs()) {
+            if (validateInputs()) {
                 const body = {
-                price: parseInt(price.value),
-                bedrooms: parseInt(bedrooms.value),
-                bathrooms: parseInt(bathrooms.value),
-                size: parseInt(size.value),
-                streetName: streetName.value,
-                houseNumber: parseInt(houseNumber.value),
-                numberAddition: numberAddition.value,
-                zip: zip.value,
-                city: city.value,
-                constructionYear: parseInt(constructionYear.value),
-                hasGarage: hasGarage.value,
-                description: description.value,
-            }
+                    price: parseInt(price.value),
+                    bedrooms: parseInt(bedrooms.value),
+                    bathrooms: parseInt(bathrooms.value),
+                    size: parseInt(size.value),
+                    streetName: streetName.value,
+                    houseNumber: parseInt(houseNumber.value),
+                    numberAddition: numberAddition.value,
+                    zip: zip.value,
+                    city: city.value,
+                    constructionYear: parseInt(constructionYear.value),
+                    hasGarage: hasGarage.value,
+                    description: description.value,
+                }
 
-            if (props.type === "create") {
-                houseStore.addHouse(body, fileName).then((isSuccessful) => {
-                    if(isSuccessful) {
-                         // clearing all the inputs
-                        streetName.value = houseNumber.value = numberAddition.value = zip.value = city.value = price.value =
-                            size.value = bedrooms.value = bathrooms.value = constructionYear.value = description.value = ""
-                        const file = document.querySelector(".file")
-                        file.value = ""
-                        document.getElementById("yesGarage").checked = true;
-                        document.getElementById("noGarage").checked = false;
-                    }
-                })
-            } else {
-                houseStore.updateHouse(props.id, body, fileName)
-            }
+                if (props.type === "create") {
+                    houseStore.addHouse(body, fileName).then((isSuccessful) => {
+                        // Only clear inputs when there was no error was caught when making request to House API
+                        if (isSuccessful) {
+                            // clearing all the inputs
+                            streetName.value = houseNumber.value = numberAddition.value = zip.value = city.value = price.value =
+                                size.value = bedrooms.value = bathrooms.value = constructionYear.value = description.value = ""
+                            const file = document.querySelector(".file")
+                            file.value = ""
+                            document.getElementById("yesGarage").checked = true;
+                            document.getElementById("noGarage").checked = false;
+                        }
+                    })
+                } else {
+                    houseStore.updateHouse(props.id, body, fileName)
+                }
             }
         }
 
@@ -247,7 +250,6 @@ export default {
     flex-direction: column;
     width: 35%;
     max-width: 500px;
-    min-width: 350px;
     gap: 15px;
 }
 
@@ -309,30 +311,30 @@ export default {
     width: calc(50% - 20px);
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 768px) {
     #house-form label {
         font-size: 14px;
     }
 
     #house-form {
         width: 100%;
-        margin:0;
+        margin: 0;
         gap: 15px;
-        margin-bottom:80px;
+        margin-bottom: 80px;
     }
 
     #house-form input {
         border: none;
         width: 100%;
         height: 40px;
-        padding:0px;
+        padding: 0px;
     }
 
     #house-form textarea {
         border: none;
         width: 100%;
         height: 150px;
-        padding:0px;
+        padding: 0px;
     }
 
     #house-form button {

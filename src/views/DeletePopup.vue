@@ -83,7 +83,7 @@ export default {
     background-color: #4A4B4C;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 768px) {
     .popup-content {
         font-size: 12px;
     }

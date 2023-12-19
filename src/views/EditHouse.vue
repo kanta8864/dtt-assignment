@@ -2,7 +2,7 @@
     <NavVar />
     <div id="edit-house" class="content">
         <div class="back-button">
-            <!-- $router.go(-1) is used to go back to the previous page based on navigation history  -->
+            <!-- Use of router link to navigate user back to house detail page when clicked -->
             <router-link :to="{ name: `houseDetail`, params: { id: id } }">
                 <img src="../assets/ic_back_grey@3x.png" alt="back button" class="back-grey">
             </router-link>
@@ -31,7 +31,7 @@ export default {
         url(../assets/img_placeholder_house@3x.png);
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 768px) {
     #edit-house {
         width: calc(100% - 40px)
     }
@@ -39,6 +39,12 @@ export default {
     #edit-house .header1 {
         text-align: center;
         margin-top: 40px;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    #edit-house {
+        width: calc(100% - 20px)
     }
 }
 </style>

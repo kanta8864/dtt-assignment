@@ -12,8 +12,7 @@
         pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
         culpa qui officia deserunt mollit anim id est laborum.</p>
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-        magna
-        aliqua.</p>
+        magna aliqua.</p>
     </div>
     <div>
       <div class="header1">Design and Development</div>
@@ -61,16 +60,17 @@ export default {
   display: none;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 768px) {
   #about {
     margin-bottom: 80px;
-    font-size:12px;
+    font-size: 12px;
   }
+
   #about-mobile {
     display: block;
     text-align: center;
-    margin-top:40px;
-    font-size:22px;
+    margin-top: 40px;
+    font-size: 22px;
   }
 
   #about img {

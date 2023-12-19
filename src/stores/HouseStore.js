@@ -76,8 +76,8 @@ export const useHouseStore = defineStore("houseStore", {
                 alert("House listing posted!")
                 return true
             } catch (e) {
-                alert(e.response.data.code)
-                return false 
+                alert(e)
+                return false
             }
         },
         // deleter house and send delete request to House API
@@ -89,8 +89,7 @@ export const useHouseStore = defineStore("houseStore", {
                 await this.fetchHouses()
                 router.push({ name: 'home' })
             } catch (e) {
-                console.log(e)
-             
+                alert(e)
             }
         },
         // update house and send post request to House API

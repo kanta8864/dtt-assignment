@@ -43,6 +43,7 @@ export default {
     font-family: "Open Sans";
     font-weight: 500;
     height: 100%;
+    align-items: center;
 }
 
 #house-info .header2 {
@@ -53,6 +54,8 @@ export default {
     border-radius: 20px;
     margin: 10px;
     aspect-ratio: 1 / 1;
+    width:100px;
+    height: 100px; 
 }
 
 .preview-text {
@@ -81,9 +84,16 @@ export default {
     justify-content: center;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 480px) {
     #house-info {
         width: 100%;
+        gap:10px;
     }
+
+    .house-photo {
+    width:80px;
+    height: 80px; 
+    margin:5px;
+}
 }
 </style>

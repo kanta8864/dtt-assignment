@@ -64,7 +64,8 @@ body {
   gap: 10px;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 768px) {
+
   /* styling rules for the main content of different pages */
   .content {
     margin: 0;
@@ -84,7 +85,7 @@ body {
   }
 
   /* styling rules for go back icon and text. This makes sure that the back-button will always come on top of other elements
-and hide the "Back to ..." text */
+    and hide the "Back to ..." text */
   .back-button {
     position: absolute;
     padding: 0px 10px;
@@ -106,5 +107,13 @@ and hide the "Back to ..." text */
     width: 15px;
     margin: 2px;
   }
+}
 
-}</style>
+@media only screen and (max-width: 768px) {
+
+/* styling rules for the main content of different pages */
+  .content {
+    padding: 5px 10px;
+  }
+}
+</style>

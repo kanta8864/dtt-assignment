@@ -2,11 +2,11 @@
     <NavVar />
     <div id="create-house" class="content">
         <div class="back-button">
-            <!-- $router.go(-1) is used to go back to the previous page based on navigation history  -->
+            <!-- Use of router link to navigate user back to house overview page when clicked -->
             <router-link :to="{ name: `home` }">
                 <img src="../assets/ic_back_grey@3x.png" alt="back button" class="back-grey">
             </router-link>
-            <div>Back to House Detail</div>
+            <div>Back to House Overview</div>
         </div>
         <div class="header1">Create new listing</div>
         <HouseForm type="create" />
@@ -31,15 +31,21 @@ export default {
         url(../assets/img_placeholder_house@3x.png);
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 768px) {
     #create-house {
-        width: calc(100% - 20px);
+        width: calc(100% - 40px);
         padding: 10px;
     }
 
     #create-house .header1 {
         text-align: center;
         margin-top: 40px;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    #create-house {
+        width: calc(100% - 20px);
     }
 }
 </style>

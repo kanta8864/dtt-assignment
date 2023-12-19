@@ -2,9 +2,7 @@
   <NavVar />
   <!-- handling custom events emitted from Tools component-->
   <Tools @changeSortTarget="handleSortTargetChange" @changeSearchText="handleSearchTextChange" />
-  <div v-if="houseStore.houses.length">
-    <Houses :searchResultSize="searchResultSize" :searchText="searchText" :sortType="sortType"></Houses>
-  </div>
+  <Houses :searchResultSize="searchResultSize" :searchText="searchText" :sortType="sortType"></Houses>
 </template>
 
 <script>
@@ -18,11 +16,11 @@ export default {
   name: 'HomeView',
   components: { NavVar, Tools, Houses },
   setup() {
-    // initializes HouseStore and fetch all the available houses from API
+    // initializes HouseStore and fetch all the available house API
     const houseStore = useHouseStore()
     houseStore.fetchHouses()
 
-    // keeps track of the sorting type
+    // keeps track of the currently used sorting type
     const sortType = ref("price")
     const handleSortTargetChange = (value) => {
       sortType.value = value
@@ -35,7 +33,6 @@ export default {
       searchText.value = value
       searchResultSize.value = houseStore.getFilteredListSize(value)
     }
-
 
     return { houseStore, sortType, handleSortTargetChange, searchText, searchResultSize, handleSearchTextChange }
   }

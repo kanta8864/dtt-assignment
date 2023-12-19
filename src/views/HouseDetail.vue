@@ -8,7 +8,10 @@
       </router-link>
       <div>Back to Overview</div>
     </div>
+    <!-- this is for mobile users. The delete, edit, and favorite icon is displayed at the top of the screen, 
+    on top of the house picture -->
     <div class="mobile-edit-delete-button-container">
+      <!-- only show edit and delete button if the house is made by the user -->
       <div v-if="house.madeByMe" class="buttons-container">
         <router-link :to="{ name: `edit`, params: { id: house.id } }">
           <img src="../assets/ic_edit_white@3x.png" class="edit-delete-button">
@@ -20,7 +23,7 @@
       </div>
       <div>
         <font-awesome-icon :icon="['fas', 'heart']" :class="{ active: houseStore.getFavs.includes(house) }"
-          @click.prevent="houseStore.toggleFav(house.id)" size="2x"  />
+          @click.prevent="houseStore.toggleFav(house.id)" size="2x" />
       </div>
     </div>
     <div class="main-content">
@@ -30,20 +33,20 @@
           <div class="first-row">
             <div class="header1">{{ house.location.street }} {{ house.location.houseNumber }}</div>
             <div class="edit-delete-button-container">
+              <!-- only show edit and delete button if the house is made by the user -->
               <div v-if="house.madeByMe" class="buttons-container">
-              <router-link :to="{ name: `edit`, params: { id: house.id } }">
-                <img src="../assets/ic_edit@3x.png" class="edit-delete-button">
-              </router-link>
-              <div>
-                <img src="../assets/ic_delete@3x.png" class="edit-delete-button" @click.prevent="openPopup(house.id)">
-                <Popup :houseId="house.id" @closePopup="closePopup" v-if="popupIsOpen" />
+                <router-link :to="{ name: `edit`, params: { id: house.id } }">
+                  <img src="../assets/ic_edit@3x.png" class="edit-delete-button">
+                </router-link>
+                <div>
+                  <img src="../assets/ic_delete@3x.png" class="edit-delete-button" @click.prevent="openPopup(house.id)">
+                  <Popup :houseId="house.id" @closePopup="closePopup" v-if="popupIsOpen" />
+                </div>
               </div>
-            </div>
               <div>
                 <font-awesome-icon :icon="['fas', 'heart']" :class="{ active: houseStore.getFavs.includes(house) }"
                   @click.prevent="houseStore.toggleFav(house.id)" size="2x" />
               </div>
-              <Popup :houseId="house.id" @closePopup="closePopup" v-if="popupIsOpen" />
             </div>
           </div>
           <div class="second-row">
@@ -88,14 +91,14 @@
       </div>
       <div id="recommendation">
         <div class="header2">Recommended for you</div>
-        <div class="recommendation-item">
-          <HouseInfo :id="recommendations[0].id"/>
+        <div class="recommendation-item" v-if="recommendations.length >= 1">
+          <HouseInfo :id="recommendations[0].id" />
         </div>
-        <div class="recommendation-item">
-          <HouseInfo :id="recommendations[1].id"/>
+        <div class="recommendation-item" v-if="recommendations.length >= 2">
+          <HouseInfo :id="recommendations[1].id" />
         </div>
-        <div class="recommendation-item">
-          <HouseInfo :id="recommendations[2].id"/>
+        <div class="recommendation-item" v-if="recommendations.length >= 3">
+          <HouseInfo :id="recommendations[2].id" />
         </div>
       </div>
     </div>
@@ -107,20 +110,20 @@ import { ref } from "vue"
 import HouseInfo from "./HouseInfo.vue"
 import NavVar from "./NavVar.vue"
 import { useHouseStore } from "../stores/HouseStore"
-import Popup from "./Popup.vue"
+import DeletePopup from "./DeletePopup.vue"
 
 export default {
   props: ["id"],
-  components: { HouseInfo, NavVar, Popup },
+  components: { HouseInfo, NavVar, DeletePopup },
   setup(props) {
+    // initialize house store and get the particular house using id passed to this component as a prop
     const houseStore = useHouseStore()
     const house = houseStore.getById(props.id)
 
     // converts true/false value to yes/no for easier understanding
     const hasGarage = ref(house.hasGarage ? "yes" : "no")
 
-    const deleteHouse = () => houseStore.deleteHouse(house.id)
-
+    // deals with opening and closing of popup asking user to confirm the deletion of a listing
     const popupIsOpen = ref(false)
     const openPopup = () => {
       popupIsOpen.value = true
@@ -134,12 +137,12 @@ export default {
     const recommendations = houseStore.houses.filter(x => x.id != house.id).sort((a, b) => {
       const priceDifA = Math.abs(a.price - house.price)
       const priceDifB = Math.abs(b.price - house.price)
-      if(priceDifA > priceDifB) return 1
+      if (priceDifA > priceDifB) return 1
       else if (priceDifA < priceDifB) return -1
       else return 0
     }).slice(0, 3)
 
-    return { houseStore, house, hasGarage, deleteHouse, popupIsOpen, openPopup, closePopup, recommendations }
+    return { houseStore, house, hasGarage, popupIsOpen, openPopup, closePopup, recommendations }
   }
 }
 </script>
@@ -164,10 +167,10 @@ export default {
 }
 
 #house-detail .buttons-container {
-  display:flex;
-  gap:10px;
+  display: flex;
+  gap: 10px;
   align-items: center;
-  margin-right:10px;
+  margin-right: 10px;
 }
 
 #house-detail .house-info {
@@ -210,7 +213,7 @@ export default {
 }
 
 #house-detail .active {
-    color: red
+  color: red
 }
 
 #house-detail .edit-delete-button-container {
@@ -255,7 +258,7 @@ export default {
   text-align: center;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 768px) {
   #house-detail {
     padding: 0px;
     margin-bottom: 70px;
@@ -325,7 +328,7 @@ export default {
 
   #house-detail svg {
     color: white;
-}
+  }
 
   #house-detail .mobile-edit-delete-button-container img {
     width: 22px;
