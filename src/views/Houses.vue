@@ -58,7 +58,7 @@ export default {
     justify-content: center;
     align-items: center;
     margin-top: 50px;
-    font-family: "Montserrat";
+    font-family: "Montserrat", sans-serif;
     font-weight: 500;
     font-size: 18px;
 }
@@ -72,6 +72,4 @@ export default {
 #noMatch p {
     margin: 5px;
 }
-
-@media only screen and (max-width: 768px) {}
 </style>

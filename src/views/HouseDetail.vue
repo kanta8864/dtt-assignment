@@ -260,7 +260,7 @@ export default {
 
 @media only screen and (max-width: 768px) {
   #house-detail {
-    padding: 0px;
+    padding: 0;
     margin-bottom: 70px;
   }
 

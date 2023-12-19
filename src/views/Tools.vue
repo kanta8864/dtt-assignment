@@ -47,9 +47,8 @@ export default {
   justify-content: center;
   align-items: space-around;
   gap: 30px;
-  font-family: "Montserrat";
-  /* if width:100%, the website would not fitting in the screen */
-  width: calc(100% - 140px);
+  font-family: "Montserrat", sans-serif;
+  box-sizing: border-box;
 }
 
 #tools a {
@@ -74,7 +73,7 @@ export default {
   font-size: 18px;
 }
 
-/* grey plus icon is not shown and taken out of document flow when viewd in desktop */
+/* Grey plus icon is not shown and taken out of document flow when viewd in desktop */
 #tools #new-button .plus-grey {
   display: none;
 }
@@ -145,33 +144,31 @@ export default {
 @media only screen and (max-width: 768px) {
   #tools {
     gap: 10px;
-    /* takes padding into consideration */
-    width: calc(100% - 40px);
   }
 
   #tools #new-button {
     background-color: transparent;
     border: none;
-    padding: 0px;
+    padding: 0;
   }
 
-  /* hide the white plus button */
+  /* Hide the white plus button */
   #tools #new-button .plus-white {
     display: none;
   }
 
-  /* show the grey plus button */
+  /* Show the grey plus button */
   #tools #new-button .plus-grey {
     display: block;
   }
 
-  /* hide the "CREATE NEW" */
+  /* Hide the "CREATE NEW" */
   #tools #new-button div {
     display: none;
   }
 
   #tools .first-row {
-    margin: 20px 0px;
+    margin: 20px 0;
   }
 
   #tools .first-row div {
@@ -197,10 +194,4 @@ export default {
   }
 }
 
-@media only screen and (max-width: 480px) {
-  #tools {
-    /* takes padding into consideration */
-    width: calc(100% - 20px);
-  }
-}
 </style>

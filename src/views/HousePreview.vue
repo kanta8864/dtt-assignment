@@ -59,7 +59,7 @@ export default {
     border-radius: 10px;
     padding: 10px 20px;
     height: 150px;
-    font-family: "Open Sans";
+    font-family: "Open Sans", sans-serif;
     color: #4A4B4C;
     font-size: 16px;
     text-decoration: none;

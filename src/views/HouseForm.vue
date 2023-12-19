@@ -131,7 +131,6 @@ export default {
             errorMessageSpan.classList.add("error-message")
             errorMessageSpan.appendChild(document.createTextNode(message))
             inputField.style.border = "1px solid red"
-            errorMessageSpan.style.color = "red"
             inputField.parentNode.insertBefore(errorMessageSpan, inputField.nextSibling)
         }
 
@@ -269,10 +268,10 @@ export default {
     background-color: #EB5440;
     color: white;
     text-align: center;
-    padding: 12px 0px;
+    padding: 12px 0;
     border-radius: 5px;
     width: 160px;
-    font-family: "Montserrat";
+    font-family: "Montserrat", sans-serif;
     font-size: 18px;
     font-weight: 700;
     border: none;
@@ -285,14 +284,14 @@ export default {
 
 #create-house p {
     font-size: 14px;
-    font-family: "Montserrat";
+    font-family: "Montserrat", sans-serif;
     font-weight: 600;
     margin-bottom: 10px;
 }
 
 #create-house input::placeholder {
     font-size: 14px;
-    font-family: "Open Sans";
+    font-family: "Open Sans", sans-serif;
     color: #4A4B4C;
 }
 
@@ -302,13 +301,15 @@ export default {
     justify-content: space-between;
 }
 
-.fileUpload img {
-    border: 1px dotted grey;
-    height: 100%;
-}
-
 #house-form .house-number div {
     width: calc(50% - 20px);
+}
+
+#house-form .error-message {
+    font-size: 14px;
+    font-family: "Montserrat";
+    font-style: italic;
+    color: red;
 }
 
 @media only screen and (max-width: 768px) {
@@ -324,63 +325,19 @@ export default {
     }
 
     #house-form input {
-        border: none;
-        width: 100%;
-        height: 40px;
-        padding: 0px;
+        padding: 0;
     }
 
     #house-form textarea {
-        border: none;
-        width: 100%;
-        height: 150px;
-        padding: 0px;
-    }
-
-    #house-form button {
-        background-color: #EB5440;
-        color: white;
-        text-align: center;
-        padding: 12px 0px;
-        border-radius: 5px;
-        width: 160px;
-        font-family: "Montserrat";
-        font-size: 18px;
-        font-weight: 700;
-        border: none;
-    }
-
-    #post-button-container {
-        display: flex;
-        justify-content: end;
-    }
-
-    #create-house p {
-        font-size: 14px;
-        font-family: "Montserrat";
-        font-weight: 600;
-        margin-bottom: 10px;
-    }
-
-    #create-house input::placeholder {
-        font-size: 14px;
-        font-family: "Open Sans";
-        color: #4A4B4C;
-    }
-
-    #house-form .house-number {
-        display: flex;
-        gap: 20px;
-        justify-content: space-between;
-    }
-
-    .fileUpload img {
-        border: 1px dotted grey;
-        height: 100%;
+        padding: 0;
     }
 
     #house-form .house-number div {
         width: calc(50% - 20px);
+    }
+
+    #house-form .error-message {
+        font-size: 12px;
     }
 }
 </style>

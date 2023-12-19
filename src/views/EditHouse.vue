@@ -29,22 +29,17 @@ export default {
     https://stackoverflow.com/questions/16791202/how-do-i-overlay-a-gradient-background-over-an-existing-background-with-css */
     background: linear-gradient(to right, rgba(255, 255, 256, 1) 0%, rgba(255, 255, 255, 0.2) 100%),
         url(../assets/img_placeholder_house@3x.png);
+        box-sizing: border-box;
 }
 
 @media only screen and (max-width: 768px) {
     #edit-house {
-        width: calc(100% - 40px)
+        padding: 10px;
     }
 
     #edit-house .header1 {
         text-align: center;
         margin-top: 40px;
-    }
-}
-
-@media only screen and (max-width: 768px) {
-    #edit-house {
-        width: calc(100% - 20px)
     }
 }
 </style>

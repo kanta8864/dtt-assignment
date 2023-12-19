@@ -37,7 +37,7 @@ export default {
 
 <style>
 #about {
-  font-family: "Open Sans";
+  font-family: "Open Sans", sans-serif;
   font-weight: 400;
   font-size: 18px;
 }

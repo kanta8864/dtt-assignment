@@ -40,7 +40,7 @@ export default {
 #house-info {
     display: flex;
     gap: 20px;
-    font-family: "Open Sans";
+    font-family: "Open Sans", sans-serif;
     font-weight: 500;
     height: 100%;
     align-items: center;

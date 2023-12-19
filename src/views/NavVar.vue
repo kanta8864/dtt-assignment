@@ -42,7 +42,7 @@ export default {
     align-items: center;
     padding: 20px 70px;
     background-color: white;
-    font-family: "Montserrat";
+    font-family: "Montserrat", sans-serif;
     font-size: 18px;
 }
 
@@ -63,7 +63,7 @@ export default {
 @media only screen and (max-width: 768px) {
     #nav-container {
         position: fixed;
-        bottom: 0px;
+        bottom: 0;
         width: calc(100% - 20px);
         gap: 0;
         padding: 10px;
