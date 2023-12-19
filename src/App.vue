@@ -8,7 +8,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap');
 
 body {
-  color: black;
   margin: 0;
   background-color: #F6F6F6;
 }
@@ -18,7 +17,6 @@ body {
   margin: 0;
   padding: 10px 70px;
 }
-
 
 /* styling rules for header1 */
 .header1 {
@@ -67,47 +65,46 @@ body {
 }
 
 @media only screen and (max-width: 600px) {
-/* styling rules for the main content of different pages */
-.content {
-  margin: 0;
-  padding: 10px 20px;
-}
+  /* styling rules for the main content of different pages */
+  .content {
+    margin: 0;
+    padding: 10px 20px;
+  }
 
-/* styling rules for header1 */
-.header1 {
-  font-size:18px;
-  margin: 10px 0px;
-}
+  /* styling rules for header1 */
+  .header1 {
+    font-size: 18px;
+    margin: 10px 0px;
+  }
 
-/* styling rules for header2 */
-.header2 {
-  font-size: 14px;
-  margin: 5px 0px;
-}
+  /* styling rules for header2 */
+  .header2 {
+    font-size: 14px;
+    margin: 5px 0px;
+  }
 
-/* styling rules for go back icon and text */
-.back-button {
-  position:absolute;
-  padding: 0px 10px;
-  z-index:99;
-}
+  /* styling rules for go back icon and text. This makes sure that the back-button will always come on top of other elements
+and hide the "Back to ..." text */
+  .back-button {
+    position: absolute;
+    padding: 0px 10px;
+    z-index: 99;
+  }
 
-.back-button div{
-  display:none;
-}
+  .back-button div {
+    display: none;
+  }
 
-.back-button img {
-  width: 20px;
-  height: auto;
-  margin: 30px 0px;
-}
+  .back-button img {
+    width: 20px;
+    height: auto;
+    margin: 30px 0px;
+  }
 
-/* styling rules for editing and deleting button */
-.edit-delete-button {
-  width: 15px;
-  margin: 2px;
-}
+  /* styling rules for editing and deleting button */
+  .edit-delete-button {
+    width: 15px;
+    margin: 2px;
+  }
 
-
-}
-</style>
+}</style>

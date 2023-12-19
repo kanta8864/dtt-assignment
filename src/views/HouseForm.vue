@@ -1,14 +1,14 @@
 <template>
     <!-- submit.prevent prevents the default behavior of the form submit and let us execute formSubmit function -->
-    <form @submit.prevent="formSubmit" id="house-form">
+    <form @submit.prevent="formSubmit" id="house-form" novalidate>
         <div>
             <p>Street name&#x2a;</p>
-            <input type="text" v-model="streetName" placeholder="Enter the street name" required>
+            <input type="text" id="street-input" v-model="streetName" placeholder="Enter the street name" required>
         </div>
         <div class="house-number">
             <div>
                 <p>House number&#x2a;</p>
-                <input type="text" v-model="houseNumber" placeholder="Enter house number" required>
+                <input type="text" id="house-number-input" v-model="houseNumber" placeholder="Enter house number" required>
             </div>
             <div>
                 <p>Addition (optional)</p>
@@ -17,52 +17,54 @@
         </div>
         <div>
             <p>Postal code&#x2a;</p>
-            <input type="text" v-model="zip" placeholder="e.g. 1000 AA" required>
+            <input type="text" id="postal-code-input" v-model="zip" placeholder="e.g. 1000 AA" required>
         </div>
         <div>
             <p>City&#x2a;</p>
-            <input type="text" v-model="city" placeholder="e.g. Utrecht" required>
+            <input type="text" id="city-input" v-model="city" placeholder="e.g. Utrecht" required>
         </div>
         <div>
             <p>Upload picture (PNG or JPG)&#x2a;</p>
-            <input type="file" class="file" @change="onFileUpload" required>
+            <input type="file" id="picture-input" class="file" @change="onFileUpload" required>
 
         </div>
 
         <div>
             <p>Price&#x2a;</p>
-            <input type="text" v-model="price" placeholder="e.g. &euro;150.000" required>
+            <input type="text" id="price-input" v-model="price" placeholder="e.g. &euro;150.000" required>
         </div>
         <div>
             <div>
                 <p>Size&#x2a;</p>
-                <input type="text" v-model="size" placeholder="e.g. 60m2" required>
+                <input type="text" id="size-input" v-model="size" placeholder="e.g. 60m2" required>
             </div>
             <div>
                 <p>Garage&#x2a;</p>
-                <input type="radio" id="yesGarage" value="true" v-model="hasGarage">
-                <label for="yesGarage" id="yes-label">Yes</label>
-                <input type="radio" id="noGarage" value="false" v-model="hasGarage">
-                <label for="noGarage" id="no-label">No</label>
+                <div id="garage-input">
+                    <input type="radio" id="yesGarage" value="true" v-model="hasGarage">
+                    <label for="yesGarage" id="yes-label">Yes</label>
+                    <input type="radio" id="noGarage" value="false" v-model="hasGarage">
+                    <label for="noGarage" id="no-label">No</label>
+                </div>
             </div>
         </div>
         <div>
             <div>
                 <p>Bedrooms&#x2a;</p>
-                <input type="text" v-model="bedrooms" placeholder="Enter amount" required>
+                <input type="text" id="bedroom-input" v-model="bedrooms" placeholder="Enter amount" required>
             </div>
             <div>
                 <p>Bathrooms&#x2a;</p>
-                <input type="text" v-model="bathrooms" placeholder="Enter amount" required>
+                <input type="text" id="bathroom-input" v-model="bathrooms" placeholder="Enter amount" required>
             </div>
         </div>
         <div>
-            <p>Construction date&#x2a;</p>
-            <input type="text" v-model="constructionYear" placeholder="e.g. 1990" required>
+            <p>Construction year&#x2a;</p>
+            <input type="text" id="construction-year-input" v-model="constructionYear" placeholder="e.g. 1990" required>
         </div>
         <div id="description">
             <p>Description&#x2a;</p>
-            <textarea v-model="description" placeholder="Enter description" required></textarea>
+            <textarea v-model="description" id="description-input" placeholder="Enter description" required></textarea>
         </div>
         <div id="post-button-container">
             <button type="submit" v-if="type == 'create'">POST</button>
@@ -122,9 +124,53 @@ export default {
             filePath.value = house.image
         }
 
+        function hadleBadInput(id, message) {
+            const inputField = document.querySelector(`#${id}`)
+            const errorMessageSpan = document.createElement("span")
+            errorMessageSpan.classList.add("error-message")
+            errorMessageSpan.appendChild(document.createTextNode(message))
+            inputField.style.border = "1px solid red"
+            errorMessageSpan.style.color = "red"
+            inputField.parentNode.insertBefore(errorMessageSpan, inputField.nextSibling)
+        }
+
+        function validateInputs() {
+            // check if there exists any required fields missing  
+            if(!streetName.value) hadleBadInput("street-input", "Required field missing")
+            else if(!houseNumber.value) hadleBadInput("house-number-input", "Required field missing")
+            else if(!zip.value) hadleBadInput("postal-code-input", "Required field missing")
+            else if(!city.value) hadleBadInput("city-input", "Required field missing")
+            else if(!fileName.value) hadleBadInput("picture-input","Required field missing")
+            else if(!price.value) hadleBadInput("price-input", "Required field missing")
+            else if(!size.value) hadleBadInput("size-input", "Required field missing")
+            else if(!bedrooms.value) hadleBadInput("bedroom-input", "Required field missing")
+            else if(!bathrooms.value) hadleBadInput("bathroom-input", "Required field missing")
+            else if(!constructionYear.value) hadleBadInput("construction-year-input", "Required field missing")
+            else if(!description.value) hadleBadInput("description-input","Required field missing")
+            else {
+                // check if the input is valid 
+                if(isNaN(parseInt(houseNumber.value))) hadleBadInput("house-number-input", "Invalid house number input")
+                    else if(isNaN(parseInt(price.value))) hadleBadInput("price-input","Invalid price input")
+                    else if(isNaN(parseInt(size.value))) hadleBadInput("size-input", "Invalid size input")
+                    else if(isNaN(parseInt(bedrooms.value))) hadleBadInput("bedroom-input","Invalid bedrooms input")
+                    else if(isNaN(parseInt(bathrooms.value))) hadleBadInput("bathroom-input", "Invalid bathrooms input")
+                    else if(isNaN(parseInt(constructionYear.value))) hadleBadInput("construction-year-input", "Invalid construction year input")
+                    else return true
+            }
+        }
+
         // defines the behaviour when the POST button is pressed
         const formSubmit = async function (e) {
-            const body = {
+            // remove the error message div from DOM and make the input border back to black
+            const errorMessageDiv = document.querySelector(".error-message")
+            if(errorMessageDiv) {
+                const inputFields = document.querySelectorAll("#house-form input")
+                inputFields.forEach(input => input.style.border = "none")
+                errorMessageDiv.remove()
+            }
+
+            if(validateInputs()) {
+                const body = {
                 price: parseInt(price.value),
                 bedrooms: parseInt(bedrooms.value),
                 bathrooms: parseInt(bathrooms.value),
@@ -139,22 +185,21 @@ export default {
                 description: description.value,
             }
 
-
-            //validators
-
             if (props.type === "create") {
-                houseStore.addHouse(body, fileName)
-                // clearing all the inputs
-                streetName.value = houseNumber.value = numberAddition.value = zip.value = city.value = price.value =
-                    size.value = bedrooms.value = bathrooms.value = constructionYear.value = description.value = ""
-                const file = document.querySelector(".file")
-                file.value = ""
-                document.getElementById("yesGarage").checked = true;
-                document.getElementById("noGarage").checked = false;
-                alert("House listing posted!")
+                houseStore.addHouse(body, fileName).then((isSuccessful) => {
+                    if(isSuccessful) {
+                         // clearing all the inputs
+                        streetName.value = houseNumber.value = numberAddition.value = zip.value = city.value = price.value =
+                            size.value = bedrooms.value = bathrooms.value = constructionYear.value = description.value = ""
+                        const file = document.querySelector(".file")
+                        file.value = ""
+                        document.getElementById("yesGarage").checked = true;
+                        document.getElementById("noGarage").checked = false;
+                    }
+                })
             } else {
                 houseStore.updateHouse(props.id, body, fileName)
-                alert("House detail editted!")
+            }
             }
         }
 

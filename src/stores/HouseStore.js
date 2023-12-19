@@ -45,8 +45,6 @@ export const useHouseStore = defineStore("houseStore", {
         },
         // filter the house listing by search text 
         filterByText(searchText) {
-            console.log(this.houses.map(x => x.location.city))
-            console.log(searchText)
             return this.houses.filter(x => x.location.street.toLowerCase().includes(searchText.toLowerCase())
                 || x.location.city.toLowerCase().includes(searchText.toLowerCase()))
         },
@@ -67,30 +65,47 @@ export const useHouseStore = defineStore("houseStore", {
         },
         // add house and send a post request to House API
         async addHouse(body, fileName) {
-            axios.defaults.headers['X-API-KEY'] = 'DiAa72IRMOZYnGe5qVSo9C4gmUQJ-wu3'
-            let data = await axios.post("https://api.intern.d-tt.nl/api/houses", body)
-            const formData = new FormData()
-            formData.append("image", fileName.value)
-            await axios.post(`https://api.intern.d-tt.nl/api/houses/${data.data.id}/upload`, formData)
-            await this.fetchHouses()
-            router.push({ name: 'houseDetail', params: { id: data.data.id } })
+            try {
+                axios.defaults.headers['X-API-KEY'] = 'DiAa72IRMOZYnGe5qVSo9C4gmUQJ-wu3'
+                let data = await axios.post("https://api.intern.d-tt.nl/api/houses", body)
+                const formData = new FormData()
+                formData.append("image", fileName.value)
+                await axios.post(`https://api.intern.d-tt.nl/api/houses/${data.data.id}/upload`, formData)
+                await this.fetchHouses()
+                router.push({ name: 'houseDetail', params: { id: data.data.id } })
+                alert("House listing posted!")
+                return true
+            } catch (e) {
+                alert(e.response.data.code)
+                return false 
+            }
         },
         // deleter house and send delete request to House API
         async deleteHouse(houseId) {
-            axios.defaults.headers['X-API-KEY'] = 'DiAa72IRMOZYnGe5qVSo9C4gmUQJ-wu3';
-            await axios.delete("https://api.intern.d-tt.nl/api/houses/" + houseId)
-            if (this.favList.includes(houseId)) this.favList.splice(this.favList.indexOf(houseId), 1)
-            await this.fetchHouses()
-            router.push({ name: 'home' })
+            try {
+                axios.defaults.headers['X-API-KEY'] = 'DiAa72IRMOZYnGe5qVSo9C4gmUQJ-wu3';
+                await axios.delete("https://api.intern.d-tt.nl/api/houses/" + houseId)
+                if (this.favList.includes(houseId)) this.favList.splice(this.favList.indexOf(houseId), 1)
+                await this.fetchHouses()
+                router.push({ name: 'home' })
+            } catch (e) {
+                console.log(e)
+             
+            }
         },
         // update house and send post request to House API
         async updateHouse(houseId, body, fileName) {
-            axios.defaults.headers['X-API-KEY'] = 'DiAa72IRMOZYnGe5qVSo9C4gmUQJ-wu3';
-            await axios.post("https://api.intern.d-tt.nl/api/houses/" + houseId, body)
-            const formData = new FormData()
-            formData.append("image", fileName.value)
-            await axios.post(`https://api.intern.d-tt.nl/api/houses/${houseId}/upload`, formData)
-            this.fetchHouses()
+            try {
+                axios.defaults.headers['X-API-KEY'] = 'DiAa72IRMOZYnGe5qVSo9C4gmUQJ-wu3';
+                await axios.post("https://api.intern.d-tt.nl/api/houses/" + houseId, body)
+                const formData = new FormData()
+                formData.append("image", fileName.value)
+                await axios.post(`https://api.intern.d-tt.nl/api/houses/${houseId}/upload`, formData)
+                await this.fetchHouses()
+                alert("House listing updated!")
+            } catch (e) {
+                alert(e)
+            }
         },
         // add house id into the favList if id does not already exist, otherwise remove it from the list 
         toggleFav(id) {

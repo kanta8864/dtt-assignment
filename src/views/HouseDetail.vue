@@ -89,13 +89,13 @@
       <div id="recommendation">
         <div class="header2">Recommended for you</div>
         <div class="recommendation-item">
-          <HouseInfo id="2" />
+          <HouseInfo :id="recommendations[0].id"/>
         </div>
         <div class="recommendation-item">
-          <HouseInfo id="3" />
+          <HouseInfo :id="recommendations[1].id"/>
         </div>
         <div class="recommendation-item">
-          <HouseInfo id="4" />
+          <HouseInfo :id="recommendations[2].id"/>
         </div>
       </div>
     </div>
@@ -129,7 +129,17 @@ export default {
       popupIsOpen.value = false
     }
 
-    return { houseStore, house, hasGarage, deleteHouse, popupIsOpen, openPopup, closePopup }
+    // recommendation items are choosen to be three houses
+    // with a similar price to the currently viewed house
+    const recommendations = houseStore.houses.filter(x => x.id != house.id).sort((a, b) => {
+      const priceDifA = Math.abs(a.price - house.price)
+      const priceDifB = Math.abs(b.price - house.price)
+      if(priceDifA > priceDifB) return 1
+      else if (priceDifA < priceDifB) return -1
+      else return 0
+    }).slice(0, 3)
+
+    return { houseStore, house, hasGarage, deleteHouse, popupIsOpen, openPopup, closePopup, recommendations }
   }
 }
 </script>

@@ -21,7 +21,7 @@
         <label for="price-choice" id="price-label">Price</label>
         <input type="radio" id="size-choice" name="choice" value="size"
           @click="e => $emit('changeSortTarget', e.target.value)">
-        <label for="size-choice" id="side-label">Size</label>
+        <label for="size-choice" id="size-label">Size</label>
       </div>
     </div>
   </div>
@@ -48,7 +48,7 @@ export default {
   align-items: space-around;
   gap: 30px;
   font-family: "Montserrat";
-  /* if width:100%, padding will be applied, making the website not fitting on screen */
+  /* if width:100%, the website would not fitting in the screen */
   width: calc(100% - 140px);
 }
 
@@ -74,6 +74,7 @@ export default {
   font-size: 18px;
 }
 
+/* grey plus icon is not shown and taken out of document flow when viewd in desktop */
 #tools #new-button .plus-grey {
   display: none;
 }
@@ -102,6 +103,7 @@ export default {
   border-radius: 5px;
   font-size: 14px;
   border: none;
+  /* adding search icon in the search bar */
   background-image: url(../assets/ic_search@3x.png);
   background-repeat: no-repeat;
   background-size: 20px;
@@ -135,6 +137,7 @@ export default {
   border-bottom-right-radius: 5px;
 }
 
+
 #tools input[type=radio]:checked+label {
   background-color: #EB5440;
 }
@@ -142,6 +145,7 @@ export default {
 @media only screen and (max-width: 600px) {
   #tools {
     gap: 10px;
+    /* takes padding into consideration */
     width: calc(100% - 40px);
   }
 
@@ -151,14 +155,17 @@ export default {
     padding: 0px;
   }
 
+  /* hide the white plus button */
   #tools #new-button .plus-white {
     display: none;
   }
 
+  /* show the grey plus button */
   #tools #new-button .plus-grey {
     display: block;
   }
 
+  /* hide the "CREATE NEW" */
   #tools #new-button div {
     display: none;
   }
