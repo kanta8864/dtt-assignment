@@ -14,8 +14,8 @@
 </template>
 
 <script>
-import NavVar from "./NavVar.vue"
-import HouseForm from "./HouseForm.vue"
+import NavVar from "../components/NavVar.vue"
+import HouseForm from "../components/HouseForm.vue"
 
 export default {
     components: { NavVar, HouseForm }

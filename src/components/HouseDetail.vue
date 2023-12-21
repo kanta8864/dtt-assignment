@@ -19,7 +19,7 @@
         <div>
           <img src="../assets/ic_delete_white@3x.png" class="edit-delete-button" @click.prevent="openPopup(house.id)">
         </div>
-        <Popup :houseId="house.id" @closePopup="closePopup" v-if="popupIsOpen" />
+        <DeletePopup :houseId="house.id" @closePopup="closePopup" v-if="popupIsOpen" />
       </div>
       <div>
         <font-awesome-icon :icon="['fas', 'heart']" :class="{ active: houseStore.getFavs.includes(house) }"
@@ -40,7 +40,7 @@
                 </router-link>
                 <div>
                   <img src="../assets/ic_delete@3x.png" class="edit-delete-button" @click.prevent="openPopup(house.id)">
-                  <Popup :houseId="house.id" @closePopup="closePopup" v-if="popupIsOpen" />
+                  <DeletePopup :houseId="house.id" @closePopup="closePopup" v-if="popupIsOpen" />
                 </div>
               </div>
               <div>
@@ -91,15 +91,15 @@
       </div>
       <div id="recommendation">
         <div class="header2">Recommended for you</div>
-        <div class="recommendation-item" v-if="recommendations.length >= 1">
+        <router-link :to="{ name: `houseDetail`, params: { id: recommendations[0].id } }" class="recommendation-item" v-if="recommendations.length >= 1">
           <HouseInfo :id="recommendations[0].id" />
-        </div>
-        <div class="recommendation-item" v-if="recommendations.length >= 2">
+        </router-link>
+        <router-link :to="{ name: `houseDetail`, params: { id: recommendations[1].id } }" class="recommendation-item" v-if="recommendations.length >= 2">
           <HouseInfo :id="recommendations[1].id" />
-        </div>
-        <div class="recommendation-item" v-if="recommendations.length >= 3">
+        </router-link>
+        <router-link :to="{ name: `houseDetail`, params: { id: recommendations[2].id } }" class="recommendation-item" v-if="recommendations.length >= 3">
           <HouseInfo :id="recommendations[2].id" />
-        </div>
+        </router-link>
       </div>
     </div>
   </div>
@@ -143,7 +143,16 @@ export default {
     }).slice(0, 3)
 
     return { houseStore, house, hasGarage, popupIsOpen, openPopup, closePopup, recommendations }
-  }
+  },
+  created() {
+    this.$watch(
+      () => this.$route.params,
+      (toParams, previousParams) => {
+        // forcing the page to reload when there is any change to the route.
+        location.reload()
+      }
+    )
+  },
 }
 </script>
 

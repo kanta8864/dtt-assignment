@@ -6,9 +6,9 @@
 </template>
 
 <script>
-import NavVar from "./NavVar.vue"
-import Tools from "./Tools.vue"
-import Houses from "./Houses.vue"
+import NavVar from "../components/NavVar.vue"
+import Tools from "../components/Tools.vue"
+import Houses from "../components/Houses.vue"
 import { ref } from "vue"
 import { useHouseStore } from "../stores/HouseStore"
 

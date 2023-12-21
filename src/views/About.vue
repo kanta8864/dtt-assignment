@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import NavVar from "./NavVar.vue"
+import NavVar from "../components/NavVar.vue"
 
 export default {
   components: { NavVar }

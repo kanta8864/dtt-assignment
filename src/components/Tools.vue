@@ -162,7 +162,7 @@ export default {
     display: block;
   }
 
-  /* Hide the "CREATE NEW" */
+  /* Hide the "CREATE NEW" text */
   #tools #new-button div {
     display: none;
   }

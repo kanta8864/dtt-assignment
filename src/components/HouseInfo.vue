@@ -47,15 +47,15 @@ export default {
 }
 
 #house-info .header2 {
-    margin-bottom:0px;
+    margin-bottom: 0px;
 }
 
 .house-photo {
     border-radius: 20px;
     margin: 10px;
     aspect-ratio: 1 / 1;
-    width:100px;
-    height: 100px; 
+    width: 100px;
+    height: 100px;
 }
 
 .preview-text {
@@ -87,13 +87,13 @@ export default {
 @media only screen and (max-width: 480px) {
     #house-info {
         width: 100%;
-        gap:10px;
+        gap: 10px;
     }
 
     .house-photo {
-    width:80px;
-    height: 80px; 
-    margin:5px;
-}
+        width: 80px;
+        height: 80px;
+        margin: 5px;
+    }
 }
 </style>

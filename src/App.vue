@@ -109,7 +109,7 @@ body {
   }
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 480px) {
 
 /* Styling rules for the main content of different pages */
   .content {

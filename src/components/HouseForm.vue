@@ -26,7 +26,9 @@
         <div>
             <p>Upload picture (PNG or JPG)&#x2a;</p>
             <input type="file" id="picture-input" class="file" @change="onFileUpload" required>
-
+            <!-- show currently chosen photo as preview -->
+            <img class="house-photo" :src="house.image" alt="house photo" v-if="!fileName && type == 'edit'">
+            <img :src="url" v-if="fileName" class="house-photo">
         </div>
 
         <div>
@@ -82,12 +84,18 @@ export default {
     setup(props) {
         const houseStore = useHouseStore()
 
+        // get a house if id is passed as props. (This is used to show the current house picture)
+        let house = {}
+        if (props.id) {
+            house = houseStore.getById(props.id)
+        }
+
         // this keeps track of the name of the submitted file and a string containing a URL representing the image
         const fileName = ref("")
         const url = ref("")
         const onFileUpload = function (e) {
             fileName.value = e.target.files[0]
-            url.value = URL.createObjectURL(fileName.value);
+            url.value = URL.createObjectURL(fileName.value)
         }
 
         // for storing form inputs. The use of v-model allows for two-way data binding
@@ -107,7 +115,6 @@ export default {
 
         if (props.type === "edit") {
             const house = houseStore.getById(props.id)
-
             // set the default input value to equal the exisiting data 
             streetName.value = house.location.street
             houseNumber.value = house.location.houseNumber
@@ -141,7 +148,7 @@ export default {
             else if (!houseNumber.value) hadleBadInput("house-number-input", "Required field missing")
             else if (!zip.value) hadleBadInput("postal-code-input", "Required field missing")
             else if (!city.value) hadleBadInput("city-input", "Required field missing")
-            else if (!fileName.value) hadleBadInput("picture-input", "Required field missing")
+            else if (!fileName.value && props.type != "edit") hadleBadInput("picture-input", "Required field missing")
             else if (!price.value) hadleBadInput("price-input", "Required field missing")
             else if (!size.value) hadleBadInput("size-input", "Required field missing")
             else if (!bedrooms.value) hadleBadInput("bedroom-input", "Required field missing")
@@ -200,14 +207,13 @@ export default {
                         }
                     })
                 } else {
-                    houseStore.updateHouse(props.id, body, fileName)
+                    houseStore.updateHouse(props.id, body, fileName.value)
                 }
             }
         }
-
         return {
             price, bedrooms, bathrooms, size, streetName, houseNumber, numberAddition, zip, city,
-            constructionYear, hasGarage, description, fileName, onFileUpload, formSubmit, url, filePath
+            constructionYear, hasGarage, description, fileName, onFileUpload, formSubmit, url, filePath, house
         }
     }
 }
@@ -310,6 +316,11 @@ export default {
     font-family: "Montserrat";
     font-style: italic;
     color: red;
+}
+
+/* hides "no file selected" text */
+#house-form input[type='file'] {
+    color: transparent;
 }
 
 @media only screen and (max-width: 768px) {

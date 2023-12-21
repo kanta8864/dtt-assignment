@@ -51,6 +51,7 @@ export const useHouseStore = defineStore("houseStore", {
         // fetch all the houses from House API
         async fetchHouses() {
             try {
+                // private API key is not secured but this is just so that reviewers can use it without configuring anything 
                 axios.defaults.headers['X-API-KEY'] = 'DiAa72IRMOZYnGe5qVSo9C4gmUQJ-wu3';
                 // function execution is paused until the promise is resolved
                 let data = await axios.get("https://api.intern.d-tt.nl/api/houses")
@@ -97,9 +98,12 @@ export const useHouseStore = defineStore("houseStore", {
             try {
                 axios.defaults.headers['X-API-KEY'] = 'DiAa72IRMOZYnGe5qVSo9C4gmUQJ-wu3';
                 await axios.post("https://api.intern.d-tt.nl/api/houses/" + houseId, body)
-                const formData = new FormData()
-                formData.append("image", fileName.value)
-                await axios.post(`https://api.intern.d-tt.nl/api/houses/${houseId}/upload`, formData)
+                // we do not update house photo if user did not submit a new image
+                if(fileName) {
+                    const formData = new FormData()
+                    formData.append("image", fileName)
+                    await axios.post(`https://api.intern.d-tt.nl/api/houses/${houseId}/upload`, formData)
+                }
                 await this.fetchHouses()
                 alert("House listing updated!")
             } catch (e) {

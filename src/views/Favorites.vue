@@ -10,8 +10,8 @@
 
 
 <script>
-import NavVar from "./NavVar.vue"
-import HousePreview from "./HousePreview.vue"
+import NavVar from "../components/NavVar.vue"
+import HousePreview from "../components/HousePreview.vue"
 import { useHouseStore } from "../stores/HouseStore"
 
 export default {
@@ -29,6 +29,10 @@ export default {
         text-align: center;
         margin-top: 40px;
         font-size: 22px;
+    }
+
+    #favorites {
+        margin-bottom: 70px;
     }
 }
 </style>

@@ -13,7 +13,7 @@
                 <div>
                     <img src="../assets/ic_delete@3x.png" class="edit-delete-button" @click.prevent="openPopup(house.id)">
                 </div>
-                <Popup :houseId="house.id" @closePopup="closePopup" v-if="popupIsOpen" />
+                <DeletePopup :houseId="house.id" @closePopup="closePopup" v-if="popupIsOpen" />
             </div>
             <!-- importing heart icon for marking a listing as favorite-->
             <font-awesome-icon :icon="['fas', 'heart']" :class="{ active: houseStore.getFavs.includes(house) }"
