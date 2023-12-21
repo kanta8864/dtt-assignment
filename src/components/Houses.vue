@@ -7,11 +7,13 @@
                 <div v-if="searchResultSize == 1">{{ searchResultSize }} result found</div>
                 <div v-else>{{ searchResultSize }} results found</div>
             </div>
+            <!-- if current sorting type is price, display a house list sorted by price -->
             <div v-if="sortType === 'price'" class="house-preview-container">
                 <div v-for="house in houseStore.sortByPrice(houseStore.filterByText(searchText))" :key="house.id">
                     <HousePreview :house="house" />
                 </div>
             </div>
+            <!-- if current sorting type is size, display a house list sorted by size -->
             <div v-if="sortType === `size`" class="house-preview-container">
                 <div v-for="house in houseStore.sortBySize(houseStore.filterByText(searchText))" :key="house.id">
                     <HousePreview :house="house" />

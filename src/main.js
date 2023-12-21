@@ -5,6 +5,7 @@ import App from './App.vue'
 import router from './router'
 // https://github.com/prazdevs/pinia-plugin-persistedstate
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
+
 /* import the fontawesome core */
 import { library } from '@fortawesome/fontawesome-svg-core'
 

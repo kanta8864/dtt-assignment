@@ -1,3 +1,4 @@
+<!-- this views file is responsible for showing a list of houses that are posted by the user -->
 <template>
     <NavVar />
     <div class="content house-preview-container" id="my-houses">

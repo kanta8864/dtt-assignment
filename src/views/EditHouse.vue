@@ -1,3 +1,4 @@
+<!-- this views file is responsible for showing a form to edit listing detail -->
 <template>
     <NavVar />
     <div id="edit-house" class="content">

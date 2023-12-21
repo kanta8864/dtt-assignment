@@ -1,4 +1,5 @@
 <template>
+    <!-- this component is responsible for showing a delete confirmation popup -->
     <div class="popup" @click.prevent="$emit(`closePopup`)">
         <div class="popup-content">
             <div class="header1">Delete listing</div>

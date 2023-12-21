@@ -1,3 +1,4 @@
+<!-- this views file is responsible for showing a house detail page -->
 <template>
   <NavVar />
   <div id="house-detail" class="content">
@@ -107,10 +108,10 @@
 
 <script>
 import { ref } from "vue"
-import HouseInfo from "./HouseInfo.vue"
-import NavVar from "./NavVar.vue"
+import HouseInfo from "../components/HouseInfo.vue"
+import NavVar from "../components/NavVar.vue"
 import { useHouseStore } from "../stores/HouseStore"
-import DeletePopup from "./DeletePopup.vue"
+import DeletePopup from "../components/DeletePopup.vue"
 
 export default {
   props: ["id"],

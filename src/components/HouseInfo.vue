@@ -1,4 +1,6 @@
 <template>
+    <!-- this component is used to display house information in the preview format
+         (for house overview page and recommended houses in the house detail page)-->
     <div id="house-info">
         <img class="house-photo" :src="house.image" alt="house photo">
         <div class="preview-text">

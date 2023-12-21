@@ -1,3 +1,4 @@
+<!-- this views file is responsible for showing the home page (house overview page) -->
 <template>
   <NavVar />
   <!-- handling custom events emitted from Tools component-->

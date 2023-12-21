@@ -1,3 +1,4 @@
+<!-- this views file is responsible for displaying information about the company -->
 <template>
   <NavVar />
   <div id="about-mobile" class="header1">About</div>

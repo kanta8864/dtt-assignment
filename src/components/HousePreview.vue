@@ -1,16 +1,18 @@
 <template>
+    <!-- this component is for displaying house information for each house in house overview page (home page)
+    It contains house info as well as edit, delete, and mark as favorite buttons -->
     <router-link :to="{ name: `houseDetail`, params: { id: house.id } }" id="house-preview">
         <div class="left">
             <HouseInfo :id="house.id" />
         </div>
-        <!-- only displays edit and delete button when the listing was made by the user
-        click.prevent is there to stop the propagation of click event to the parent element (not to be routed to HouseDetail page)-->
+        <!-- only displays edit and delete button when the listing was made by the user -->
         <div>
             <div v-if="house.madeByMe">
                 <router-link :to="{ name: `edit`, params: { id: house.id } }">
                     <img src="../assets/ic_edit@3x.png" class="edit-delete-button">
                 </router-link>
                 <div>
+                    <!-- click.prevent is there to stop the propagation of click event to the parent element (not to be routed to HouseDetail page) -->
                     <img src="../assets/ic_delete@3x.png" class="edit-delete-button" @click.prevent="openPopup(house.id)">
                 </div>
                 <DeletePopup :houseId="house.id" @closePopup="closePopup" v-if="popupIsOpen" />

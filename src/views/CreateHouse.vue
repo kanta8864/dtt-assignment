@@ -1,3 +1,4 @@
+<!-- this views file is responsible for showing a form to create a listing -->
 <template>
     <NavVar />
     <div id="create-house" class="content">

@@ -1,3 +1,4 @@
+<!-- this views file is responsible for showing listings that are marked as favorites by the user -->
 <template>
     <NavVar />
     <div class="content  house-preview-container" id="favorites">

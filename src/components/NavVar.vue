@@ -1,4 +1,5 @@
 <template>
+    <!-- this component is for displaying a navigation bar -->
     <div id="nav-container">
         <img class="logo" src="../assets/img_logo_dtt@3x.png" alt="DTT logo">
         <!-- active class is for styling the navigation bar text to be bold when needed -->

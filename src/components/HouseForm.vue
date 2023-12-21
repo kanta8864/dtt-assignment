@@ -1,4 +1,5 @@
 <template>
+    <!-- This component contains a form which is used to create and edit a listing -->
     <!-- submit.prevent prevents the default behavior of the form submit and let us execute formSubmit function -->
     <form @submit.prevent="formSubmit" id="house-form" novalidate>
         <div>
@@ -69,6 +70,7 @@
             <textarea v-model="description" id="description-input" placeholder="Enter description" required></textarea>
         </div>
         <div id="post-button-container">
+            <!-- decide which button to display depending on the type passed as a prop -->
             <button type="submit" v-if="type == 'create'">POST</button>
             <button type="submit" v-if="type == 'edit'">SAVE</button>
         </div>

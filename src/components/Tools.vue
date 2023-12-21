@@ -1,4 +1,6 @@
 <template>
+  <!-- this component includes all the tools avaialble for sorting and filtering of listings,
+     as well as a button to craete a new listing-->
   <div id="tools" class="content">
     <div class="first-row">
       <div class="header1">Houses</div>
@@ -15,7 +17,7 @@
         @input="e => $emit('changeSearchText', e.target.value)">
       <div class="sort">
         <!-- emits a custom event to the parent component (Home) when the radio button is clicked
-        It also emits a target-value which will either be price or size. -->
+        It also emits the selected sorting type which will either be price or size. -->
         <input type="radio" id="price-choice" name="choice" value="price" checked="checked"
           @click="e => $emit('changeSortTarget', e.target.value)">
         <label for="price-choice" id="price-label">Price</label>
@@ -33,7 +35,7 @@ import { ref } from "vue"
 export default {
   emits: ["changeSortTarget"],
   setup() {
-    // this variable will keep track of the user input for search text.
+    // this variable will keep track of the user input for search text using v-model.
     const searchText = ref("")
     return { searchText }
   }
