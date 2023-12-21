@@ -3,6 +3,7 @@ import { createPinia } from "pinia"
 
 import App from './App.vue'
 import router from './router'
+
 // https://github.com/prazdevs/pinia-plugin-persistedstate
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 
