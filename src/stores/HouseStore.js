@@ -61,6 +61,7 @@ export const useHouseStore = defineStore("houseStore", {
                     this.houses = data.data
                 }
             } catch (e) {
+                console.log(e)
                 alert(e)
             }
         },
