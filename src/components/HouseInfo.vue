@@ -25,17 +25,14 @@
     </div>
 </template>
 
-<script>
+<script setup>
 import { useHouseStore } from "../stores/HouseStore"
-
-export default {
-    props: ["id"],
-    setup(props) {
-        const houseStore = useHouseStore()
-        const house = houseStore.getById(props.id)
-        return { houseStore, house }
-    }
-}
+import { defineProps } from "vue"
+const props = defineProps({
+  id: Number,
+})
+const houseStore = useHouseStore()
+const house = houseStore.getById(props.id)
 </script>
 
 <style>

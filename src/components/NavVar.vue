@@ -18,22 +18,17 @@
     </div>
 </template>
 
-<script>
+<script setup>
 import { useRoute } from 'vue-router'
 import { computed } from 'vue'
 
-export default {
-    setup() {
-        const route = useRoute();
-        // use of computed property to automatically track its dependencies. (the route in this case) 
-        // the following four values check if each navigation bar text needs to be bold given the current route
-        const housesIncluded = computed(() => route.path.includes("/houses") ? true : false)
-        const aboutIncluded = computed(() => route.path.includes("/about") ? true : false)
-        const myHousesIncluded = computed(() => route.path.includes("/myHouses") ? true : false)
-        const favoritesIncluded = computed(() => route.path.includes("/favorites") ? true : false)
-        return { housesIncluded, aboutIncluded, myHousesIncluded, favoritesIncluded }
-    }
-}
+const route = useRoute();
+// use of computed property to automatically track its dependencies. (the route in this case) 
+// the following four values check if each navigation bar text needs to be bold given the current route
+const housesIncluded = computed(() => route.path.includes("/houses") ? true : false)
+const aboutIncluded = computed(() => route.path.includes("/about") ? true : false)
+const myHousesIncluded = computed(() => route.path.includes("/myHouses") ? true : false)
+const favoritesIncluded = computed(() => route.path.includes("/favorites") ? true : false)
 </script>
 
 <style>
@@ -120,4 +115,5 @@ export default {
     #about-button div {
         color: transparent;
     }
-}</style>
+}
+</style>

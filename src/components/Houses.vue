@@ -29,18 +29,18 @@
     </div>
 </template>
 
-<script>
+<script setup>
 import HousePreview from './HousePreview.vue'
 import { useHouseStore } from "../stores/HouseStore"
+import { defineProps } from 'vue'
 
-export default {
-    components: { HousePreview },
-    props: ["searchResultSize", "searchText", "sortType"],
-    setup() {
-        const houseStore = useHouseStore()
-        return { houseStore }
-    }
-}
+const props = defineProps({
+  searchResultSize: Number,
+  searchText: String, 
+  sortType: String
+})
+
+const houseStore = useHouseStore()
 </script>
 
 <style>

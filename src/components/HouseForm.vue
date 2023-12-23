@@ -28,7 +28,7 @@
             <p>Upload picture (PNG or JPG)&#x2a;</p>
             <input type="file" id="picture-input" class="file" @change="onFileUpload" required>
             <!-- show currently chosen photo as preview -->
-            <img class="house-photo" :src="house.image" alt="house photo" v-if="!fileName && type == 'edit'">
+            <img class="house-photo" :src="houseImage" alt="house photo" v-if="!fileName && type == 'edit'">
             <img :src="url" v-if="fileName" class="house-photo">
         </div>
 
@@ -77,145 +77,142 @@
     </form>
 </template>
 
-<script>
+<script setup>
 import { ref } from 'vue'
 import { useHouseStore } from "../stores/HouseStore"
+const props = defineProps({
+    type: String,
+    id: Number
+})
 
-export default {
-    props: ["type", "id"],
-    setup(props) {
-        const houseStore = useHouseStore()
+const houseStore = useHouseStore()
 
-        // get a house if id is passed as props. (This is used to show the current house picture)
-        let house = {}
-        if (props.id) {
-            house = houseStore.getById(props.id)
+// get a house image if id is passed as a prop. 
+// (This is used to show the current house picture)
+let houseImage = ""
+if (props.id) {
+    const house = houseStore.getById(props.id)
+    houseImage = house.image
+}
+
+// this keeps track of the name of the submitted file and a string containing a URL representing the image
+const fileName = ref("")
+const url = ref("")
+const onFileUpload = function (e) {
+    fileName.value = e.target.files[0]
+    url.value = URL.createObjectURL(fileName.value)
+}
+
+// for storing form inputs. The use of v-model allows for two-way data binding
+const streetName = ref("")
+const houseNumber = ref("")
+const numberAddition = ref("")
+const zip = ref("")
+const city = ref("")
+const price = ref("")
+const size = ref("")
+const hasGarage = ref("true")
+const bedrooms = ref("")
+const bathrooms = ref("")
+const constructionYear = ref("")
+const description = ref("")
+const filePath = ref("")
+
+if (props.type === "edit") {
+    const house = houseStore.getById(props.id)
+    // set the default input value to equal the exisiting data 
+    streetName.value = house.location.street
+    houseNumber.value = house.location.houseNumber
+    numberAddition.value = house.location.houseNumberAddition
+    zip.value = house.location.zip
+    city.value = house.location.city
+    price.value = house.price
+    size.value = house.size
+    hasGarage.value = house.hasGarage
+    bedrooms.value = house.rooms.bedrooms
+    bathrooms.value = house.rooms.bathrooms
+    constructionYear.value = house.constructionYear
+    description.value = house.description
+    filePath.value = house.image
+}
+
+// function which displays error message in case of bad input (missing required field, invalid input type etc)
+function hadleBadInput(id, message) {
+    const inputField = document.querySelector(`#${id}`)
+    const errorMessageSpan = document.createElement("span")
+    errorMessageSpan.classList.add("error-message")
+    errorMessageSpan.appendChild(document.createTextNode(message))
+    inputField.style.border = "1px solid red"
+    inputField.parentNode.insertBefore(errorMessageSpan, inputField.nextSibling)
+}
+
+// function to validate the inputs by the users
+function validateInputs() {
+    // check if there exists any required fields missing  
+    if (!streetName.value) hadleBadInput("street-input", "Required field missing")
+    else if (!houseNumber.value) hadleBadInput("house-number-input", "Required field missing")
+    else if (!zip.value) hadleBadInput("postal-code-input", "Required field missing")
+    else if (!city.value) hadleBadInput("city-input", "Required field missing")
+    else if (!fileName.value && props.type != "edit") hadleBadInput("picture-input", "Required field missing")
+    else if (!price.value) hadleBadInput("price-input", "Required field missing")
+    else if (!size.value) hadleBadInput("size-input", "Required field missing")
+    else if (!bedrooms.value) hadleBadInput("bedroom-input", "Required field missing")
+    else if (!bathrooms.value) hadleBadInput("bathroom-input", "Required field missing")
+    else if (!constructionYear.value) hadleBadInput("construction-year-input", "Required field missing")
+    else if (!description.value) hadleBadInput("description-input", "Required field missing")
+    else {
+        // check if the input is valid 
+        if (isNaN(parseInt(houseNumber.value))) hadleBadInput("house-number-input", "Invalid house number input")
+        else if (isNaN(parseInt(price.value))) hadleBadInput("price-input", "Invalid price input")
+        else if (isNaN(parseInt(size.value))) hadleBadInput("size-input", "Invalid size input")
+        else if (isNaN(parseInt(bedrooms.value))) hadleBadInput("bedroom-input", "Invalid bedrooms input")
+        else if (isNaN(parseInt(bathrooms.value))) hadleBadInput("bathroom-input", "Invalid bathrooms input")
+        else if (isNaN(parseInt(constructionYear.value))) hadleBadInput("construction-year-input", "Invalid construction year input")
+        else return true
+    }
+}
+
+// defines the behaviour when the POST button is pressed
+const formSubmit = async function (e) {
+    // remove the error message div from DOM and make the input border back to black
+    const errorMessageDiv = document.querySelector(".error-message")
+    if (errorMessageDiv) {
+        const inputFields = document.querySelectorAll("#house-form input")
+        inputFields.forEach(input => input.style.border = "none")
+        errorMessageDiv.remove()
+    }
+
+    if (validateInputs()) {
+        const body = {
+            price: parseInt(price.value),
+            bedrooms: parseInt(bedrooms.value),
+            bathrooms: parseInt(bathrooms.value),
+            size: parseInt(size.value),
+            streetName: streetName.value,
+            houseNumber: parseInt(houseNumber.value),
+            numberAddition: numberAddition.value,
+            zip: zip.value,
+            city: city.value,
+            constructionYear: parseInt(constructionYear.value),
+            hasGarage: hasGarage.value,
+            description: description.value,
         }
 
-        // this keeps track of the name of the submitted file and a string containing a URL representing the image
-        const fileName = ref("")
-        const url = ref("")
-        const onFileUpload = function (e) {
-            fileName.value = e.target.files[0]
-            url.value = URL.createObjectURL(fileName.value)
-        }
-
-        // for storing form inputs. The use of v-model allows for two-way data binding
-        const streetName = ref("")
-        const houseNumber = ref("")
-        const numberAddition = ref("")
-        const zip = ref("")
-        const city = ref("")
-        const price = ref("")
-        const size = ref("")
-        const hasGarage = ref("true")
-        const bedrooms = ref("")
-        const bathrooms = ref("")
-        const constructionYear = ref("")
-        const description = ref("")
-        const filePath = ref("")
-
-        if (props.type === "edit") {
-            const house = houseStore.getById(props.id)
-            // set the default input value to equal the exisiting data 
-            streetName.value = house.location.street
-            houseNumber.value = house.location.houseNumber
-            numberAddition.value = house.location.houseNumberAddition
-            zip.value = house.location.zip
-            city.value = house.location.city
-            price.value = house.price
-            size.value = house.size
-            hasGarage.value = house.hasGarage
-            bedrooms.value = house.rooms.bedrooms
-            bathrooms.value = house.rooms.bathrooms
-            constructionYear.value = house.constructionYear
-            description.value = house.description
-            filePath.value = house.image
-        }
-
-        // function which displays error message in case of bad input (missing required field, invalid input type etc)
-        function hadleBadInput(id, message) {
-            const inputField = document.querySelector(`#${id}`)
-            const errorMessageSpan = document.createElement("span")
-            errorMessageSpan.classList.add("error-message")
-            errorMessageSpan.appendChild(document.createTextNode(message))
-            inputField.style.border = "1px solid red"
-            inputField.parentNode.insertBefore(errorMessageSpan, inputField.nextSibling)
-        }
-
-        // function to validate the inputs by the users
-        function validateInputs() {
-            // check if there exists any required fields missing  
-            if (!streetName.value) hadleBadInput("street-input", "Required field missing")
-            else if (!houseNumber.value) hadleBadInput("house-number-input", "Required field missing")
-            else if (!zip.value) hadleBadInput("postal-code-input", "Required field missing")
-            else if (!city.value) hadleBadInput("city-input", "Required field missing")
-            else if (!fileName.value && props.type != "edit") hadleBadInput("picture-input", "Required field missing")
-            else if (!price.value) hadleBadInput("price-input", "Required field missing")
-            else if (!size.value) hadleBadInput("size-input", "Required field missing")
-            else if (!bedrooms.value) hadleBadInput("bedroom-input", "Required field missing")
-            else if (!bathrooms.value) hadleBadInput("bathroom-input", "Required field missing")
-            else if (!constructionYear.value) hadleBadInput("construction-year-input", "Required field missing")
-            else if (!description.value) hadleBadInput("description-input", "Required field missing")
-            else {
-                // check if the input is valid 
-                if (isNaN(parseInt(houseNumber.value))) hadleBadInput("house-number-input", "Invalid house number input")
-                else if (isNaN(parseInt(price.value))) hadleBadInput("price-input", "Invalid price input")
-                else if (isNaN(parseInt(size.value))) hadleBadInput("size-input", "Invalid size input")
-                else if (isNaN(parseInt(bedrooms.value))) hadleBadInput("bedroom-input", "Invalid bedrooms input")
-                else if (isNaN(parseInt(bathrooms.value))) hadleBadInput("bathroom-input", "Invalid bathrooms input")
-                else if (isNaN(parseInt(constructionYear.value))) hadleBadInput("construction-year-input", "Invalid construction year input")
-                else return true
-            }
-        }
-
-        // defines the behaviour when the POST button is pressed
-        const formSubmit = async function (e) {
-            // remove the error message div from DOM and make the input border back to black
-            const errorMessageDiv = document.querySelector(".error-message")
-            if (errorMessageDiv) {
-                const inputFields = document.querySelectorAll("#house-form input")
-                inputFields.forEach(input => input.style.border = "none")
-                errorMessageDiv.remove()
-            }
-
-            if (validateInputs()) {
-                const body = {
-                    price: parseInt(price.value),
-                    bedrooms: parseInt(bedrooms.value),
-                    bathrooms: parseInt(bathrooms.value),
-                    size: parseInt(size.value),
-                    streetName: streetName.value,
-                    houseNumber: parseInt(houseNumber.value),
-                    numberAddition: numberAddition.value,
-                    zip: zip.value,
-                    city: city.value,
-                    constructionYear: parseInt(constructionYear.value),
-                    hasGarage: hasGarage.value,
-                    description: description.value,
+        if (props.type === "create") {
+            houseStore.addHouse(body, fileName).then((isSuccessful) => {
+                // Only clear inputs when there was no error was caught when making request to House API
+                if (isSuccessful) {
+                    // clearing all the inputs
+                    streetName.value = houseNumber.value = numberAddition.value = zip.value = city.value = price.value =
+                        size.value = bedrooms.value = bathrooms.value = constructionYear.value = description.value = ""
+                    const file = document.querySelector(".file")
+                    file.value = ""
+                    document.getElementById("yesGarage").checked = true;
+                    document.getElementById("noGarage").checked = false;
                 }
-
-                if (props.type === "create") {
-                    houseStore.addHouse(body, fileName).then((isSuccessful) => {
-                        // Only clear inputs when there was no error was caught when making request to House API
-                        if (isSuccessful) {
-                            // clearing all the inputs
-                            streetName.value = houseNumber.value = numberAddition.value = zip.value = city.value = price.value =
-                                size.value = bedrooms.value = bathrooms.value = constructionYear.value = description.value = ""
-                            const file = document.querySelector(".file")
-                            file.value = ""
-                            document.getElementById("yesGarage").checked = true;
-                            document.getElementById("noGarage").checked = false;
-                        }
-                    })
-                } else {
-                    houseStore.updateHouse(props.id, body, fileName.value)
-                }
-            }
-        }
-        return {
-            price, bedrooms, bathrooms, size, streetName, houseNumber, numberAddition, zip, city,
-            constructionYear, hasGarage, description, fileName, onFileUpload, formSubmit, url, filePath, house
+            })
+        } else {
+            houseStore.updateHouse(props.id, body, fileName.value)
         }
     }
 }

@@ -29,17 +29,11 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import { ref } from "vue"
 
-export default {
-  emits: ["changeSortTarget"],
-  setup() {
-    // this variable will keep track of the user input for search text using v-model.
-    const searchText = ref("")
-    return { searchText }
-  }
-}
+// this variable will keep track of the user input for search text using v-model.
+const searchText = ref("")
 </script>
 
 <style>
@@ -175,7 +169,7 @@ export default {
 
   #tools .first-row div {
     margin: auto;
-    font-size:22px;
+    font-size: 22px;
   }
 
   #tools .first-row a {
@@ -195,5 +189,4 @@ export default {
     padding: 10px 15px 10px 50px;
   }
 }
-
 </style>

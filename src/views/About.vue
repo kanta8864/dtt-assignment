@@ -28,12 +28,8 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import NavVar from "../components/NavVar.vue"
-
-export default {
-  components: { NavVar }
-}
 </script>
 
 <style>

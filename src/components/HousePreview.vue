@@ -24,28 +24,25 @@
     </router-link>
 </template>
 
-<script>
+<script setup>
 import HouseInfo from "./HouseInfo.vue"
 import { useHouseStore } from "../stores/HouseStore"
 import DeletePopup from "./DeletePopup.vue"
-import { ref } from 'vue'
+import { ref, defineProps } from 'vue'
 
-export default {
-    components: { HouseInfo, DeletePopup },
-    props: ["house"],
-    setup() {
-        const houseStore = useHouseStore()
+const props = defineProps({
+    house: Object,
+})
 
-        // manages if the popup to confirm listing deletion is open or not
-        const popupIsOpen = ref(false)
-        const openPopup = () => {
-            popupIsOpen.value = true
-        }
-        const closePopup = () => {
-            popupIsOpen.value = false
-        }
-        return { houseStore, popupIsOpen, openPopup, closePopup }
-    }
+const houseStore = useHouseStore()
+
+// manages if the popup to confirm listing deletion is open or not
+const popupIsOpen = ref(false)
+const openPopup = () => {
+    popupIsOpen.value = true
+}
+const closePopup = () => {
+    popupIsOpen.value = false
 }
 </script>
 

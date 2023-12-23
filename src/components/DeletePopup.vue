@@ -15,16 +15,14 @@
     </div>
 </template>
 
-<script>
+<script setup>
 import { useHouseStore } from "../stores/HouseStore"
+import { defineProps } from "vue"
 
-export default {
-    props: ["houseId"],
-    setup() {
-        const houseStore = useHouseStore()
-        return { houseStore }
-    },
-}
+const props = defineProps({
+  houseId: Number,
+})
+const houseStore = useHouseStore()
 </script>
 
 <style>

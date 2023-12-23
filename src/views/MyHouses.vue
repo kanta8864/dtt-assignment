@@ -10,18 +10,12 @@
 </template>
 
 
-<script>
+<script setup>
 import NavVar from "../components/NavVar.vue"
 import HousePreview from "../components/HousePreview.vue"
 import { useHouseStore } from "../stores/HouseStore"
 
-export default {
-    components: { NavVar, HousePreview },
-    setup() {
-        const houseStore = useHouseStore()
-        return { houseStore }
-    }
-}
+const houseStore = useHouseStore()
 </script>
 
 <style>
@@ -33,7 +27,7 @@ export default {
     }
 
     #my-houses {
-        margin-bottom:70px;
+        margin-bottom: 70px;
     }
 }
 </style>

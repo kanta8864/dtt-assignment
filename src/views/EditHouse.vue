@@ -14,14 +14,14 @@
     </div>
 </template>
 
-<script>
+<script setup>
 import NavVar from "../components/NavVar.vue"
 import HouseForm from "../components/HouseForm.vue"
+import { defineProps } from "vue"
 
-export default {
-    props: ["id"],
-    components: { NavVar, HouseForm },
-}
+const props = defineProps({
+  id: Number,
+})
 </script>
 
 <style>

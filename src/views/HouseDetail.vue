@@ -92,13 +92,16 @@
       </div>
       <div id="recommendation">
         <div class="header2">Recommended for you</div>
-        <router-link :to="{ name: `houseDetail`, params: { id: recommendations[0].id } }" class="recommendation-item" v-if="recommendations.length >= 1">
+        <router-link :to="{ name: `houseDetail`, params: { id: recommendations[0].id } }" class="recommendation-item"
+          v-if="recommendations.length >= 1">
           <HouseInfo :id="recommendations[0].id" />
         </router-link>
-        <router-link :to="{ name: `houseDetail`, params: { id: recommendations[1].id } }" class="recommendation-item" v-if="recommendations.length >= 2">
+        <router-link :to="{ name: `houseDetail`, params: { id: recommendations[1].id } }" class="recommendation-item"
+          v-if="recommendations.length >= 2">
           <HouseInfo :id="recommendations[1].id" />
         </router-link>
-        <router-link :to="{ name: `houseDetail`, params: { id: recommendations[2].id } }" class="recommendation-item" v-if="recommendations.length >= 3">
+        <router-link :to="{ name: `houseDetail`, params: { id: recommendations[2].id } }" class="recommendation-item"
+          v-if="recommendations.length >= 3">
           <HouseInfo :id="recommendations[2].id" />
         </router-link>
       </div>
@@ -106,55 +109,41 @@
   </div>
 </template>
 
-<script>
-import { ref } from "vue"
+<script setup>
+import { ref, defineProps } from "vue"
 import HouseInfo from "../components/HouseInfo.vue"
 import NavVar from "../components/NavVar.vue"
 import { useHouseStore } from "../stores/HouseStore"
 import DeletePopup from "../components/DeletePopup.vue"
 
-export default {
-  props: ["id"],
-  components: { HouseInfo, NavVar, DeletePopup },
-  setup(props) {
-    // initialize house store and get the particular house using id passed to this component as a prop
-    const houseStore = useHouseStore()
-    const house = houseStore.getById(props.id)
+const props = defineProps({
+  id: Number,
+})
+// initialize house store and get the particular house using id passed to this component as a prop
+const houseStore = useHouseStore()
+const house = houseStore.getById(props.id)
 
-    // converts true/false value to yes/no for easier understanding
-    const hasGarage = ref(house.hasGarage ? "yes" : "no")
+// converts true/false value to yes/no for easier understanding
+const hasGarage = ref(house.hasGarage ? "yes" : "no")
 
-    // deals with opening and closing of popup asking user to confirm the deletion of a listing
-    const popupIsOpen = ref(false)
-    const openPopup = () => {
-      popupIsOpen.value = true
-    }
-    const closePopup = () => {
-      popupIsOpen.value = false
-    }
-
-    // recommendation items are choosen to be three houses
-    // with a similar price to the currently viewed house
-    const recommendations = houseStore.houses.filter(x => x.id != house.id).sort((a, b) => {
-      const priceDifA = Math.abs(a.price - house.price)
-      const priceDifB = Math.abs(b.price - house.price)
-      if (priceDifA > priceDifB) return 1
-      else if (priceDifA < priceDifB) return -1
-      else return 0
-    }).slice(0, 3)
-
-    return { houseStore, house, hasGarage, popupIsOpen, openPopup, closePopup, recommendations }
-  },
-  created() {
-    this.$watch(
-      () => this.$route.params,
-      (toParams, previousParams) => {
-        // forcing the page to reload when there is any change to the route.
-        location.reload()
-      }
-    )
-  },
+// deals with opening and closing of popup asking user to confirm the deletion of a listing
+const popupIsOpen = ref(false)
+const openPopup = () => {
+  popupIsOpen.value = true
 }
+const closePopup = () => {
+  popupIsOpen.value = false
+}
+
+// recommendation items are choosen to be three houses
+// with a similar price to the currently viewed house
+const recommendations = houseStore.houses.filter(x => x.id != house.id).sort((a, b) => {
+  const priceDifA = Math.abs(a.price - house.price)
+  const priceDifB = Math.abs(b.price - house.price)
+  if (priceDifA > priceDifB) return 1
+  else if (priceDifA < priceDifB) return -1
+  else return 0
+}).slice(0, 3)
 </script>
 
 <style>
@@ -355,5 +344,4 @@ export default {
   #house-detail .back-button .back-grey {
     display: none;
   }
-}
-</style>
+}</style>
