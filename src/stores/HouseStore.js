@@ -72,13 +72,23 @@ export const useHouseStore = defineStore("houseStore", {
                 let data = await axios.post("https://api.intern.d-tt.nl/api/houses", body)
                 const formData = new FormData()
                 formData.append("image", fileName.value)
-                await axios.post(`https://api.intern.d-tt.nl/api/houses/${data.data.id}/upload`, formData)
-                await this.fetchHouses()
-                router.push({ name: 'houseDetail', params: { id: data.data.id } })
-                alert("House listing posted!")
-                return true
+                if(data.data.id) {
+                    await axios.post(`https://api.intern.d-tt.nl/api/houses/${data.data.id}/upload`, formData)
+                    await this.fetchHouses()
+                    router.push({ name: 'houseDetail', params: { id: data.data.id } })
+                    alert("House listing posted!")
+                    return true
+                } else {
+                    // when the user types in input such as 10000 for construction year, API does not
+                    // throw any error in the first post request but data.data.id becomes undefined, 
+                    // making the second post request invalid. This is to notify the user about what the 
+                    // problem is specifically instead of giving very general bad request error. 
+                    alert("house construction year is not valid")
+                    return false;
+                }
             } catch (e) {
-                alert(e)
+                // this is mainly for when construction year is out of range 
+                alert(e.response.data.code)
                 return false
             }
         },
