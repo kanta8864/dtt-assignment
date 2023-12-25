@@ -14,7 +14,7 @@
     <!-- only show edit and delete button if the house is made by the user -->
     <div class="mobile-buttons-container">
       <div v-if="house.madeByMe" class="edit-delete-button-container">
-        <router-link :to="{ name: `edit`, params: { id: house.id } }">
+        <router-link :to="{ name: `edit`, params: { id: house.id, type: 'edit' } }">
           <img src="../assets/ic_edit_white@3x.png" class="edit-delete-button">
         </router-link>
         <div>
@@ -36,7 +36,7 @@
             <div class="buttons-container">
               <!-- only show edit and delete button if the house is made by the user -->
               <div v-if="house.madeByMe" class="edit-delete-button-container">
-                <router-link :to="{ name: `edit`, params: { id: house.id } }">
+                <router-link :to="{ name: `edit`, params: { id: house.id, type: 'edit' } }">
                   <img src="../assets/ic_edit@3x.png" class="edit-delete-button">
                 </router-link>
                 <div>
@@ -196,6 +196,11 @@ const recommendations = houseStore.houses.filter(x => x.id != house.id).sort((a,
   align-items: center;
   gap: 10px;
 }
+
+#house-detail .edit-delete-button {
+    width: 32px;
+    height: 32px;
+  }
 
 #house-detail .house-info {
   width: 55%;
@@ -373,7 +378,7 @@ const recommendations = houseStore.houses.filter(x => x.id != house.id).sort((a,
 
   #house-detail .edit-delete-button {
     width: 25px;
-    height: auto;
+    height: 25px;
   }
 
   #house-detail .back-button .back-white {

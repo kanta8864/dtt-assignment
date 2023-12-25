@@ -8,7 +8,7 @@
         <!-- only displays edit and delete button when the listing was made by the user -->
         <div class="buttons-container">
             <div v-if="house.madeByMe" class="edit-delete-button-container">
-                <router-link :to="{ name: `edit`, params: { id: house.id } }">
+                <router-link :to="{ name: `edit`, params: { id: house.id, type: 'edit' } }">
                     <img src="../assets/ic_edit@3x.png" class="edit-delete-button">
                 </router-link>
                 <div>

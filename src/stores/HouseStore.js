@@ -61,7 +61,6 @@ export const useHouseStore = defineStore("houseStore", {
                     this.houses = data.data
                 }
             } catch (e) {
-                console.log(e)
                 alert(e)
             }
         },
@@ -116,6 +115,7 @@ export const useHouseStore = defineStore("houseStore", {
                     await axios.post(`https://api.intern.d-tt.nl/api/houses/${houseId}/upload`, formData)
                 }
                 await this.fetchHouses()
+                router.push({ name: 'houseDetail', params: { id: houseId } })
                 alert("House listing updated!")
             } catch (e) {
                 alert(e)

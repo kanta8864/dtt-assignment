@@ -1,89 +1,114 @@
 <template>
-    
-    <!-- This component contains a form which is used to create and edit a listing -->
-    <!-- submit.prevent prevents the default behavior of the form submit and let us execute formSubmit function -->
-    <form @submit.prevent="formSubmit" id="house-form" novalidate>
-        <div>
-            <p>Street name&#x2a;</p>
-            <input type="text" id="street-input" v-model="streetName" placeholder="Enter the street name" required>
-        </div>
-        <div class="house-number">
-            <div>
-                <p>House number&#x2a;</p>
-                <input type="text" id="house-number-input" v-model="houseNumber" placeholder="Enter house number" required>
+    <NavVar />
+    <div id="house-form">
+        <div v-if="type == 'create'">
+            <div class="back-button">
+                <!-- Use of router link to navigate user back to house overview page when clicked -->
+                <router-link :to="{ name: `home` }">
+                    <img src="../assets/ic_back_grey@3x.png" alt="back button" class="back-grey">
+                </router-link>
+                <div>Back to House Overview</div>
             </div>
-            <div>
-                <p>Addition (optional)</p>
-                <input type="text" id="addition-input" v-model="numberAddition" placeholder="e.g. A">
+            <div class="header1">Create new listing</div>
+        </div>
+        <div v-if="type == 'edit'">
+            <div class="back-button">
+                <!-- Use of router link to navigate user back to house detail page when clicked -->
+                <router-link :to="{ name: `houseDetail`, params: { id: id } }">
+                    <img src="../assets/ic_back_grey@3x.png" alt="back button" class="back-grey">
+                </router-link>
+                <div>Back to House Detail</div>
             </div>
+            <div class="header1">Edit listing</div>
         </div>
-        <div>
-            <p>Postal code&#x2a;</p>
-            <input type="text" id="postal-code-input" v-model="zip" placeholder="e.g. 1000 AA" required>
-        </div>
-        <div>
-            <p>City&#x2a;</p>
-            <input type="text" id="city-input" v-model="city" placeholder="e.g. Utrecht" required>
-        </div>
-        <div>
-            <p>Upload picture (PNG or JPG)&#x2a;</p>
-            <input type="file" id="picture-input" class="file" @change="onFileUpload" required>
-            <!-- show currently chosen photo as preview -->
-            <img class="house-photo" :src="houseImage" alt="house photo" v-if="!fileName && type == 'edit'">
-            <img :src="url" v-if="fileName" class="house-photo">
-        </div>
-
-        <div>
-            <p>Price&#x2a;</p>
-            <input type="text" id="price-input" v-model="price" placeholder="e.g. &euro;150.000" required>
-        </div>
-        <div>
+        <!-- This component contains a form which is used to create and edit a listing -->
+        <!-- submit.prevent prevents the default behavior of the form submit and let us execute formSubmit function -->
+        <form @submit.prevent="formSubmit" novalidate>
             <div>
-                <p>Size&#x2a;</p>
-                <input type="text" id="size-input" v-model="size" placeholder="e.g. 60m2" required>
+                <p>Street name&#x2a;</p>
+                <input type="text" id="street-input" v-model="streetName" placeholder="Enter the street name" required>
             </div>
-            <div>
-                <p>Garage&#x2a;</p>
-                <div id="garage-input">
-                    <input type="radio" id="yesGarage" value="true" v-model="hasGarage">
-                    <label for="yesGarage" id="yes-label">Yes</label>
-                    <input type="radio" id="noGarage" value="false" v-model="hasGarage">
-                    <label for="noGarage" id="no-label">No</label>
+            <div class="house-number">
+                <div>
+                    <p>House number&#x2a;</p>
+                    <input type="text" id="house-number-input" v-model="houseNumber" placeholder="Enter house number"
+                        required>
+                </div>
+                <div>
+                    <p>Addition (optional)</p>
+                    <input type="text" id="addition-input" v-model="numberAddition" placeholder="e.g. A">
                 </div>
             </div>
-        </div>
-        <div>
             <div>
-                <p>Bedrooms&#x2a;</p>
-                <input type="text" id="bedroom-input" v-model="bedrooms" placeholder="Enter amount" required>
+                <p>Postal code&#x2a;</p>
+                <input type="text" id="postal-code-input" v-model="zip" placeholder="e.g. 1000 AA" required>
             </div>
             <div>
-                <p>Bathrooms&#x2a;</p>
-                <input type="text" id="bathroom-input" v-model="bathrooms" placeholder="Enter amount" required>
+                <p>City&#x2a;</p>
+                <input type="text" id="city-input" v-model="city" placeholder="e.g. Utrecht" required>
             </div>
-        </div>
-        <div>
-            <p>Construction year&#x2a;</p>
-            <input type="text" id="construction-year-input" v-model="constructionYear" placeholder="e.g. 1990" required>
-        </div>
-        <div id="description">
-            <p>Description&#x2a;</p>
-            <textarea v-model="description" id="description-input" placeholder="Enter description" required></textarea>
-        </div>
-        <div id="post-button-container">
-            <!-- decide which button to display depending on the type passed as a prop -->
-            <button type="submit" v-if="type == 'create'">POST</button>
-            <button type="submit" v-if="type == 'edit'">SAVE</button>
-        </div>
-    </form>
+            <div>
+                <p>Upload picture (PNG or JPG)&#x2a;</p>
+                <input type="file" id="picture-input" class="file" @change="onFileUpload" required>
+                <!-- show currently chosen photo as preview -->
+                <img class="house-photo" :src="houseImage" alt="house photo" v-if="!fileName && type == 'edit'">
+                <img :src="url" v-if="fileName" class="house-photo">
+            </div>
+
+            <div>
+                <p>Price&#x2a;</p>
+                <input type="text" id="price-input" v-model="price" placeholder="e.g. &euro;150.000" required>
+            </div>
+            <div>
+                <div>
+                    <p>Size&#x2a;</p>
+                    <input type="text" id="size-input" v-model="size" placeholder="e.g. 60m2" required>
+                </div>
+                <div>
+                    <p>Garage&#x2a;</p>
+                    <div id="garage-input">
+                        <input type="radio" id="yesGarage" value="true" v-model="hasGarage">
+                        <label for="yesGarage" id="yes-label">Yes</label>
+                        <input type="radio" id="noGarage" value="false" v-model="hasGarage">
+                        <label for="noGarage" id="no-label">No</label>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div>
+                    <p>Bedrooms&#x2a;</p>
+                    <input type="text" id="bedroom-input" v-model="bedrooms" placeholder="Enter amount" required>
+                </div>
+                <div>
+                    <p>Bathrooms&#x2a;</p>
+                    <input type="text" id="bathroom-input" v-model="bathrooms" placeholder="Enter amount" required>
+                </div>
+            </div>
+            <div>
+                <p>Construction year&#x2a;</p>
+                <input type="text" id="construction-year-input" v-model="constructionYear" placeholder="e.g. 1990" required>
+            </div>
+            <div id="description">
+                <p>Description&#x2a;</p>
+                <textarea v-model="description" id="description-input" placeholder="Enter description" required></textarea>
+            </div>
+            <div id="post-button-container">
+                <!-- decide which button to display depending on the type passed as a prop -->
+                <button type="submit" v-if="type == 'create'">POST</button>
+                <button type="submit" v-if="type == 'edit'">SAVE</button>
+            </div>
+        </form>
+    </div>
 </template>
 
 <script setup>
 import { ref } from 'vue'
 import { useHouseStore } from "../stores/HouseStore"
+import NavVar from "../components/NavVar.vue"
+
 const props = defineProps({
-    type: String,
-    id: String
+    id: String,
+    type: String
 })
 
 const houseStore = useHouseStore()
@@ -220,6 +245,46 @@ const formSubmit = async function (e) {
 </script>
 
 <style>
+#house-form {
+    /* Answer from Fabrizio Calderan to put a gradient background over another background
+    https://stackoverflow.com/questions/16791202/how-do-i-overlay-a-gradient-background-over-an-existing-background-with-css */
+    background: linear-gradient(to right, rgba(255, 255, 256, 1) 0%, rgba(255, 255, 255, 0.2) 100%),
+        url(../assets/img_placeholder_house@3x.png);
+    background-size: cover;
+    box-sizing: border-box;
+    padding: 10px 200px;
+}
+
+#house-form .back-button {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    height: 50px;
+    padding-top: 30px;
+}
+
+#house-form .back-button img {
+    width: 16px;
+    height: auto;
+}
+
+#house-form form {
+    display: flex;
+    flex-direction: column;
+    width: 35%;
+    max-width: 500px;
+    gap: 15px;
+}
+
+#house-form input {
+    border: none;
+    width: 100%;
+    height: 40px;
+}
+
 #house-form input[type=radio] {
     display: none;
     position: absolute;
@@ -248,20 +313,6 @@ const formSubmit = async function (e) {
 
 #house-form input[type=radio]:checked+label {
     background-color: #EB5440;
-}
-
-#house-form {
-    display: flex;
-    flex-direction: column;
-    width: 35%;
-    max-width: 500px;
-    gap: 15px;
-}
-
-#house-form input {
-    border: none;
-    width: 100%;
-    height: 40px;
 }
 
 #house-form textarea {
@@ -324,15 +375,38 @@ const formSubmit = async function (e) {
 }
 
 @media only screen and (max-width: 768px) {
-    #house-form label {
-        font-size: 14px;
+    #house-form {
+        padding: 10px 20px;
     }
 
-    #house-form {
+    #house-form .header1 {
+        text-align: center;
+        margin-top: 40px;
+    }
+
+    #house-form .back-button {
+        position: absolute;
+        padding: 0 10px;
+        z-index: 99;
+    }
+
+    #house-form .back-button div {
+        display: none;
+    }
+
+    #house-form .back-button img {
+        margin-top: 50px;
+    }
+
+    #house-form form {
         width: 100%;
         margin: 0;
         gap: 15px;
         margin-bottom: 80px;
+    }
+
+    #house-form label {
+        font-size: 14px;
     }
 
     #house-form input {
