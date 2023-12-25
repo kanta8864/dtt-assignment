@@ -1,7 +1,7 @@
 <!-- this views file is responsible for showing a house detail page -->
 <template>
   <NavVar />
-  <div id="house-detail" class="content">
+  <div id="house-detail">
     <div class="back-button">
       <router-link :to="{ name: `home` }">
         <img src="../assets/ic_back_grey@3x.png" alt="back button" class="back-grey">
@@ -11,9 +11,9 @@
     </div>
     <!-- this is for mobile users. The delete, edit, and favorite icon is displayed at the top of the screen, 
     on top of the house picture -->
-    <div class="mobile-edit-delete-button-container">
-      <!-- only show edit and delete button if the house is made by the user -->
-      <div v-if="house.madeByMe" class="buttons-container">
+    <!-- only show edit and delete button if the house is made by the user -->
+    <div class="mobile-buttons-container">
+      <div v-if="house.madeByMe" class="edit-delete-button-container">
         <router-link :to="{ name: `edit`, params: { id: house.id } }">
           <img src="../assets/ic_edit_white@3x.png" class="edit-delete-button">
         </router-link>
@@ -33,9 +33,9 @@
         <div class="text-content">
           <div class="first-row">
             <div class="header1">{{ house.location.street }} {{ house.location.houseNumber }}</div>
-            <div class="edit-delete-button-container">
+            <div class="buttons-container">
               <!-- only show edit and delete button if the house is made by the user -->
-              <div v-if="house.madeByMe" class="buttons-container">
+              <div v-if="house.madeByMe" class="edit-delete-button-container">
                 <router-link :to="{ name: `edit`, params: { id: house.id } }">
                   <img src="../assets/ic_edit@3x.png" class="edit-delete-button">
                 </router-link>
@@ -60,7 +60,7 @@
           <div class="third-row">
             <div class="icon">
               <img src="../assets/ic_price@3x.png" alt="price icon">
-              {{ house.price }}
+              {{ filters.currencyFormatting(house.price).substring(2) }}
             </div>
             <div class="icon">
               <img src="../assets/ic_size@3x.png" alt="size icon">
@@ -94,15 +94,15 @@
         <div class="header2">Recommended for you</div>
         <router-link :to="{ name: `houseDetail`, params: { id: recommendations[0].id } }" class="recommendation-item"
           v-if="recommendations.length >= 1">
-          <HouseInfo :id="recommendations[0].id" />
+          <HouseInfo :id="recommendations[0].id" type="recommendation"/>
         </router-link>
         <router-link :to="{ name: `houseDetail`, params: { id: recommendations[1].id } }" class="recommendation-item"
           v-if="recommendations.length >= 2">
-          <HouseInfo :id="recommendations[1].id" />
+          <HouseInfo :id="recommendations[1].id" type="recommendation"/>
         </router-link>
         <router-link :to="{ name: `houseDetail`, params: { id: recommendations[2].id } }" class="recommendation-item"
           v-if="recommendations.length >= 3">
-          <HouseInfo :id="recommendations[2].id" />
+          <HouseInfo :id="recommendations[2].id" type="recommendation"/>
         </router-link>
       </div>
     </div>
@@ -117,7 +117,7 @@ import { useHouseStore } from "../stores/HouseStore"
 import DeletePopup from "../components/DeletePopup.vue"
 
 const props = defineProps({
-  id: Number,
+  id: String,
 })
 // initialize house store and get the particular house using id passed to this component as a prop
 const houseStore = useHouseStore()
@@ -150,8 +150,23 @@ const recommendations = houseStore.houses.filter(x => x.id != house.id).sort((a,
 #house-detail {
   display: flex;
   flex-direction: column;
-  padding: 10px 100px;
-  font-family: "Open Sans";
+  padding: 10px 200px;
+  font-family: "Open Sans", sans-serif;
+}
+
+#house-detail .back-button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  height: 70px;
+}
+
+#house-detail .back-button img {
+  width: 16px;
+  height: 16px;
 }
 
 #house-detail #big-house-image {
@@ -165,6 +180,10 @@ const recommendations = houseStore.houses.filter(x => x.id != house.id).sort((a,
   justify-content: space-between;
 }
 
+#house-detail .mobile-buttons-container {
+  display: none;
+}
+
 #house-detail .buttons-container {
   display: flex;
   gap: 10px;
@@ -172,8 +191,14 @@ const recommendations = houseStore.houses.filter(x => x.id != house.id).sort((a,
   margin-right: 10px;
 }
 
+#house-detail .edit-delete-button-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 #house-detail .house-info {
-  width: 65%;
+  width: 55%;
   background: white;
   display: flex;
   flex-direction: column;
@@ -189,14 +214,14 @@ const recommendations = houseStore.houses.filter(x => x.id != house.id).sort((a,
 
 #house-detail .icon img {
   width: 16px;
-  height: auto;
+  height: 16px;
 }
 
 #recommendation {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  width: 30%;
+  width: 40%;
 }
 
 #house-detail .recommendation-item {
@@ -204,7 +229,7 @@ const recommendations = houseStore.houses.filter(x => x.id != house.id).sort((a,
   display: flex;
   align-items: center;
   border-radius: 10px;
-  padding: 10px 20px;
+  padding: 5px;
   height: 130px;
   color: #4A4B4C;
   font-size: 16px;
@@ -213,15 +238,6 @@ const recommendations = houseStore.houses.filter(x => x.id != house.id).sort((a,
 
 #house-detail .active {
   color: red
-}
-
-#house-detail .edit-delete-button-container {
-  display: flex;
-  align-items: center;
-}
-
-#house-detail .mobile-edit-delete-button-container {
-  display: none;
 }
 
 .first-row {
@@ -257,10 +273,32 @@ const recommendations = houseStore.houses.filter(x => x.id != house.id).sort((a,
   text-align: center;
 }
 
+@media only screen and (max-width: 1200px) {
+    #house-detail {
+        padding: 20px 150px;
+    }
+}
+
+@media only screen and (max-width: 992px) {
+    #house-detail {
+        padding: 20px 50px;
+    }
+}
+
 @media only screen and (max-width: 768px) {
   #house-detail {
     padding: 0;
     margin-bottom: 70px;
+  }
+
+  #house-detail .back-button {
+    position: absolute;
+    padding: 0 10px;
+    z-index: 99;
+  }
+
+  #house-detail .back-button div {
+    display: none;
   }
 
   #house-detail .house-info {
@@ -296,6 +334,10 @@ const recommendations = houseStore.houses.filter(x => x.id != house.id).sort((a,
     width: calc(100% - 40px);
   }
 
+  #house-detail .recommendation-item {
+    font-size: 12px;
+  }
+
   .first-row,
   .second-row,
   .third-row,
@@ -304,17 +346,16 @@ const recommendations = houseStore.houses.filter(x => x.id != house.id).sort((a,
     font-size: 12px;
   }
 
-
   #house-detail .description {
     font-size: 12px;
   }
 
-  #house-detail .edit-delete-button-container {
+  #house-detail .buttons-container {
     display: none;
     align-items: center;
   }
 
-  #house-detail .mobile-edit-delete-button-container {
+  #house-detail .mobile-buttons-container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -325,12 +366,14 @@ const recommendations = houseStore.houses.filter(x => x.id != house.id).sort((a,
     z-index: 99;
   }
 
+  /* for favorite (heart) icon */
   #house-detail svg {
     color: white;
   }
 
-  #house-detail .mobile-edit-delete-button-container img {
-    width: 22px;
+  #house-detail .edit-delete-button {
+    width: 25px;
+    height: auto;
   }
 
   #house-detail .back-button .back-white {
@@ -344,4 +387,5 @@ const recommendations = houseStore.houses.filter(x => x.id != house.id).sort((a,
   #house-detail .back-button .back-grey {
     display: none;
   }
-}</style>
+}
+</style>

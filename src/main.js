@@ -25,5 +25,19 @@ const pinia = createPinia()
 // persist application state, for example, when reloading)
 pinia.use(piniaPluginPersistedstate)
 
+const app = createApp(App)
+
+// set this currency formatting function as global properties because
+// this function will be used in more than one components. 
+app.config.globalProperties.filters = {
+    currencyFormatting(value) {
+        return new Intl.NumberFormat("nl-be", {
+            style: "currency", 
+            currency: "EUR",
+            minimumFractionDigits: 2
+        }).format(value)
+    }
+}
+
 // register necessary middlewares
-createApp(App).component('font-awesome-icon', FontAwesomeIcon).use(router).use(pinia).mount('#app')
+app.component('font-awesome-icon', FontAwesomeIcon).use(router).use(pinia).mount('#app')

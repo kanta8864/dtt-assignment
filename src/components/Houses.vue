@@ -1,5 +1,5 @@
 <template>
-    <div id="houses" class="content">
+    <div id="houses">
         <!-- if the search field is empty or search result size is graeter than 0 (there are some matches)
         then we show available listings -->
         <div v-if="searchText.length == 0 || searchResultSize > 0">
@@ -35,9 +35,9 @@ import { useHouseStore } from "../stores/HouseStore"
 import { defineProps } from 'vue'
 
 const props = defineProps({
-  searchResultSize: Number,
-  searchText: String, 
-  sortType: String
+    searchResultSize: Number,
+    searchText: String,
+    sortType: String
 })
 
 const houseStore = useHouseStore()
@@ -45,7 +45,17 @@ const houseStore = useHouseStore()
 
 <style>
 #houses {
-    margin-bottom: 72px;
+    margin-bottom: 50px;
+    padding: 10px 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#houses .house-preview-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 #searchMatches {
@@ -73,5 +83,31 @@ const houseStore = useHouseStore()
 
 #noMatch p {
     margin: 5px;
+}
+
+@media only screen and (max-width: 1200px) {
+    #houses {
+        padding: 20px 150px;
+    }
+}
+
+@media only screen and (max-width: 992px) {
+    #houses {
+        padding: 20px 50px;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    #houses {
+        padding: 10px 20px;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+
+/* Styling rules for the main content of different pages */
+  #houses {
+    padding: 5px;
+  }
 }
 </style>

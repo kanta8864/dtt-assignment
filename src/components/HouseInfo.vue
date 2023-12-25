@@ -1,11 +1,11 @@
 <template>
     <!-- this component is used to display house information in the preview format
          (for house overview page and recommended houses in the house detail page)-->
-    <div id="house-info">
+    <div id="house-info" :class="{ recommendation: type == 'recommendation' }">
         <img class="house-photo" :src="house.image" alt="house photo">
         <div class="preview-text">
             <div class="header2">{{ house.location.street }} {{ house.location.houseNumber }}</div>
-            <div>&euro; {{ house.price }}</div>
+            <div>{{ filters.currencyFormatting(house.price)}}</div>
             <div>{{ house.location.city }} {{ house.location.zip }}</div>
             <div class="more-info">
                 <div class="bedroom-info">
@@ -30,6 +30,7 @@ import { useHouseStore } from "../stores/HouseStore"
 import { defineProps } from "vue"
 const props = defineProps({
   id: Number,
+  type: String
 })
 const houseStore = useHouseStore()
 const house = houseStore.getById(props.id)
@@ -45,23 +46,31 @@ const house = houseStore.getById(props.id)
     align-items: center;
 }
 
-#house-info .header2 {
-    margin-bottom: 0px;
+#house-info .preview-text {
+    display: flex;
+    flex-direction: column;
+    gap:5px;
+
 }
 
 .house-photo {
     border-radius: 20px;
     margin: 10px;
-    aspect-ratio: 1 / 1;
     width: 100px;
     height: 100px;
 }
 
-.preview-text {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 5px;
+#house-info.recommendation {
+    font-size: 12px;
+}
+
+.recommendation .house-photo {
+    width: 100px;
+    height: 100px;
+}
+
+.recommendation .header2 {
+    font-size:16px;
 }
 
 .more-info img {

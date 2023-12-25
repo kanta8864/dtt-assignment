@@ -47,9 +47,10 @@ const houseStore = useHouseStore()
     align-items: center;
     justify-content: center;
     gap: 10px;
-    width: 500px;
+    width: 450px;
     padding: 30px;
     font-size: 18px;
+    border-radius:5px;
 }
 
 .popup-content div {
@@ -82,9 +83,10 @@ const houseStore = useHouseStore()
     background-color: #4A4B4C;
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 480px) {
     .popup-content {
         font-size: 12px;
+        width:80%;
     }
 }
 </style>

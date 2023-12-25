@@ -6,8 +6,8 @@
             <HouseInfo :id="house.id" />
         </div>
         <!-- only displays edit and delete button when the listing was made by the user -->
-        <div>
-            <div v-if="house.madeByMe">
+        <div class="buttons-container">
+            <div v-if="house.madeByMe" class="edit-delete-button-container">
                 <router-link :to="{ name: `edit`, params: { id: house.id } }">
                     <img src="../assets/ic_edit@3x.png" class="edit-delete-button">
                 </router-link>
@@ -31,7 +31,7 @@ import DeletePopup from "./DeletePopup.vue"
 import { ref, defineProps } from 'vue'
 
 const props = defineProps({
-    house: Object,
+    house: Object
 })
 
 const houseStore = useHouseStore()
@@ -64,6 +64,31 @@ const closePopup = () => {
     text-decoration: none;
 }
 
+#house-preview .buttons-container {
+    display: flex;
+    gap: 5px;
+    height: 30px;
+    align-items: center;
+}
+
+#house-preview .edit-delete-button-container {
+    height: 30px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+#house-preview .edit-delete-button {
+    width: 25px;
+    height: auto;
+    margin: 0;
+}
+
+#house-preview svg {
+    width: 25px;
+    height: auto;
+}
+
 #house-preview .left {
     align-self: center;
     height: 100%;
@@ -74,6 +99,16 @@ const closePopup = () => {
         font-size: 12px;
         height: 130px;
         padding: 10px 10px;
+    }
+
+    #house-preview .edit-delete-button {
+        width: 20px;
+        height: auto;
+    }
+
+    #house-preview svg {
+        width: 20px;
+        height: auto;
     }
 }
 </style>

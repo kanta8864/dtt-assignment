@@ -1,7 +1,7 @@
 <template>
   <!-- this component includes all the tools avaialble for sorting and filtering of listings,
      as well as a button to craete a new listing-->
-  <div id="tools" class="content">
+  <div id="tools">
     <div class="first-row">
       <div class="header1">Houses</div>
       <router-link id="new-button" :to="{ name: `create` }">
@@ -45,6 +45,7 @@ const searchText = ref("")
   gap: 30px;
   font-family: "Montserrat", sans-serif;
   box-sizing: border-box;
+  padding: 10px 200px;
 }
 
 #tools a {
@@ -137,8 +138,22 @@ const searchText = ref("")
   background-color: #EB5440;
 }
 
+@media only screen and (max-width: 1200px) {
+    #tools {
+        padding: 20px 150px;
+    }
+}
+
+@media only screen and (max-width: 992px) {
+    #tools {
+        padding: 20px 50px;
+    }
+}
+
 @media only screen and (max-width: 768px) {
   #tools {
+    margin: 0;
+    padding: 10px 20px;
     gap: 10px;
   }
 

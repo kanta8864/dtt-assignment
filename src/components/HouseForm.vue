@@ -1,4 +1,5 @@
 <template>
+    
     <!-- This component contains a form which is used to create and edit a listing -->
     <!-- submit.prevent prevents the default behavior of the form submit and let us execute formSubmit function -->
     <form @submit.prevent="formSubmit" id="house-form" novalidate>
@@ -82,7 +83,7 @@ import { ref } from 'vue'
 import { useHouseStore } from "../stores/HouseStore"
 const props = defineProps({
     type: String,
-    id: Number
+    id: String
 })
 
 const houseStore = useHouseStore()

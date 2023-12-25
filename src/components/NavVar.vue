@@ -36,7 +36,7 @@ const favoritesIncluded = computed(() => route.path.includes("/favorites") ? tru
     display: flex;
     gap: 40px;
     align-items: center;
-    padding: 20px 70px;
+    padding: 20px 200px;
     background-color: white;
     font-family: "Montserrat", sans-serif;
     font-size: 18px;
@@ -54,6 +54,18 @@ const favoritesIncluded = computed(() => route.path.includes("/favorites") ? tru
 #nav-container img {
     max-width: 150px;
     height: auto;
+}
+
+@media only screen and (max-width: 1200px) {
+    #nav-container {
+        padding: 20px 150px;
+    }
+}
+
+@media only screen and (max-width: 992px) {
+    #nav-container {
+        padding: 20px 50px;
+    }
 }
 
 @media only screen and (max-width: 768px) {

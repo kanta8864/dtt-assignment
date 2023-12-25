@@ -2,7 +2,7 @@
 <template>
   <NavVar />
   <div id="about-mobile" class="header1">About</div>
-  <div id="about" class="content">
+  <div id="about">
     <div>
       <div class="header1">About DTT Real Estate</div>
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
@@ -37,6 +37,7 @@ import NavVar from "../components/NavVar.vue"
   font-family: "Open Sans", sans-serif;
   font-weight: 400;
   font-size: 18px;
+  padding: 10px 200px;
 }
 
 #about img {
@@ -57,10 +58,23 @@ import NavVar from "../components/NavVar.vue"
   display: none;
 }
 
+@media only screen and (max-width: 1200px) {
+    #about {
+        padding: 20px 150px;
+    }
+}
+
+@media only screen and (max-width: 992px) {
+    #about {
+        padding: 20px 50px;
+    }
+}
+
 @media only screen and (max-width: 768px) {
   #about {
     margin-bottom: 80px;
     font-size: 12px;
+    padding: 10px 20px;
   }
 
   #about-mobile {
