@@ -1,7 +1,7 @@
 <template>
     <NavVar />
     <div id="house-form">
-        <div v-if="type == 'create'">
+        <div v-if="type == 'create'" class="top-row">
             <div class="back-button">
                 <!-- Use of router link to navigate user back to house overview page when clicked -->
                 <router-link :to="{ name: `home` }">
@@ -11,7 +11,7 @@
             </div>
             <div class="header1">Create new listing</div>
         </div>
-        <div v-if="type == 'edit'">
+        <div v-if="type == 'edit'" class="top-row">
             <div class="back-button">
                 <!-- Use of router link to navigate user back to house detail page when clicked -->
                 <router-link :to="{ name: `houseDetail`, params: { id: id } }">
@@ -49,10 +49,12 @@
             </div>
             <div>
                 <p>Upload picture (PNG or JPG)&#x2a;</p>
-                <input type="file" id="picture-input" class="file" @change="onFileUpload" required>
-                <!-- show currently chosen photo as preview -->
-                <img class="house-photo" :src="houseImage" alt="house photo" v-if="!fileName && type == 'edit'">
-                <img :src="url" v-if="fileName" class="house-photo">
+                <div id="house-photo-input-container">
+                    <input type="file" id="picture-input" class="file" @change="onFileUpload" required>
+                    <!-- show currently chosen photo as preview -->
+                    <img class="house-photo" :src="houseImage" alt="house photo" v-if="!fileName && type == 'edit'">
+                    <img :src="url" v-if="fileName" class="house-photo">
+                </div>
             </div>
 
             <div>
@@ -253,6 +255,9 @@ const formSubmit = async function (e) {
     background-size: cover;
     box-sizing: border-box;
     padding: 10px 200px;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 600;
+    font-size: 14px;
 }
 
 #house-form .back-button {
@@ -268,7 +273,7 @@ const formSubmit = async function (e) {
 
 #house-form .back-button img {
     width: 16px;
-    height: auto;
+    height: 16px;
 }
 
 #house-form form {
@@ -279,10 +284,16 @@ const formSubmit = async function (e) {
     gap: 15px;
 }
 
-#house-form input {
+#house-form input[type=text],
+#house-form textarea {
     border: none;
     width: 100%;
     height: 40px;
+    font-family: "Open Sans", sans-serif;
+    font-size: 14px;
+    box-sizing: border-box;
+    padding-left: 20px;
+    border-radius: 5px;
 }
 
 #house-form input[type=radio] {
@@ -291,6 +302,7 @@ const formSubmit = async function (e) {
     visibility: hidden;
 }
 
+/* for garage options */
 #house-form label {
     display: inline-block;
     cursor: pointer;
@@ -316,9 +328,8 @@ const formSubmit = async function (e) {
 }
 
 #house-form textarea {
-    border: none;
-    width: 100%;
     height: 150px;
+    padding-top: 15px;
 }
 
 #house-form button {
@@ -346,12 +357,6 @@ const formSubmit = async function (e) {
     margin-bottom: 10px;
 }
 
-#create-house input::placeholder {
-    font-size: 14px;
-    font-family: "Open Sans", sans-serif;
-    color: #4A4B4C;
-}
-
 #house-form .house-number {
     display: flex;
     gap: 20px;
@@ -360,6 +365,12 @@ const formSubmit = async function (e) {
 
 #house-form .house-number div {
     width: calc(50% - 20px);
+}
+
+#house-form #house-photo-input-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 #house-form .error-message {
@@ -379,6 +390,14 @@ const formSubmit = async function (e) {
         padding: 10px 20px;
     }
 
+    #house-form .top-row {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        width: 100%;
+    }
+
     #house-form .header1 {
         text-align: center;
         margin-top: 40px;
@@ -386,16 +405,12 @@ const formSubmit = async function (e) {
 
     #house-form .back-button {
         position: absolute;
-        padding: 0 10px;
+        left:0;
         z-index: 99;
     }
 
     #house-form .back-button div {
         display: none;
-    }
-
-    #house-form .back-button img {
-        margin-top: 50px;
     }
 
     #house-form form {
@@ -409,13 +424,15 @@ const formSubmit = async function (e) {
         font-size: 14px;
     }
 
-    #house-form input {
-        padding: 0;
+    #house-form input[type=text],
+    #house-form textarea {
+        font-size: 12px;
     }
 
     #house-form textarea {
-        padding: 0;
+        height: 120px;
     }
+
 
     #house-form .house-number div {
         width: calc(50% - 20px);
