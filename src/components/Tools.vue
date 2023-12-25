@@ -4,7 +4,7 @@
   <div id="tools">
     <div class="first-row">
       <div class="header1">Houses</div>
-      <router-link id="new-button" :to="{ name: `create`, params: {type: 'create'} }">
+      <router-link id="new-button" :to="{ name: `create`, params: { type: 'create' } }">
         <img src="../assets/ic_plus_white@3x.png" alt="plus symbol" class="plus-white">
         <img src="../assets/ic_plus_grey@3x.png" alt="plus symbol" class="plus-grey">
         <div>CREATE NEW</div>
@@ -139,15 +139,15 @@ const searchText = ref("")
 }
 
 @media only screen and (max-width: 1200px) {
-    #tools {
-        padding: 20px 150px;
-    }
+  #tools {
+    padding: 20px 150px;
+  }
 }
 
 @media only screen and (max-width: 992px) {
-    #tools {
-        padding: 20px 50px;
-    }
+  #tools {
+    padding: 20px 50px;
+  }
 }
 
 @media only screen and (max-width: 768px) {

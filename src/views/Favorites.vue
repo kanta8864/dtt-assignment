@@ -1,12 +1,12 @@
 <!-- this views file is responsible for showing listings that are marked as favorites by the user -->
 <template>
-    <NavVar />
-    <div id="favorites">
-        <div class="header1">Favorite Listings</div>
-        <div v-for="house in houseStore.getFavs" :key="house.id">
-            <HousePreview :house="house" />
-        </div>
+  <NavVar />
+  <div id="favorites">
+    <div class="header1">Favorite Listings</div>
+    <div v-for="house in houseStore.getFavs" :key="house.id">
+      <HousePreview :house="house" />
     </div>
+  </div>
 </template>
 
 
@@ -27,27 +27,27 @@ const houseStore = useHouseStore()
 }
 
 @media only screen and (max-width: 1200px) {
-    #favorites {
-        padding: 20px 150px;
-    }
+  #favorites {
+    padding: 20px 150px;
+  }
 }
 
 @media only screen and (max-width: 992px) {
-    #favorites {
-        padding: 20px 50px;
-    }
+  #favorites {
+    padding: 20px 50px;
+  }
 }
 
 @media only screen and (max-width: 768px) {
-    #favorites .header1 {
-        text-align: center;
-        margin-top: 40px;
-        font-size: 22px;
-    }
+  #favorites .header1 {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 22px;
+  }
 
-    #favorites {
-        padding: 10px 20px;
-        margin-bottom: 70px;
-    }
+  #favorites {
+    padding: 10px 20px;
+    margin-bottom: 70px;
+  }
 }
 </style>

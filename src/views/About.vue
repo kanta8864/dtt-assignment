@@ -59,15 +59,15 @@ import NavVar from "../components/NavVar.vue"
 }
 
 @media only screen and (max-width: 1200px) {
-    #about {
-        padding: 20px 150px;
-    }
+  #about {
+    padding: 20px 150px;
+  }
 }
 
 @media only screen and (max-width: 992px) {
-    #about {
-        padding: 20px 50px;
-    }
+  #about {
+    padding: 20px 50px;
+  }
 }
 
 @media only screen and (max-width: 768px) {

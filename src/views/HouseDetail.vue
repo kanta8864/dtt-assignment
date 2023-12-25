@@ -94,15 +94,15 @@
         <div class="header2">Recommended for you</div>
         <router-link :to="{ name: `houseDetail`, params: { id: recommendations[0].id } }" class="recommendation-item"
           v-if="recommendations.length >= 1">
-          <HouseInfo :id="recommendations[0].id" type="recommendation"/>
+          <HouseInfo :id="recommendations[0].id" type="recommendation" />
         </router-link>
         <router-link :to="{ name: `houseDetail`, params: { id: recommendations[1].id } }" class="recommendation-item"
           v-if="recommendations.length >= 2">
-          <HouseInfo :id="recommendations[1].id" type="recommendation"/>
+          <HouseInfo :id="recommendations[1].id" type="recommendation" />
         </router-link>
         <router-link :to="{ name: `houseDetail`, params: { id: recommendations[2].id } }" class="recommendation-item"
           v-if="recommendations.length >= 3">
-          <HouseInfo :id="recommendations[2].id" type="recommendation"/>
+          <HouseInfo :id="recommendations[2].id" type="recommendation" />
         </router-link>
       </div>
     </div>
@@ -198,9 +198,9 @@ const recommendations = houseStore.houses.filter(x => x.id != house.id).sort((a,
 }
 
 #house-detail .edit-delete-button {
-    width: 32px;
-    height: 32px;
-  }
+  width: 32px;
+  height: 32px;
+}
 
 #house-detail .house-info {
   width: 55%;
@@ -279,15 +279,15 @@ const recommendations = houseStore.houses.filter(x => x.id != house.id).sort((a,
 }
 
 @media only screen and (max-width: 1200px) {
-    #house-detail {
-        padding: 20px 150px;
-    }
+  #house-detail {
+    padding: 20px 150px;
+  }
 }
 
 @media only screen and (max-width: 992px) {
-    #house-detail {
-        padding: 20px 50px;
-    }
+  #house-detail {
+    padding: 20px 50px;
+  }
 }
 
 @media only screen and (max-width: 768px) {
@@ -298,7 +298,7 @@ const recommendations = houseStore.houses.filter(x => x.id != house.id).sort((a,
 
   #house-detail .back-button {
     position: absolute;
-    padding: 0 10px;
+    padding: 0 20px;
     z-index: 99;
   }
 
@@ -336,7 +336,8 @@ const recommendations = houseStore.houses.filter(x => x.id != house.id).sort((a,
 
   #recommendation {
     padding: 20px;
-    width: calc(100% - 40px);
+    box-sizing: border-box;
+    width: 100%;
   }
 
   #house-detail .recommendation-item {

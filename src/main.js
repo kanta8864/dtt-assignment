@@ -30,13 +30,13 @@ const app = createApp(App)
 // set this currency formatting function as global properties because
 // this function will be used in more than one components. 
 app.config.globalProperties.filters = {
-    currencyFormatting(value) {
-        return new Intl.NumberFormat("nl-be", {
-            style: "currency", 
-            currency: "EUR",
-            minimumFractionDigits: 2
-        }).format(value)
-    }
+  currencyFormatting(value) {
+    return new Intl.NumberFormat("nl-be", {
+      style: "currency",
+      currency: "EUR",
+      minimumFractionDigits: 2
+    }).format(value)
+  }
 }
 
 // register necessary middlewares

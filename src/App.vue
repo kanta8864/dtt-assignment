@@ -30,7 +30,6 @@ body {
 
 
 @media only screen and (max-width: 768px) {
-
   /* Styling rules for header1 */
   .header1 {
     font-size: 18px;

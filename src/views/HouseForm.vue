@@ -1,5 +1,5 @@
 <template>
-    <NavVar />
+  <NavVar />
     <div id="house-form">
         <div v-if="type == 'create'" class="top-row">
             <div class="back-button">
@@ -296,6 +296,11 @@ const formSubmit = async function (e) {
     border-radius: 5px;
 }
 
+#house-form textarea {
+    height: 150px;
+    padding-top: 15px;
+}
+
 #house-form input[type=radio] {
     display: none;
     position: absolute;
@@ -327,11 +332,6 @@ const formSubmit = async function (e) {
     background-color: #EB5440;
 }
 
-#house-form textarea {
-    height: 150px;
-    padding-top: 15px;
-}
-
 #house-form button {
     background-color: #EB5440;
     color: white;
@@ -348,13 +348,6 @@ const formSubmit = async function (e) {
 #post-button-container {
     display: flex;
     justify-content: end;
-}
-
-#create-house p {
-    font-size: 14px;
-    font-family: "Montserrat", sans-serif;
-    font-weight: 600;
-    margin-bottom: 10px;
 }
 
 #house-form .house-number {
