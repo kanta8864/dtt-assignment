@@ -4,7 +4,7 @@
   <div id="tools">
     <div class="first-row">
       <div class="header1">Houses</div>
-      <router-link id="new-button" :to="{ name: `create`, params: { type: 'create' } }">
+      <router-link id="new-button" :to="{ name: `create` }">
         <img src="../assets/ic_plus_white@3x.png" alt="plus symbol" class="plus-white">
         <img src="../assets/ic_plus_grey@3x.png" alt="plus symbol" class="plus-grey">
         <div>CREATE NEW</div>
@@ -14,15 +14,15 @@
       <!-- emits a custom event to the parent component (Home) when there is a change in input text
         It also emits the search text itself -->
       <input type="search" id="search-text-input" placeholder="Search for a house" v-model="searchText"
-        @input="e => $emit('changeSearchText', e.target.value)">
+        @input="searchInputChange">
       <div class="sort">
         <!-- emits a custom event to the parent component (Home) when the radio button is clicked
         It also emits the selected sorting type which will either be price or size. -->
         <input type="radio" id="price-choice" name="choice" value="price" checked="checked"
-          @click="e => $emit('changeSortTarget', e.target.value)">
+          @click="sortTargetChange">
         <label for="price-choice" id="price-label">Price</label>
         <input type="radio" id="size-choice" name="choice" value="size"
-          @click="e => $emit('changeSortTarget', e.target.value)">
+          @click="sortTargetChange">
         <label for="size-choice" id="size-label">Size</label>
       </div>
     </div>
@@ -31,6 +31,16 @@
 
 <script setup>
 import { ref } from "vue"
+
+const emit = defineEmits(["changeSearchText", "changeSortTarget"])
+
+const searchInputChange = (e) => {
+  emit('changeSearchText', e.target.value)
+}
+
+const sortTargetChange = (e) => {
+  emit('changeSortTarget', e.target.value)
+}
 
 // this variable will keep track of the user input for search text using v-model.
 const searchText = ref("")
@@ -140,13 +150,13 @@ const searchText = ref("")
 
 @media only screen and (max-width: 1200px) {
   #tools {
-    padding: 20px 150px;
+    padding: 20px 100px;
   }
 }
 
 @media only screen and (max-width: 992px) {
   #tools {
-    padding: 20px 50px;
+    padding: 20px 30px;
   }
 }
 

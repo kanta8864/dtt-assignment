@@ -1,7 +1,7 @@
 <!-- this views file is responsible for showing a house detail page -->
 <template>
   <NavVar />
-  <div id="house-detail">
+  <article id="house-detail" v-if="house">
     <div class="back-button">
       <router-link :to="{ name: `home` }">
         <img src="../assets/ic_back_grey@3x.png" alt="back button" class="back-grey">
@@ -14,7 +14,7 @@
     <!-- only show edit and delete button if the house is made by the user -->
     <div class="mobile-buttons-container">
       <div v-if="house.madeByMe" class="edit-delete-button-container">
-        <router-link :to="{ name: `edit`, params: { id: house.id, type: 'edit' } }">
+        <router-link :to="{ name: `edit`, params: { id: house.id } }">
           <img src="../assets/ic_edit_white@3x.png" class="edit-delete-button">
         </router-link>
         <div>
@@ -23,7 +23,7 @@
         <DeletePopup :houseId="house.id" @closePopup="closePopup" v-if="popupIsOpen" />
       </div>
       <div>
-        <font-awesome-icon :icon="['fas', 'heart']" :class="{ active: houseStore.getFavs.includes(house) }"
+        <font-awesome-icon :icon="['fas', 'heart']" :class="{ active: houseStore.favList.includes(house.id) }"
           @click.prevent="houseStore.toggleFav(house.id)" size="2x" />
       </div>
     </div>
@@ -32,11 +32,12 @@
         <img :src="house.image" alt="house photo" id="big-house-image">
         <div class="text-content">
           <div class="first-row">
-            <div class="header1">{{ house.location.street }} {{ house.location.houseNumber }}</div>
+            <div class="header1 address">{{ house.location.street }} {{ house.location.houseNumber }} {{
+              house.location.houseNumberAddition }}</div>
             <div class="buttons-container">
               <!-- only show edit and delete button if the house is made by the user -->
               <div v-if="house.madeByMe" class="edit-delete-button-container">
-                <router-link :to="{ name: `edit`, params: { id: house.id, type: 'edit' } }">
+                <router-link :to="{ name: `edit`, params: { id: house.id } }">
                   <img src="../assets/ic_edit@3x.png" class="edit-delete-button">
                 </router-link>
                 <div>
@@ -45,7 +46,7 @@
                 </div>
               </div>
               <div>
-                <font-awesome-icon :icon="['fas', 'heart']" :class="{ active: houseStore.getFavs.includes(house) }"
+                <font-awesome-icon :icon="['fas', 'heart']" :class="{ active: houseStore.favList.includes(house.id) }"
                   @click.prevent="houseStore.toggleFav(house.id)" size="2x" />
               </div>
             </div>
@@ -82,7 +83,7 @@
             </div>
             <div class="icon">
               <img src="../assets/ic_garage@3x.png" alt="garage icon">
-              {{ hasGarage }}
+              {{ house.hasGarage ? "yes" : "no" }}
             </div>
           </div>
           <div class="description">
@@ -90,27 +91,27 @@
           </div>
         </div>
       </div>
-      <div id="recommendation">
+      <div id="recommendation" v-if="recommendations">
         <div class="header2">Recommended for you</div>
         <router-link :to="{ name: `houseDetail`, params: { id: recommendations[0].id } }" class="recommendation-item"
-          v-if="recommendations.length >= 1">
-          <HouseInfo :id="recommendations[0].id" type="recommendation" />
+          @click="handleRecommendationClick(recommendations[0].id)">
+          <HouseInfo :id="recommendations[0].id" type="recommendation" :key="recommendations" />
         </router-link>
         <router-link :to="{ name: `houseDetail`, params: { id: recommendations[1].id } }" class="recommendation-item"
-          v-if="recommendations.length >= 2">
-          <HouseInfo :id="recommendations[1].id" type="recommendation" />
+          @click="handleRecommendationClick(recommendations[1].id)">
+          <HouseInfo :id="recommendations[1].id" type="recommendation" :key="recommendations" />
         </router-link>
         <router-link :to="{ name: `houseDetail`, params: { id: recommendations[2].id } }" class="recommendation-item"
-          v-if="recommendations.length >= 3">
-          <HouseInfo :id="recommendations[2].id" type="recommendation" />
+          @click="handleRecommendationClick(recommendations[2].id)">
+          <HouseInfo :id="recommendations[2].id" type="recommendation" :key="recommendations" />
         </router-link>
       </div>
     </div>
-  </div>
+  </article>
 </template>
 
 <script setup>
-import { ref, defineProps } from "vue"
+import { ref, onMounted } from "vue"
 import HouseInfo from "../components/HouseInfo.vue"
 import NavVar from "../components/NavVar.vue"
 import { useHouseStore } from "../stores/HouseStore"
@@ -121,10 +122,36 @@ const props = defineProps({
 })
 // initialize house store and get the particular house using id passed to this component as a prop
 const houseStore = useHouseStore()
-const house = houseStore.getById(props.id)
+const house = ref("")
+const recommendations = ref([])
 
-// converts true/false value to yes/no for easier understanding
-const hasGarage = ref(house.hasGarage ? "yes" : "no")
+async function setUp(id) {
+  if (houseStore.houses.length == 0) {
+    await houseStore.fetchHouses()
+  }
+  house.value = await houseStore.getOneHouse(id)
+  // recommendation items are choosen to be three houses
+  // with a similar price to the currently viewed house
+  recommendations.value = houseStore.houses.filter(x => x.id != house.value.id).sort((a, b) => {
+    const priceDifA = Math.abs(a.price - house.value.price)
+    const priceDifB = Math.abs(b.price - house.value.price)
+    if (priceDifA > priceDifB) return 1
+    else if (priceDifA < priceDifB) return -1
+    else return 0
+  }).slice(0, 3)
+}
+
+onMounted(() => setUp(props.id))
+
+function handleRecommendationClick(id) {
+  setUp(id)
+  // scroll up to the top of the page
+  window.scrollTo({
+    top: 0,
+    left: 0,
+    behavior: 'smooth'
+  })
+}
 
 // deals with opening and closing of popup asking user to confirm the deletion of a listing
 const popupIsOpen = ref(false)
@@ -134,16 +161,6 @@ const openPopup = () => {
 const closePopup = () => {
   popupIsOpen.value = false
 }
-
-// recommendation items are choosen to be three houses
-// with a similar price to the currently viewed house
-const recommendations = houseStore.houses.filter(x => x.id != house.id).sort((a, b) => {
-  const priceDifA = Math.abs(a.price - house.price)
-  const priceDifB = Math.abs(b.price - house.price)
-  if (priceDifA > priceDifB) return 1
-  else if (priceDifA < priceDifB) return -1
-  else return 0
-}).slice(0, 3)
 </script>
 
 <style>
@@ -187,8 +204,11 @@ const recommendations = houseStore.houses.filter(x => x.id != house.id).sort((a,
 #house-detail .buttons-container {
   display: flex;
   gap: 10px;
-  align-items: center;
-  margin-right: 10px;
+  align-items: start;
+  margin-top: 25px;
+  position: absolute;
+  right: 20px;
+  top: 10px;
 }
 
 #house-detail .edit-delete-button-container {
@@ -198,8 +218,8 @@ const recommendations = houseStore.houses.filter(x => x.id != house.id).sort((a,
 }
 
 #house-detail .edit-delete-button {
-  width: 32px;
-  height: 32px;
+  width: 25px;
+  height: auto;
 }
 
 #house-detail .house-info {
@@ -215,6 +235,7 @@ const recommendations = houseStore.houses.filter(x => x.id != house.id).sort((a,
   gap: 10px;
   padding: 10px 30px;
   font-size: 16px;
+  position: relative;
 }
 
 #house-detail .icon img {
@@ -245,9 +266,8 @@ const recommendations = houseStore.houses.filter(x => x.id != house.id).sort((a,
   color: red
 }
 
-.first-row {
-  display: flex;
-  justify-content: space-between;
+.address {
+  width: 80%;
 }
 
 .second-row,
@@ -262,6 +282,7 @@ const recommendations = houseStore.houses.filter(x => x.id != house.id).sort((a,
 .second-row,
 .third-row,
 .fourth-row {
+  width: 100%;
   font-weight: 600;
   font-size: 16px;
 }
@@ -280,13 +301,13 @@ const recommendations = houseStore.houses.filter(x => x.id != house.id).sort((a,
 
 @media only screen and (max-width: 1200px) {
   #house-detail {
-    padding: 20px 150px;
+    padding: 20px 100px;
   }
 }
 
 @media only screen and (max-width: 992px) {
   #house-detail {
-    padding: 20px 50px;
+    padding: 20px 30px;
   }
 }
 
@@ -344,6 +365,7 @@ const recommendations = houseStore.houses.filter(x => x.id != house.id).sort((a,
     font-size: 12px;
   }
 
+
   .first-row,
   .second-row,
   .third-row,
@@ -378,6 +400,11 @@ const recommendations = houseStore.houses.filter(x => x.id != house.id).sort((a,
   }
 
   #house-detail .edit-delete-button {
+    width: 25px;
+    height: auto;
+  }
+
+  #house-detail .back-button img {
     width: 25px;
     height: 25px;
   }

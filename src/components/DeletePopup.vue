@@ -1,6 +1,6 @@
 <template>
   <!-- this component is responsible for showing a delete confirmation popup -->
-  <div class="popup" @click.prevent="$emit(`closePopup`)">
+  <div class="popup" @click.prevent="handleClosePopup">
     <div class="popup-content">
       <div class="header1">Delete listing</div>
       <div>
@@ -8,8 +8,8 @@
         <div>The action cannot be undone.</div>
       </div>
       <div class="buttons">
-        <button class="delete" @click.prevent="houseStore.deleteHouse(houseId)">YES, DELETE</button>
-        <button class="goback" @click.prevent="$emit(`closePopup`)">GO BACK</button>
+        <button class="delete" @click="houseStore.deleteHouse(houseId)">YES, DELETE</button>
+        <button class="goback">GO BACK</button>
       </div>
     </div>
   </div>
@@ -17,12 +17,22 @@
 
 <script setup>
 import { useHouseStore } from "../stores/HouseStore"
-import { defineProps } from "vue"
 
 const props = defineProps({
   houseId: Number,
 })
+
+const emit = defineEmits(["closePopup"])
 const houseStore = useHouseStore()
+
+function handleClosePopup(e) {
+  const modalBackground = document.querySelector(".popup")
+  const gobackButton = document.querySelector(".goback")
+  if (e.target.isEqualNode(modalBackground) || e.target.isEqualNode(gobackButton)) {
+    emit("closePopup")
+  }
+}
+
 </script>
 
 <style>
@@ -47,10 +57,10 @@ const houseStore = useHouseStore()
   align-items: center;
   justify-content: center;
   gap: 10px;
-  width: 450px;
+  width: 500px;
   padding: 30px;
   font-size: 18px;
-  border-radius: 5px;
+  border-radius: 15px;
 }
 
 .popup-content div {

@@ -1,10 +1,10 @@
 <template>
   <!-- this component is used to display house information in the preview format
          (for house overview page and recommended houses in the house detail page)-->
-  <div id="house-info" :class="{ recommendation: type == 'recommendation' }">
+  <div id="house-info" :class="{ recommendation: type == 'recommendation' }" v-if="house">
     <img class="house-photo" :src="house.image" alt="house photo">
     <div class="preview-text">
-      <div class="header2">{{ house.location.street }} {{ house.location.houseNumber }}</div>
+      <div class="header2">{{ house.location.street }} {{ house.location.houseNumber }}{{ house.location.houseNumberAddition }}</div>
       <div>{{ filters.currencyFormatting(house.price) }}</div>
       <div>{{ house.location.city }} {{ house.location.zip }}</div>
       <div class="more-info">
@@ -27,13 +27,17 @@
 
 <script setup>
 import { useHouseStore } from "../stores/HouseStore"
-import { defineProps } from "vue"
+import { ref, onBeforeMount } from "vue"
 const props = defineProps({
   id: Number,
   type: String
 })
 const houseStore = useHouseStore()
-const house = houseStore.getById(props.id)
+const house = ref("")
+
+onBeforeMount(async () => {
+  house.value = await houseStore.getOneHouse(props.id)
+})
 </script>
 
 <style>
@@ -92,10 +96,10 @@ const house = houseStore.getById(props.id)
   justify-content: center;
 }
 
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 992px) {
   #house-info {
     width: 100%;
-    gap: 10px;
+    gap: 8px;
   }
 
   .house-photo {

@@ -9,15 +9,15 @@
       </div>
       <!-- if current sorting type is price, display a house list sorted by price -->
       <div v-if="sortType === 'price'" class="house-preview-container">
-        <div v-for="house in houseStore.sortByPrice(houseStore.filterByText(searchText))" :key="house.id">
+        <article v-for="house in houseStore.sortByPrice(houseStore.filterByText(searchText))" :key="house.id">
           <HousePreview :house="house" />
-        </div>
+        </article>
       </div>
       <!-- if current sorting type is size, display a house list sorted by size -->
       <div v-if="sortType === `size`" class="house-preview-container">
-        <div v-for="house in houseStore.sortBySize(houseStore.filterByText(searchText))" :key="house.id">
+        <article v-for="house in houseStore.sortBySize(houseStore.filterByText(searchText))" :key="house.id">
           <HousePreview :house="house" />
-        </div>
+        </article>
       </div>
     </div>
     <!-- if there is no match to the search text, then we display that there was no match -->
@@ -32,7 +32,6 @@
 <script setup>
 import HousePreview from './HousePreview.vue'
 import { useHouseStore } from "../stores/HouseStore"
-import { defineProps } from 'vue'
 
 const props = defineProps({
   searchResultSize: Number,
@@ -87,13 +86,13 @@ const houseStore = useHouseStore()
 
 @media only screen and (max-width: 1200px) {
   #houses {
-    padding: 20px 150px;
+    padding: 20px 100px;
   }
 }
 
 @media only screen and (max-width: 992px) {
   #houses {
-    padding: 20px 50px;
+    padding: 20px 30px;
   }
 }
 

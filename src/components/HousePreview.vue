@@ -8,7 +8,7 @@
     <!-- only displays edit and delete button when the listing was made by the user -->
     <div class="buttons-container">
       <div v-if="house.madeByMe" class="edit-delete-button-container">
-        <router-link :to="{ name: `edit`, params: { id: house.id, type: 'edit' } }">
+        <router-link :to="{ name: `edit`, params: { id: house.id } }">
           <img src="../assets/ic_edit@3x.png" class="edit-delete-button">
         </router-link>
         <div>
@@ -18,7 +18,7 @@
         <DeletePopup :houseId="house.id" @closePopup="closePopup" v-if="popupIsOpen" />
       </div>
       <!-- importing heart icon for marking a listing as favorite-->
-      <font-awesome-icon :icon="['fas', 'heart']" :class="{ active: houseStore.getFavs.includes(house) }"
+      <font-awesome-icon :icon="['fas', 'heart']" :class="{ active: houseStore.favList.includes(house.id) }"
         @click.prevent="houseStore.toggleFav(house.id)" size="2x" />
     </div>
   </router-link>
@@ -28,7 +28,7 @@
 import HouseInfo from "./HouseInfo.vue"
 import { useHouseStore } from "../stores/HouseStore"
 import DeletePopup from "./DeletePopup.vue"
-import { ref, defineProps } from 'vue'
+import { ref } from 'vue'
 
 const props = defineProps({
   house: Object
@@ -69,6 +69,7 @@ const closePopup = () => {
   gap: 5px;
   height: 30px;
   align-items: center;
+  margin-top: 20px;
 }
 
 #house-preview .edit-delete-button-container {
@@ -108,6 +109,16 @@ const closePopup = () => {
 
   #house-preview svg {
     width: 20px;
+    height: auto;
+  }
+
+  #house-preview .buttons-container {
+    flex-direction: column;
+    height: auto;
+  }
+
+  #house-preview .edit-delete-button-container {
+    flex-direction: column;
     height: auto;
   }
 }

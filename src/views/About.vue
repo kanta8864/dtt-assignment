@@ -1,8 +1,8 @@
 <!-- this views file is responsible for displaying information about the company -->
 <template>
   <NavVar />
-  <div id="about-mobile" class="header1">About</div>
   <div id="about">
+    <div id="about-mobile" class="header1">About</div>
     <div>
       <div class="header1">About DTT Real Estate</div>
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
@@ -60,13 +60,13 @@ import NavVar from "../components/NavVar.vue"
 
 @media only screen and (max-width: 1200px) {
   #about {
-    padding: 20px 150px;
+    padding: 20px 100px;
   }
 }
 
 @media only screen and (max-width: 992px) {
   #about {
-    padding: 20px 50px;
+    padding: 20px 30px;
   }
 }
 
@@ -81,6 +81,7 @@ import NavVar from "../components/NavVar.vue"
     display: block;
     text-align: center;
     margin-top: 40px;
+    margin-bottom: 25px;
     font-size: 22px;
   }
 

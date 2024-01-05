@@ -1,6 +1,6 @@
 import { defineStore } from "pinia"
-import axios from "axios"
 import router from '../router'
+import api from '../services/api.js'
 
 export const useHouseStore = defineStore("houseStore", {
   state: () => ({
@@ -10,12 +10,6 @@ export const useHouseStore = defineStore("houseStore", {
     favList: []
   }),
   getters: {
-    // get the house object by its id
-    getById: (state) => {
-      return (id) => {
-        return state.houses.find(x => x.id == id)
-      }
-    },
     // get the size of the listing after filtering by search text 
     getFilteredListSize: (state) => {
       return (text) => {
@@ -48,78 +42,52 @@ export const useHouseStore = defineStore("houseStore", {
       return this.houses.filter(x => x.location.street.toLowerCase().includes(searchText.toLowerCase())
         || x.location.city.toLowerCase().includes(searchText.toLowerCase()))
     },
+    // update houses state with the latest fetched data 
+    updateHouses(houses) {
+      // store fetched data in the store 
+      this.houses = houses
+    },
+    // function dealing with route direct
+    routeDirect(routeName, params) {
+      if (!params) router.push({ name: routeName })
+      router.push({ name: routeName, params: params })
+    },
     // fetch all the houses from House API
     async fetchHouses() {
-      try {
-        // private API key is not secured but this is just so that reviewers can use it without configuring anything 
-        axios.defaults.headers['X-API-KEY'] = 'DiAa72IRMOZYnGe5qVSo9C4gmUQJ-wu3';
-        // function execution is paused until the promise is resolved
-        let data = await axios.get("https://api.intern.d-tt.nl/api/houses")
-        if (data.status !== 200) {
-          throw Error("No house was found")
-        } else {
-          this.houses = data.data
-        }
-      } catch (e) {
-        alert(e)
-      }
+      const houses = await api.fetchHouses()
+      this.updateHouses(houses)
+    },
+    // get information about one specific house 
+    async getOneHouse(id) {
+      return await api.getOneHouse(id)
     },
     // add house and send a post request to House API
     async addHouse(body, fileName) {
-      try {
-        axios.defaults.headers['X-API-KEY'] = 'DiAa72IRMOZYnGe5qVSo9C4gmUQJ-wu3'
-        let data = await axios.post("https://api.intern.d-tt.nl/api/houses", body)
-        const formData = new FormData()
-        formData.append("image", fileName.value)
-        if (data.data.id) {
-          await axios.post(`https://api.intern.d-tt.nl/api/houses/${data.data.id}/upload`, formData)
-          await this.fetchHouses()
-          router.push({ name: 'houseDetail', params: { id: data.data.id } })
-          alert("House listing posted!")
-          return true
-        } else {
-          // when the user types in input such as 10000 for construction year, API does not
-          // throw any error in the first post request but data.data.id becomes undefined, 
-          // making the second post request invalid. This is to notify the user about what the 
-          // problem is specifically instead of giving very general bad request error. 
-          alert("house construction year is not valid")
-          return false;
-        }
-      } catch (e) {
-        // this is mainly for when construction year is out of range 
-        alert(e.response.data.code)
+      const newId = await api.addHouse(body, fileName)
+      if (newId != -1) {
+        await this.fetchHouses()
+        this.routeDirect("houseDetail", { id: newId })
+        alert("House listing posted!")
+        return true
+      } else {
         return false
       }
     },
     // deleter house and send delete request to House API
     async deleteHouse(houseId) {
-      try {
-        axios.defaults.headers['X-API-KEY'] = 'DiAa72IRMOZYnGe5qVSo9C4gmUQJ-wu3';
-        await axios.delete("https://api.intern.d-tt.nl/api/houses/" + houseId)
-        if (this.favList.includes(houseId)) this.favList.splice(this.favList.indexOf(houseId), 1)
-        await this.fetchHouses()
-        router.push({ name: 'home' })
-      } catch (e) {
-        alert(e)
+      await api.deleteHouse(houseId)
+      if (this.favList.includes(houseId)) {
+        this.favList.splice(this.favList.indexOf(houseId), 1)
       }
+      await this.fetchHouses()
+      this.routeDirect("home")
     },
     // update house and send post request to House API
     async updateHouse(houseId, body, fileName) {
-      try {
-        axios.defaults.headers['X-API-KEY'] = 'DiAa72IRMOZYnGe5qVSo9C4gmUQJ-wu3';
-        await axios.post("https://api.intern.d-tt.nl/api/houses/" + houseId, body)
-        // we do not update house photo if user did not submit a new image
-        if (fileName) {
-          const formData = new FormData()
-          formData.append("image", fileName)
-          await axios.post(`https://api.intern.d-tt.nl/api/houses/${houseId}/upload`, formData)
-        }
-        await this.fetchHouses()
-        router.push({ name: 'houseDetail', params: { id: houseId } })
-        alert("House listing updated!")
-      } catch (e) {
-        alert(e)
-      }
+      await api.updateHouse(houseId, body, fileName)
+      await this.fetchHouses()
+      this.routeDirect("houseDetail", { id: houseId })
+      alert("House listing updated!")
     },
     // add house id into the favList if id does not already exist, otherwise remove it from the list 
     toggleFav(id) {

@@ -1,6 +1,6 @@
 <template>
   <!-- this component is for displaying a navigation bar -->
-  <div id="nav-container">
+  <nav id="nav-container">
     <img class="logo" src="../assets/img_logo_dtt@3x.png" alt="DTT logo">
     <!-- active class is for styling the navigation bar text to be bold when needed -->
     <router-link :to="{ name: `home` }" :class="housesIncluded ? `active` : ``" id="home-button">
@@ -15,7 +15,7 @@
     <router-link :to="{ name: `about` }" :class="aboutIncluded ? `active` : ``" id="about-button">
       <div>About</div>
     </router-link>
-  </div>
+  </nav>
 </template>
 
 <script setup>
@@ -58,13 +58,13 @@ const favoritesIncluded = computed(() => route.path.includes("/favorites") ? tru
 
 @media only screen and (max-width: 1200px) {
   #nav-container {
-    padding: 20px 150px;
+    padding: 20px 100px;
   }
 }
 
 @media only screen and (max-width: 992px) {
   #nav-container {
-    padding: 20px 50px;
+    padding: 20px 30px;
   }
 }
 

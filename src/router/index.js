@@ -2,8 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import About from '../views/About.vue'
 import HouseDetail from "../views/HouseDetail.vue"
-import MyHouses from "../views/MyHouses.vue"
-import Favorites from "../views/Favorites.vue"
+import SpecificListings from "../views/SpecificListings.vue"
 import HouseForm from "../views/HouseForm.vue"
 
 // specifying all the available routes of the application
@@ -23,32 +22,32 @@ const routes = [
     component: About
   },
   {
+    path: '/houses/create',
+    name: 'create',
+    component: HouseForm,
+    props: true
+  },
+  {
+    path: '/houses/edit/:id',
+    name: 'edit',
+    component: HouseForm,
+    props: true
+  },
+  {
     path: '/houses/:id',
     name: 'houseDetail',
     component: HouseDetail,
     props: true
   },
   {
-    path: '/houses/:type',
-    name: 'create',
-    component: HouseForm,
-    props: true
-  },
-  {
-    path: '/houses/:id/:type',
-    name: 'edit',
-    component: HouseForm,
-    props: true
-  },
-  {
     path: '/myHouses',
     name: 'myHouses',
-    component: MyHouses
+    component: SpecificListings
   },
   {
     path: '/favorites',
     name: 'favorites',
-    component: Favorites
+    component: SpecificListings
   },
 
 ]
