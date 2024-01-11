@@ -8,10 +8,7 @@ and then
 ```
 npm run dev 
 ```
-or 
-```
-npm run preview 
-```
+
 
 
 ### Customize configuration
